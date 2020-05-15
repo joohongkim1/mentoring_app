@@ -41,4 +41,4 @@ https://ovenapp.io/view/1mcbsPtgJYhj2PLbjGQT6zQY19CNXMDP/KzEmI
 
 경험 정리
 
-![경험](./readme-asset/exp.png)
+![키워드](./readme-asset/exp.png)
