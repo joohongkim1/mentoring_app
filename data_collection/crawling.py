@@ -15,6 +15,7 @@ def find_xpath(url):
 driver = webdriver.Chrome('./chromedriver')
 time.sleep(5)
 for page in range(1,317):
+    
     try : 
         for passessay in range(1,21):
             try:
@@ -23,11 +24,29 @@ for page in range(1,317):
                 find_xpath('//*[@id="container"]/div[2]/div[5]/ul/li['+str(passessay)+']/div[1]/p/a/span').click()
                 #span_text = driver.find_element_by_xpath('//*[@id="container"]/div[2]/div[3]/dl/dt[1]/button/span[2]').text
                 #print(span_text)
-                driver.find_element_by_xpath('//*[@id="container"]/div[2]/div[3]/dl/dt[1]/button/span[2]').click()
-                SpecialPrice =driver.find_element_by_xpath('//*[@id="container"]/div[2]/div[3]/dl/dt[1]/button/span[2]').text
+                print("=============")
+                find_xpath('//*[@id="container"]/div[2]/div[1]/div[1]/h2/em').click()
+                q =find_xpath('//*[@id="container"]/div[2]/div[1]/div[1]/h2/em').text
+                print("직무",q)
+                for j in range(1, 7):
+                    try : 
+                        find_xpath('//*[@id="container"]/div[2]/div[3]/dl/dt['+str(j)+']/button/span[2]').click()
+                        q =find_xpath('//*[@id="container"]/div[2]/div[3]/dl/dt['+str(j)+']/button/span[2]').text
+                        print("문항",q)
+                    except:
+                        print("없는문항")
+                        continue
+                for j in range(1, 7):
+                    try : 
+                        find_xpath('//*[@id="container"]/div[2]/div[3]/dl/dd['+str(j)+']/div[1]').click()
+                        q =find_xpath('//*[@id="container"]/div[2]/div[3]/dl/dd['+str(j)+']/div[1]').text
+                        print("자소서",q)
+                    except:
+                        print("없는자소서")
+                        continue
 
-                '//*[@id="container"]/div[2]/div[3]/dl/dt['+str(j)+']/button/span[2]' #질문
-                '//*[@id="container"]/div[2]/div[3]/dl/dd['+str(j)+']/div[1]' # 답
+                # '//*[@id="container"]/div[2]/div[3]/dl/dt['+str(j)+']/button/span[2]' #질문
+                # '//*[@id="container"]/div[2]/div[3]/dl/dd['+str(j)+']/div[1]' # 답
 
                 # //*[@id="container"]/div[2]/div[3]/dl/dt[1]/button/span[2]
                 # //*[@id="container"]/div[2]/div[3]/dl/dt[2]/button/span[2]
@@ -41,7 +60,6 @@ for page in range(1,317):
                 # //*[@id="container"]/div[2]/div[3]/dl/dd[3]/div[1]
 
                 # //*[@id="container"]/div[2]/div[3]/dl/dd[6]/div[1]
-                print(SpecialPrice)
             except:
                 print("errors")
 
