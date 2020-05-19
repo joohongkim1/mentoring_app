@@ -14,10 +14,16 @@ def find_xpath(url):
 
 driver = webdriver.Chrome('./chromedriver')
 time.sleep(5)
-for page in range(1,317):
-    
+
+csvfile = open('./result.csv', "w", newline="")
+csvwriter = csv.writer(csvfile)
+
+
+
+for page in range(1,2): # 317
     try : 
-        for passessay in range(1,21):
+        for passessay in range(1,10):#21
+            res = []
             try:
                 driver.get('http://www.jobkorea.co.kr/starter/PassAssay?FavorCo_Stat=0&Pass_An_Stat=0&OrderBy=0&EduType=0&WorkType=0&isSaved=0&Page=%i' %page)
                 time.sleep(3) 
@@ -28,62 +34,37 @@ for page in range(1,317):
                 find_xpath('//*[@id="container"]/div[2]/div[1]/div[1]/h2/em').click()
                 q =find_xpath('//*[@id="container"]/div[2]/div[1]/div[1]/h2/em').text
                 print("직무",q)
+                if q:res.append(q)
+                else: res.append(0)
+                
+                res.append(q)
                 for j in range(1, 7):
                     try : 
                         find_xpath('//*[@id="container"]/div[2]/div[3]/dl/dt['+str(j)+']/button/span[2]').click()
                         q =find_xpath('//*[@id="container"]/div[2]/div[3]/dl/dt['+str(j)+']/button/span[2]').text
                         print("문항",q)
+                        res.append(q)
                     except:
                         print("없는문항")
+                        res.append(0)
                         continue
                 for j in range(1, 7):
                     try : 
                         find_xpath('//*[@id="container"]/div[2]/div[3]/dl/dd['+str(j)+']/div[1]').click()
                         q =find_xpath('//*[@id="container"]/div[2]/div[3]/dl/dd['+str(j)+']/div[1]').text
                         print("자소서",q)
+                        res.append(q)
                     except:
                         print("없는자소서")
+                        res.append(0)
                         continue
-
-                # '//*[@id="container"]/div[2]/div[3]/dl/dt['+str(j)+']/button/span[2]' #질문
-                # '//*[@id="container"]/div[2]/div[3]/dl/dd['+str(j)+']/div[1]' # 답
-
-                # //*[@id="container"]/div[2]/div[3]/dl/dt[1]/button/span[2]
-                # //*[@id="container"]/div[2]/div[3]/dl/dt[2]/button/span[2]
-                # //*[@id="container"]/div[2]/div[3]/dl/dt[3]/button/span[2]
-                # //*[@id="container"]/div[2]/div[3]/dl/dt[4]/button/span[2]
-                # //*[@id="container"]/div[2]/div[3]/dl/dt[5]/button/span[2]
-                # //*[@id="container"]/div[2]/div[3]/dl/dt[6]/button/span[2]
-
-                # //*[@id="container"]/div[2]/div[3]/dl/dd[1]/div[1]
-                # //*[@id="container"]/div[2]/div[3]/dl/dd[2]/div[1]
-                # //*[@id="container"]/div[2]/div[3]/dl/dd[3]/div[1]
-
-                # //*[@id="container"]/div[2]/div[3]/dl/dd[6]/div[1]
+                print("---res---")
+                print(res)
+                csvwriter.writerow([r for r in res])
             except:
                 print("errors")
 
-            # html = driver.page_source
-            # soup = BeautifulSoup(html, 'html.parser')
-            # a = soup.find_all("div", "tx")
-            # q = soup.find_all("span", "tx")
-            # answer_list, question_list = [], []
-            # print("=======================질문===============================")
-            # for q1 in q:
-            #     question_list.append(q1.get_text())            
-            # print(question_list)
-            # print("======================답========================")
-            # for a1 in a:
-            #     answer_list.append(a1.get_text())
-            # print(answer_list)
 
     except :
         print('error')
-    #driver.find_element_by_xpath('//*[@id="container"]/div[2]/div[5]/div[2]/ul/li[1]/span')
-
-# load
-# csvfile = open('./jobkorea_crawling.csv', "w", newline="")
-# csvwriter = csv.writer(csvfile)
-
-
-# for i in range(6306)``
+csvfile.close()
