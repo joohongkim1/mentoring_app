@@ -70,13 +70,13 @@ public class StudentService {
         } else {
             return "해당하는 정보가 없습니다.";
         }
-
     }
 
     // 비밀번호 찾기
     @Transactional
     public String findPass(String stu_id, String stu_email) {
-        if (!checkId(stu_id)) return "존재하지 않는 ID 입니다.";
+        if (!checkId(stu_id))
+            return "존재하지 않는 ID 입니다.";
 
         Student student = studentRepository.findBystu_id(stu_id);
 
@@ -92,10 +92,8 @@ public class StudentService {
             studentRepository.updatePass(stu_id, SHA256Util.getEncrypt(new_pass));
         } else {
             new IllegalArgumentException("존재하지 않는 이메일입니다.");
-//        }
-
-        return student.getStu_email();
         }
+        return student.getStu_email();
     }
 
     // 비밀번호 생성 메소드

@@ -30,7 +30,7 @@ public interface StudentRepository extends JpaRepository<Student,Long> {
     List<Student> findByNameEmail(@Param("stu_name") String stu_name, @Param("stu_email") String stu_email);
 
 
-    @Modifying  // password수정하기
+    @Modifying  // password수정하기?? 정확하게 알기!!
     @Query("UPDATE Student s set s.stu_password =:stu_password where s.stu_id =:stu_id")
     void updatePass(@Param("stu_id") String stu_id, @Param("stu_password") String stu_password);
 

@@ -1,8 +1,11 @@
 package com.back.admin.web.dto;
 
+import com.back.admin.domain.student.Student;
 import com.back.admin.service.StudentService;
+import com.back.admin.service.jwt.CookieManage;
 import com.back.admin.service.jwt.JwtService;
-import com.back.admin.web.dto.student.StudentSaveRequestDto;
+import com.back.admin.service.jwt.UnauthorizedException;
+import com.back.admin.web.dto.student.*;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -12,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.security.MessageDigest;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @CrossOrigin("*")
@@ -57,39 +61,39 @@ public class StudentController {
 //    }
 
     // 비밀번호 찾기
-    @PostMapping("/findpass/{uid}/{uemail}")
-    public Map findPass(@PathVariable String uid, @PathVariable String uemail) {
+    @PostMapping("/findpass/{stu_id}/{stu_email}")
+    public Map findPass(@PathVariable String stu_id, @PathVariable String stu_email) {
         Map<String, String> map = new HashMap<>();
-        map.put("email", userService.findPass(uid, uemail));
+        map.put("email", studentService.findPass(stu_id, stu_email));
         return map;
     }
 
-    // 회원 정보 수정 -> mypage에서 pass, nickname, phone 변경 가능
+    // 회원 정보 수정
     @PutMapping("/update")
-    public void update(HttpServletResponse response, HttpServletRequest request, @RequestBody UserUpdateRequestDto userUpdateRequestDto) {
+    public void update(HttpServletResponse response, HttpServletRequest request, @RequestBody StudentUpdateRequestDto studentUpdateRequestDto) {
         String jwt = request.getHeader("Authorization");
         if (!jwtService.isUsable(jwt)) return;
-        UserJwtResponsetDto user = jwtService.getUser(jwt);
-        userService.update(user.getUid(), userUpdateRequestDto);
+        StudentJwtResponseDto student = jwtService.getUser(jwt);
+        studentService.update(student.getStu_id(), studentUpdateRequestDto);
         // 기존 토큰 죽이기
 
         cm.CookieDelete(request, response);
         //토큰 재발행
         System.out.println("토큰을 재발행합니다.");
-        String token = jwtService.create(new UserJwtResponsetDto(userService.findByuid(user.getUid())));
+        String token = jwtService.create(new StudentJwtResponseDto(studentService.findByuid(student.getStu_id())));
         cm.CookieMake(request, response, token);
     }
 
     // 삭제
     @DeleteMapping("/delete")
-    public void delete(@RequestBody UserDeleteRequestDto userDeleteRequestDto, HttpServletResponse response, HttpServletRequest request) {
+    public void delete(@RequestBody StudentDeleteRequestDto studentDeleteRequestDto, HttpServletResponse response, HttpServletRequest request) {
         String jwt = request.getHeader("Authorization");
         //유효성 검사
         if (!jwtService.isUsable(jwt)) throw new UnauthorizedException(); // 예외
-        UserJwtResponsetDto user = jwtService.getUser(jwt);
+        StudentJwtResponseDto student = jwtService.getUser(jwt);
 
-        if (user.getUid().equals(userDeleteRequestDto.getUid())) {
-            userService.delete(user.getUid());
+        if (student.getStu_id().equals(studentDeleteRequestDto.getStu_id())) {
+            studentService.delete(student.getStu_id());
             Cookie cookie = request.getCookies()[0];
             cookie.setValue(null);
             cookie.setPath("/"); // <- 여기 잘 모르겠음
@@ -101,12 +105,12 @@ public class StudentController {
     // 로그인
     @ApiOperation("로그인하면서 토큰을 발행")
     @PostMapping("/signin")
-    public Map signIn(@RequestBody UserJwtRequestDto userJwtRequestDto, HttpServletResponse response, HttpServletRequest request) {
+    public Map signIn(@RequestBody StudentJwtRequestDto studentJwtRequestDto, HttpServletResponse response, HttpServletRequest request) {
         Map<String, String> map = new HashMap<>();
-        String secPass = encrypt(userJwtRequestDto.getUpass());
-        UserJwtResponsetDto userJwtResponsetDto = userService.signIn(userJwtRequestDto.getUid(), secPass);
-        if (userJwtResponsetDto != null && request.getCookies() == null) {
-            String token = jwtService.create(userJwtResponsetDto);
+        String secPass = encrypt(studentJwtRequestDto.getStu_password());
+        StudentJwtResponseDto studentJwtResponseDto = studentService.signIn(studentJwtRequestDto.getStu_id(), secPass);
+        if (studentJwtResponseDto != null && request.getCookies() == null) {
+            String token = jwtService.create(studentJwtResponseDto);
             cm.CookieMake(request, response, token);
             map.put("token", token);
             return map;
@@ -146,14 +150,6 @@ public class StudentController {
     }
 
     static String Static_access_Token = null;
-
-
-
-
-
-
-
-
 
 
 }

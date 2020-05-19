@@ -53,7 +53,6 @@ public class Student extends BaseTimeEntity {
         this.stu_email = stu_email;
         this.stu_password = stu_password;
         this.stu_total_mileage = stu_total_mileage;
-
     }
 
     // 회원가입 이후, 수정할 수 있는 정보들
