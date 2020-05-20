@@ -1,4 +1,4 @@
-package com.back.admin.domain.student;
+package com.back.admin.domain.mentor;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;

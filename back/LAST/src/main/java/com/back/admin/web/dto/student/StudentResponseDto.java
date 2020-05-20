@@ -1,10 +1,14 @@
 package com.back.admin.web.dto.student;
 
 import com.back.admin.domain.student.Student;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 
 @Getter
+@NoArgsConstructor
 public class StudentResponseDto {
     private Long stu_no;
     private Long stu_auth;  // 0: 일반, 1: 우수 , 2: 스탭, 3: 관리
@@ -16,6 +20,7 @@ public class StudentResponseDto {
     private String stu_password;
     private Long stu_total_mileage;
 
+    @Builder
     public StudentResponseDto(Student entity) {
         this.stu_no = entity.getStu_no();
         this.stu_auth = entity.getStu_auth();

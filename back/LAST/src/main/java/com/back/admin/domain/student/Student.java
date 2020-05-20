@@ -1,11 +1,14 @@
 package com.back.admin.domain.student;
 
 import com.back.admin.domain.BaseTimeEntity;
+import com.back.admin.domain.experience.Experience;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Getter
 @NoArgsConstructor
@@ -40,6 +43,11 @@ public class Student extends BaseTimeEntity {
 
     @Column
     private Long stu_total_mileage;
+
+    // fk -> 1:N = student:experience
+    @OneToMany(cascade=CascadeType.ALL, mappedBy = "stu_no")
+    @JsonManagedReference
+    private List<Experience> experience;
 
 
     @Builder

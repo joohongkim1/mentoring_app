@@ -39,6 +39,7 @@ public class StudentController {
 
 
     // 회원 가입
+    @ApiOperation("회원가입 진행")
     @PostMapping(value = "/signup", consumes = "application/json")
     public void signUp(@RequestBody StudentSaveRequestDto studentSaveRequestDto) {
         String secPass = encrypt(studentSaveRequestDto.getStu_password());
@@ -47,6 +48,7 @@ public class StudentController {
     }
 
     // 아이디 중복 확인(회원가입시)
+    @ApiOperation("회원가입시 아이디 중복 확인")
     @PostMapping("/checkid/{stu_id}")
     public boolean checkId(@PathVariable String stu_id) {
         return studentService.checkId(stu_id);
@@ -61,6 +63,7 @@ public class StudentController {
 //    }
 
     // 비밀번호 찾기
+    @ApiOperation("비밀번호 찾기")
     @PostMapping("/findpass/{stu_id}/{stu_email}")
     public Map findPass(@PathVariable String stu_id, @PathVariable String stu_email) {
         Map<String, String> map = new HashMap<>();
@@ -68,7 +71,26 @@ public class StudentController {
         return map;
     }
 
+    // 로그인
+    @ApiOperation("로그인 -> Authorization 발행")
+    @PostMapping("/signin")
+    public Map signIn(@RequestBody StudentJwtRequestDto studentJwtRequestDto, HttpServletResponse response, HttpServletRequest request) {
+        Map<String, String> map = new HashMap<>();
+        String secPass = encrypt(studentJwtRequestDto.getStu_password());
+        StudentJwtResponseDto studentJwtResponseDto = studentService.signIn(studentJwtRequestDto.getStu_id(), secPass);
+        if (studentJwtResponseDto != null && request.getCookies() == null) {
+            String token = jwtService.create(studentJwtResponseDto);
+            cm.CookieMake(request, response, token);
+            map.put("token", token);
+            return map;
+        }
+        map.put("token", request.getCookies()[0].getValue());
+        return map;
+    }
+
+
     // 회원 정보 수정
+    @ApiOperation("회원정보 수정 -> Authorization필요(하면 500에러남)")
     @PutMapping("/update")
     public void update(HttpServletResponse response, HttpServletRequest request, @RequestBody StudentUpdateRequestDto studentUpdateRequestDto) {
         String jwt = request.getHeader("Authorization");
@@ -76,7 +98,6 @@ public class StudentController {
         StudentJwtResponseDto student = jwtService.getUser(jwt);
         studentService.update(student.getStu_id(), studentUpdateRequestDto);
         // 기존 토큰 죽이기
-
         cm.CookieDelete(request, response);
         //토큰 재발행
         System.out.println("토큰을 재발행합니다.");
@@ -84,7 +105,17 @@ public class StudentController {
         cm.CookieMake(request, response, token);
     }
 
+
+    // 로그아웃
+    @ApiOperation("로그아웃 -> Authorization 필요")
+    @GetMapping("/logout")
+    public void logOut(HttpServletResponse response, HttpServletRequest request) {
+        cm.CookieDelete(request, response);
+    }
+
+
     // 삭제
+    @ApiOperation("회원 탈퇴 -> Authorization필요(하면 500에러남)")
     @DeleteMapping("/delete")
     public void delete(@RequestBody StudentDeleteRequestDto studentDeleteRequestDto, HttpServletResponse response, HttpServletRequest request) {
         String jwt = request.getHeader("Authorization");
@@ -102,27 +133,6 @@ public class StudentController {
         } else throw new UnauthorizedException(); // 예외
     }
 
-    // 로그인
-    @ApiOperation("로그인하면서 토큰을 발행")
-    @PostMapping("/signin")
-    public Map signIn(@RequestBody StudentJwtRequestDto studentJwtRequestDto, HttpServletResponse response, HttpServletRequest request) {
-        Map<String, String> map = new HashMap<>();
-        String secPass = encrypt(studentJwtRequestDto.getStu_password());
-        StudentJwtResponseDto studentJwtResponseDto = studentService.signIn(studentJwtRequestDto.getStu_id(), secPass);
-        if (studentJwtResponseDto != null && request.getCookies() == null) {
-            String token = jwtService.create(studentJwtResponseDto);
-            cm.CookieMake(request, response, token);
-            map.put("token", token);
-            return map;
-        }
-        map.put("token", request.getCookies()[0].getValue());
-        return map;
-    }
-
-    @GetMapping("/logout")
-    public void logOut(HttpServletResponse response, HttpServletRequest request) {
-        cm.CookieDelete(request, response);
-    }
 
     // 암호화
     public static String encrypt(String rawpass) {

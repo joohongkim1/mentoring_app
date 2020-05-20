@@ -1,4 +1,4 @@
-package com.back.admin.domain.student;
+package com.back.admin.domain.mentor;
 
 import com.back.admin.domain.BaseTimeEntity;
 import lombok.Builder;
