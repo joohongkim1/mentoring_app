@@ -23,7 +23,7 @@ public interface StudentRepository extends JpaRepository<Student,Long> {
 
     // 회원가입시 아이디 중복 확인
     @Query("select s from Student s where s.stu_id=:stu_id")
-    List<Student> checkBystu_id(@Param("uid") String stu_id);
+    List<Student> checkBystu_id(@Param("stu_id") String stu_id);
 
     // 아이디 찾기
     @Query("select s from Student s where s.stu_name=:stu_name and s.stu_email=:stu_email")
@@ -33,5 +33,4 @@ public interface StudentRepository extends JpaRepository<Student,Long> {
     @Modifying  // password수정하기?? 정확하게 알기!!
     @Query("UPDATE Student s set s.stu_password =:stu_password where s.stu_id =:stu_id")
     void updatePass(@Param("stu_id") String stu_id, @Param("stu_password") String stu_password);
-
 }

@@ -19,10 +19,10 @@ import java.util.List;
 @EnableSwagger2
 @Configuration
 public class SwaggerConfig {
-    private ApiInfo metadata() {
-        return new ApiInfoBuilder().title("Latte Project").description("Latte Swagger")
-                .version("2.0").build();
-}
+//    private ApiInfo metadata() {
+//        return new ApiInfoBuilder().title("Last Project").description("Last Swagger")
+//                .version("2.0").build();
+//}
     @Bean
     public Docket api() {
         ParameterBuilder aParameterBuilder = new ParameterBuilder();
@@ -36,7 +36,8 @@ public class SwaggerConfig {
         headerParams.add(aParameterBuilder.build());
         return new Docket(DocumentationType.SWAGGER_2)
                 .globalOperationParameters(headerParams)
-                .select().apis(RequestHandlerSelectors.basePackage("com.latte.admin.web"))
-                .paths(PathSelectors.any()).build().apiInfo(metadata());
+                .select().apis(RequestHandlerSelectors.basePackage("com.back.admin.web"))
+//                .paths(PathSelectors.any()).build();
+                .paths(PathSelectors.any()).build(); //.apiInfo(metadata());
     }
 }
