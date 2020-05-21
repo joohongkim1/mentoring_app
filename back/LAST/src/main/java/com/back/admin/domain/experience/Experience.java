@@ -54,5 +54,6 @@ public class Experience {
         this.experience_end = experience_end;
         this.experience_title = experience_title;
         this.experience_content = experience_content;
+        this.stu_no = stu_no;
     }
 }
