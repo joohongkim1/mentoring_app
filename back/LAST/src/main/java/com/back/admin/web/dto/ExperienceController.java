@@ -42,7 +42,7 @@ public class ExperienceController {
 
 
     // 경험 저장
-    @ApiOperation("경험 저장")
+    @ApiOperation("경험 저장 -> 권한 있을 때")
     @PostMapping("/save/{experience_no}")
     public Map save(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse,
                     @PathVariable Long experience_no, @RequestBody ExperienceSaveRequestDto experienceSaveRequestDto) {
@@ -60,7 +60,8 @@ public class ExperienceController {
 
 
     // 경험 수정하기
-    @ApiOperation("경험 수정 -> Authorization필요")
+    // service단에서 boolean으로 맞춰둠. equals부분 확인필요!!!
+    @ApiOperation("경험 수정 -> 권한 있을 때")
     @PutMapping("/update/experience/{experience_no}")
     public Map update(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse,
                       @RequestBody ExperienceUpdateRequestDto experienceUpdateRequestDto, @PathVariable Long experience_no) {
@@ -71,8 +72,8 @@ public class ExperienceController {
         Map<String,String> map=new HashMap<>();
 
             // 앞에꺼는 student타입이고 equals 뒤에있는 것은 long타입 -> 타입 맞춰줄 필요가 있다.
-        if(experienceUpdateRequestDto.getStu_no().equals(student.getStu_no())){ //수정할 권한이 있으면
-            experienceService.update(experience_no,experienceUpdateRequestDto);
+//        if(experienceUpdateRequestDto.().equals(student.getStu_no())){ //수정할 권한이 있으면
+        if (experienceService.update(experience_no,experienceUpdateRequestDto)) {
             map.put("result","저장이 완료되었습니다~");
         }else map.put("result","저장에 실패하였습니다.");
         return map;
@@ -80,7 +81,7 @@ public class ExperienceController {
 
 
     // 경험 삭제하기
-    @ApiOperation("경험 삭제 -> Authorization필요(권한이 있을때 삭제)")
+    @ApiOperation("경험 삭제 -> Authorization필요(권한이 있을때 삭제?)")
     @DeleteMapping("/delete/{experience_no}")
     public void delete(@PathVariable Long experience_no,
                       HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse){

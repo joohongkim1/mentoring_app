@@ -41,11 +41,11 @@ public class ExperienceService {
 
     // 경험 수정
     @Transactional
-    public Long update(Long experience_no, ExperienceUpdateRequestDto experienceUpdateRequestDto) {
+    public boolean update(Long experience_no, ExperienceUpdateRequestDto experienceUpdateRequestDto) {
         Experience experience = experienceRepository.findByExperience_no(experience_no);
         experience.update(experienceUpdateRequestDto.getExperience_start(), experienceUpdateRequestDto.getExperience_end(),
                         experienceUpdateRequestDto.getExperience_title(), experienceUpdateRequestDto.getExperience_content());
-        return experience_no;
+        return true;
     }
 
 

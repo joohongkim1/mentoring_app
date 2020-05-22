@@ -15,7 +15,6 @@ public class ExperienceUpdateRequestDto {
     private Date experience_end;
     private String experience_title;
     private String experience_content;
-    private Student stu_no;
 
     @Builder
     public ExperienceUpdateRequestDto(Experience entity) {
@@ -23,6 +22,5 @@ public class ExperienceUpdateRequestDto {
         this.experience_end = entity.getExperience_end();
         this.experience_title = entity.getExperience_title();
         this.experience_content = entity.getExperience_content();
-        this.stu_no = entity.getStu_no();
     }
 }

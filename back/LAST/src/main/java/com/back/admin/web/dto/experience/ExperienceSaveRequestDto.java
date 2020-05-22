@@ -23,6 +23,7 @@ public class ExperienceSaveRequestDto {
         this.experience_end = entity.getExperience_end();
         this.experience_title = entity.getExperience_title();
         this.experience_content = entity.getExperience_content();
+        this.stu_no=entity.getStu_no();
     }
 
     public Experience toEntity() {
