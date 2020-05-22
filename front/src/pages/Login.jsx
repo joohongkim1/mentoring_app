@@ -1,7 +1,7 @@
 /* eslint-disable object-curly-newline */
 import React, { useState } from 'react';
 import Container from '@material-ui/core/Container';
-import { Paper, TextField, Button, Typography } from '@material-ui/core';
+import { Paper, TextField, Button, Typography, Box } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { Link, useHistory } from 'react-router-dom';
 import GoogleLogin from 'react-google-login';
@@ -22,10 +22,14 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: '1',
   },
   boxWrapper: {
+    width: '40vw',
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    padding: theme.spacing(3),
+    // padding: theme.spacing(3),
+  },
+  googleLoginButton: {
+    width: '40vh',
   },
   // inputRoot: {
   //   '&$inputFocused $inputNotchedOutline': {
@@ -151,10 +155,10 @@ const Login = () => {
           //     This is my custom Google button
           //   </Button>
           // )}
-          buttonText="구글 계정으로 로그인하기"
+          buttonText="구글 계정으로 로그인"
           onSuccess={responseGoogle}
           onFailure={responseGoogle}
-          cookiePolicy={'single_host_origin'}
+          cookiePolicy="single_host_origin"
         />
         {/* </Paper> */}
         <Typography
@@ -162,9 +166,20 @@ const Login = () => {
           color="textSecondary"
           variant="body2"
         >
-          <Link className={classes.textRegister} to="/register">
-            Register
-          </Link>
+          <Box>
+            <Link className={classes.textRegister} to="/register">
+              회원가입
+            </Link>
+            <Box>
+              <Link className={classes.textRegister} to="/register">
+                아이디
+              </Link>
+              /
+              <Link className={classes.textRegister} to="/register">
+                비밀번호 찾기
+              </Link>
+            </Box>
+          </Box>
         </Typography>
       </Container>
     </div>
