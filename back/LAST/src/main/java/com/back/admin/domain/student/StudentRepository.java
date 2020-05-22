@@ -29,8 +29,18 @@ public interface StudentRepository extends JpaRepository<Student,Long> {
     @Query("select s from Student s where s.stu_name=:stu_name and s.stu_email=:stu_email")
     List<Student> findByNameEmail(@Param("stu_name") String stu_name, @Param("stu_email") String stu_email);
 
-
-    @Modifying  // password수정하기?? 정확하게 알기!!
+    // password 수정
+    @Modifying  // 수정하는 값이 생기는 경우 무조건 붙여야한다!
     @Query("UPDATE Student s set s.stu_password =:stu_password where s.stu_id =:stu_id")
     void updatePass(@Param("stu_id") String stu_id, @Param("stu_password") String stu_password);
+
+    // stu_auth 변경
+    @Modifying
+    @Query("update Student s set s.stu_auth=:stu_auth where s.stu_no=:stu_no")
+    void change_stu_auth(@Param("stu_no") Long stu_no,@Param("stu_auth") int stu_auth);
+
+    // 관리자페이지에서 stu_auth 별로 보여주기
+    @Query("select s from Student s where s.stu_auth=:stu_auth")
+    List<Student> show_by_stu_auth(@Param("stu_auth") int stu_auth);
+
 }

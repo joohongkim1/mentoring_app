@@ -3,6 +3,7 @@ package com.back.admin.service;
 import com.back.admin.domain.student.Student;
 import com.back.admin.domain.student.StudentRepository;
 import com.back.admin.web.dto.student.StudentJwtResponseDto;
+import com.back.admin.web.dto.student.StudentResponseDto;
 import com.back.admin.web.dto.student.StudentSaveRequestDto;
 import com.back.admin.web.dto.student.StudentUpdateRequestDto;
 import lombok.RequiredArgsConstructor;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -168,4 +170,24 @@ public class StudentService {
         }
     }
 
+    // 학생 상태 변경 -> 일반:0, 우수:1
+    @Transactional
+    public void change_stu_auth(Long stu_no,int stu_auth){
+        studentRepository.change_stu_auth(stu_no,stu_auth);
+    }
+
+    // stu_no로 학생 정보 가지고오기
+    @Transactional
+    public Student findBystu_no(Long stu_no){
+        return studentRepository.findBystu_no(stu_no);
+    }
+
+
+    // 학생 상태에 따른 리스트 보여주기
+    @Transactional
+    public List<StudentResponseDto> show_by_stu_auth(int stu_auth) {
+        return studentRepository.show_by_stu_auth(stu_auth).stream()
+                .map(StudentResponseDto::new)
+                .collect(Collectors.toList());
+    }
 }

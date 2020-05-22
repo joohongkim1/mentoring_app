@@ -21,7 +21,7 @@ public class Student extends BaseTimeEntity {
     private Long stu_no;
 
     @Column
-    private Long stu_auth;  // 0: 일반, 1: 우수 , 2: 스탭, 3: 관리
+    private int stu_auth;  // 0: 일반, 1: 우수 , 2: 스탭, 3: 관리
 
     @Column
     private String stu_name;
@@ -51,7 +51,7 @@ public class Student extends BaseTimeEntity {
 
 
     @Builder
-    public Student(Long stu_auth, String stu_name, String stu_school, String stu_major, String stu_id,
+    public Student(int stu_auth, String stu_name, String stu_school, String stu_major, String stu_id,
                    String stu_email, String stu_password, Long stu_total_mileage) {
         this.stu_auth = stu_auth;
         this.stu_name = stu_name;
@@ -67,10 +67,8 @@ public class Student extends BaseTimeEntity {
     // auth, mileage는 관리자만 수정 가능!!
     // 관리자 페이지 따로 만들어야할듯 -> student, mentor 마일리지 관리, 권한 관리
     public void update(String stu_school, String stu_major, String stu_password) {
-//        this.stu_auth = stu_auth;
         this.stu_school = stu_school;
         this.stu_major = stu_major;
         this.stu_password = stu_password;
-//        this.stu_total_mileage = stu_total_mileage;
     }
 }

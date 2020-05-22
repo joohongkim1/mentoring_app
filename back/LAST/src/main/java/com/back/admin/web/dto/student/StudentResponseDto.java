@@ -11,7 +11,7 @@ import lombok.Setter;
 @NoArgsConstructor
 public class StudentResponseDto {
     private Long stu_no;
-    private Long stu_auth;  // 0: 일반, 1: 우수 , 2: 스탭, 3: 관리
+    private int stu_auth;  // 0: 일반, 1: 우수 , 2: 스탭, 3: 관리
     private String stu_name;
     private String stu_school;
     private String stu_major;
@@ -30,6 +30,6 @@ public class StudentResponseDto {
         this.stu_id = entity.getStu_id();
         this.stu_email = entity.getStu_email();
         this.stu_password = entity.getStu_password();
-        this.stu_total_mileage = entity.getStu_auth();
+        this.stu_total_mileage = entity.getStu_total_mileage();
     }
 }
