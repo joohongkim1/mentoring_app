@@ -1,13 +1,17 @@
 package com.back.admin.domain.experience;
 
+import com.back.admin.domain.board.Board;
 import com.back.admin.domain.student.Student;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Getter
 @NoArgsConstructor
@@ -30,13 +34,18 @@ public class Experience {
     @Column
     private String experience_title;
 
-    @Column(columnDefinition = "TEXT", length = 500)
+    @Column(length = 500)
     private String experience_content;
 
-    // fk -> 1:N = user:experience
+    // fk -> 1:N = student:experience
     @ManyToOne(optional = false)
     @JsonBackReference
     private Student stu_no;
+
+    // fk -> 1:N = experience:board
+    @OneToMany(cascade=CascadeType.ALL, mappedBy = "experienceboard")
+    @JsonManagedReference
+    private List<Board> boards=new ArrayList<>();
 
     @Builder
     public Experience(Date experience_start, Date experience_end, String experience_title,

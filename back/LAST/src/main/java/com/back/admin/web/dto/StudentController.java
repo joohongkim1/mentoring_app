@@ -162,4 +162,22 @@ public class StudentController {
     static String Static_access_Token = null;
 
 
+    // 학생 상태 변경 -> 일반:0, 우수:1
+    @ApiOperation("학생 상태 변경 -> 일반:0, 우수:1")
+    @PostMapping("/manage/stu_auth")
+    public Student change_stu_auth(@RequestBody StudentAuthRequestDto studentAuthRequestDto) {
+        Long stu_no = studentAuthRequestDto.getStu_no();
+        int stu_auth = studentAuthRequestDto.getStu_auth();
+        studentService.change_stu_auth(stu_no, stu_auth);
+        return studentService.findBystu_no(stu_no);
+    }
+
+    // 학생 상태에 따른 리스트 보여주기
+    @ApiOperation("학생 상태에 따른 리스트 보여주기")
+    @PostMapping("/manage/{stu_auth}")
+    public List<StudentResponseDto> show_by_stu_auth(@PathVariable int stu_auth) {
+        return studentService.show_by_stu_auth(stu_auth);
+    }
+
+
 }
