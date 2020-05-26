@@ -19,7 +19,7 @@ public class JwtService {
     @Autowired
     private ObjectMapper objectMapper;
 
-    private static final String SALT = "LatteSecret";
+    private static final String SALT = "LastSecret";
     private static String key = "member";
 
     public StudentJwtResponseDto getUser(String jwt){
