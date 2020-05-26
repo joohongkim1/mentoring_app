@@ -43,7 +43,7 @@ public class AnalyticsController {
         }
     }
 
-
+//
     @ApiOperation("자소서 문항 분석")
     @GetMapping("/profile")  // stu_no로 할지 stu_id로 할지 결정이 필요할것같아여~
     static public void main(String[] args) {
