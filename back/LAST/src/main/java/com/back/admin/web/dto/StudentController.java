@@ -50,8 +50,8 @@ public class StudentController {
     // 아이디 중복 확인(회원가입시)
     @ApiOperation("회원가입시 아이디 중복 확인")
     @PostMapping("/checkid/{stu_id_email}")
-    public boolean checkId(@PathVariable String stu_id_email) {
-        return studentService.checkId(stu_id_email);
+    public boolean checkBystu_id_email(@PathVariable String stu_id_email) {
+        return studentService.checkBystu_id_email(stu_id_email);
     }
 
     // 아이디 찾기
@@ -101,7 +101,7 @@ public class StudentController {
         cm.CookieDelete(request, response);
         //토큰 재발행
         System.out.println("토큰을 재발행합니다.");
-        String token = jwtService.create(new StudentJwtResponseDto(studentService.findByuid(student.getStu_id_email())));
+        String token = jwtService.create(new StudentJwtResponseDto(studentService.findBystu_id(student.getStu_id_email())));
         cm.CookieMake(request, response, token);
     }
 

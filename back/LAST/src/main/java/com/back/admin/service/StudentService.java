@@ -30,8 +30,8 @@ public class StudentService {
 
     // 이메일로 아이디 찾기
     @Transactional
-    public Student findByEmail(String stu_id_email) {
-        return studentRepository.findBystu_id_email(stu_id_email).get(0);
+    public Student findBystu_id_email(String stu_id_email) {
+        return studentRepository.findBystu_id_email(stu_id_email);
     }
 
     // 회원 가입
@@ -41,24 +41,17 @@ public class StudentService {
         // insert 전에 테이블을 검색해서 중복된 이메일이 있는지 확인한다.
 
         //우리 회원가입 로직은 이메일로만 중복검사를 실행합니다.!!!
-        if (checkEmail(studentSaveRequestDto.getStu_id_email())) //이미 이메일이 있으면
+        if (checkBystu_id_email(studentSaveRequestDto.getStu_id_email())) //이미 이메일이 있으면
             return false;
         studentRepository.save(studentSaveRequestDto.toEntity());
         return true;
     }
 
-    // 회원가입시 이메일 중복 확인
-    @Transactional
-    public boolean checkEmail(String stu_id_email) {
-        List<Student> student = studentRepository.findBystu_id_email(stu_id_email);
-        if (student.size() > 0) return true; //있으면 1
-        else return false; //없으면 0
-    }
 
     // 아이디 중복 확인 (있으면 true, 없으면 false)
     @Transactional
-    public boolean checkId(String stu_id_email) {
-        List<Student> student = studentRepository.checkBystu_id(stu_id_email);
+    public boolean checkBystu_id_email(String stu_id_email) {
+        List<Student> student = studentRepository.checkBystu_id_email(stu_id_email);
         if (student.size() > 0) return true;
         else return false;
     }
@@ -77,7 +70,7 @@ public class StudentService {
     // 비밀번호 찾기
     @Transactional
     public String findPass(String stu_id_email) {
-        if (!checkId(stu_id_email))
+        if (!checkBystu_id_email(stu_id_email))
             return "존재하지 않는 ID 입니다.";
 
         Student student = studentRepository.findBystu_id_email(stu_id_email);
@@ -119,7 +112,7 @@ public class StudentService {
     //바뀐 유저 데이터에 대해서 토큰을 재발행 할 때 JwtUserRequest를 만들기 위한 작업으로 필요함.
     //DB까지 가지않고 서비스를 이용하여 끌고옴
     @Transactional
-    public Student findByuid(String stu_id_email) {
+    public Student findBystu_id(String stu_id_email) {
         return studentRepository.findBystu_id_email(stu_id_email);
     }
 
