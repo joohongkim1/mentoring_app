@@ -1,13 +1,16 @@
 package com.back.admin.web.dto;
 
-import com.back.admin.service.BoardService;
+import com.back.admin.service.jwt.UnauthorizedException;
 import com.back.admin.web.dto.board.BoardResponseDto;
-import com.back.admin.web.dto.experience.ExperienceResponseDto;
+import com.back.admin.web.dto.board.BoardSaveRequestDto;
+import com.back.admin.web.dto.student.StudentJwtResponseDto;
 import com.google.gson.Gson;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
@@ -43,10 +46,11 @@ public class AnalyticsController {
         }
     }
 
-//
+
     @ApiOperation("자소서 문항 분석")
-    @GetMapping("/profile")  // stu_no로 할지 stu_id로 할지 결정이 필요할것같아여~
-    static public void main(String[] args) {
+    @PostMapping("/profile")
+    static public Map<String, List> main(String[] args) {
+
         String openApiURL = "http://aiopen.etri.re.kr:8000/WiseNLU";
         String accessKey = "0fb8d092-a504-4f73-aade-eeba691f7cd5";    // 발급받은 API Key
         String analysisCode = "srl";   // 언어 분석 코드
@@ -143,6 +147,8 @@ public class AnalyticsController {
         abilities.add("끈기");
         abilities.add("인내");
 
+        Map<String,List> map=new HashMap<>();
+
         try {
             url = new URL(openApiURL);
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
@@ -169,7 +175,7 @@ public class AnalyticsController {
             if ( responseCode != 200 ) {
                 // 오류 내용 출력
                 System.out.println("[error] " + responBodyJson);
-                return ;
+                return map;
             }
 
             responeBody = gson.fromJson(responBodyJson, Map.class);
@@ -182,7 +188,7 @@ public class AnalyticsController {
 
                 // 오류 내용 출력
                 System.out.println("[error] " + responeBody.get("result"));
-                return ;
+                return map;
             }
 
             // 분석 결과 활용
@@ -195,7 +201,7 @@ public class AnalyticsController {
             List<NameEntity> nameEntities = null;
             List<String> target = new ArrayList<String>(); // new ArrayList<>() 도 가능
             List<String> keywords = new ArrayList<String>();
-
+            List<String> customerabilities = new ArrayList<String>();
 
             for( Map<String, Object> sentence : sentences ) {
                 List<Map<String, Object>> srlResult = (List<Map<String, Object>>) sentence.get("SRL");
@@ -348,26 +354,25 @@ public class AnalyticsController {
                     if (keys.contains(ability)) {
                         System.out.println("핵심역량");
                         System.out.println(keys);
+                        customerabilities.add(keys);
                         break;
                     }
                 }
             }
+
+
+            map.put("의미론적 분석",target);
+            map.put("키워드 추출",keywords);
+            map.put("핵심역량",customerabilities);
+
+            return map;
         } catch (MalformedURLException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return map;
     }
-    // 특정 학생의 경험 보여주기
-//    @ApiOperation("자소서 문항 분석")
-//    @GetMapping("/profile")  // stu_no로 할지 stu_id로 할지 결정이 필요할것같아여~
-//
-//    @PostMapping("/Board")
-//    @ApiOperation("Board 정보 등록")
-//    public ResponseEntity<Map<String, Object>> insert(@RequestBody Board Board) {
-//        service.insert(Board);
-//        return handleSuccess("");
-//    }
 
 
 }
