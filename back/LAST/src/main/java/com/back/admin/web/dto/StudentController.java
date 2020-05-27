@@ -20,7 +20,7 @@ import java.util.Map;
 
 @CrossOrigin("*")
 @RestController
-@RequestMapping("/last/student")
+@RequestMapping("/api/vi")
 @RequiredArgsConstructor
 public class StudentController {
     private final StudentService studentService;
@@ -62,7 +62,7 @@ public class StudentController {
 //        return map;
 //    }
 
-    // 비밀번호 찾기
+    // 비밀번호 찾기 -> 이메일로 보내주기
     @ApiOperation("비밀번호 찾기")
     @PostMapping("/findpass/{stu_id_email}")
     public Map findPass(@PathVariable String stu_id_email) {
@@ -82,11 +82,13 @@ public class StudentController {
             String token = jwtService.create(studentJwtResponseDto);
             cm.CookieMake(request, response, token);
             map.put("token", token);
+            System.out.println("기존");
             System.out.println("token");
             System.out.println(token);
             return map;
         }
         map.put("token", request.getCookies()[0].getValue());
+        System.out.println("새롭게");
         System.out.println("token");
         System.out.println(request.getCookies()[0].getValue());
         return map;
@@ -94,12 +96,14 @@ public class StudentController {
 
 
     // 회원 정보 수정
-    @ApiOperation("회원정보 수정 -> Authorization필요(하면 500에러남)")
-    @PutMapping("/update")
-    public void update(HttpServletResponse response, HttpServletRequest request, @RequestBody StudentUpdateRequestDto studentUpdateRequestDto) {
+    @ApiOperation("회원정보 수정 -> Authorization필요")
+    @PutMapping("")
+    public void update(HttpServletResponse response, HttpServletRequest request,
+                       @RequestBody StudentUpdateRequestDto studentUpdateRequestDto) {
         String jwt = request.getHeader("Authorization");
         if (!jwtService.isUsable(jwt)) return;
         StudentJwtResponseDto student = jwtService.getUser(jwt);
+        // 비밀번호 encrypt(암호화 과정 필요)
         studentService.update(student.getStu_id_email(), studentUpdateRequestDto);
         // 기존 토큰 죽이기
         cm.CookieDelete(request, response);
@@ -120,7 +124,7 @@ public class StudentController {
 
     // 삭제
     @ApiOperation("회원 탈퇴 -> Authorization필요(하면 500에러남)")
-    @DeleteMapping("/delete")
+    @DeleteMapping()
     public void delete(@RequestBody StudentDeleteRequestDto studentDeleteRequestDto, HttpServletResponse response, HttpServletRequest request) {
         String jwt = request.getHeader("Authorization");
         //유효성 검사
@@ -168,12 +172,13 @@ public class StudentController {
 
     // 학생 상태 변경 -> 일반:0, 우수:1
     @ApiOperation("학생 상태 변경 -> 일반:0, 우수:1")
-    @PostMapping("/manage/stu_auth")
+    @PutMapping("/stu_auth")
     public Student change_stu_auth(@RequestBody StudentAuthRequestDto studentAuthRequestDto) {
-        Long stu_no = studentAuthRequestDto.getStu_no();
+        String stu_id_email = studentAuthRequestDto.getStu_id_email();
         int stu_auth = studentAuthRequestDto.getStu_auth();
-        studentService.change_stu_auth(stu_no, stu_auth);
-        return studentService.findBystu_no(stu_no);
+        studentService.change_stu_auth(stu_id_email, stu_auth);
+        System.out.println(studentService.findBystu_id_email(stu_id_email));
+        return studentService.findBystu_id_email(stu_id_email);
     }
 
     // 학생 상태에 따른 리스트 보여주기
