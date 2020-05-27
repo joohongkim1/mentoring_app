@@ -20,7 +20,7 @@ import java.util.Map;
 
 @CrossOrigin("*")
 @RestController
-@RequestMapping("/last/student")
+@RequestMapping("/api/vi")
 @RequiredArgsConstructor
 public class StudentController {
     private final StudentService studentService;
@@ -49,12 +49,12 @@ public class StudentController {
 
     // 아이디 중복 확인(회원가입시)
     @ApiOperation("회원가입시 아이디 중복 확인")
-    @PostMapping("/checkid/{stu_id}")
-    public boolean checkId(@PathVariable String stu_id) {
-        return studentService.checkId(stu_id);
+    @PostMapping("/checkid/{stu_id_email}")
+    public boolean checkBystu_id_email(@PathVariable String stu_id_email) {
+        return studentService.checkBystu_id_email(stu_id_email);
     }
 
-//    // 아이디 찾기
+    // 아이디 찾기
 //    @PostMapping("/findid")
 //    public Map findId(@RequestBody UserFindIdRequestDto userFindIdRequestDto) {
 //        Map<String, String> map = new HashMap<>();
@@ -62,12 +62,12 @@ public class StudentController {
 //        return map;
 //    }
 
-    // 비밀번호 찾기
+    // 비밀번호 찾기 -> 이메일로 보내주기
     @ApiOperation("비밀번호 찾기")
-    @PostMapping("/findpass/{stu_id}/{stu_email}")
-    public Map findPass(@PathVariable String stu_id, @PathVariable String stu_email) {
+    @PostMapping("/findpass/{stu_id_email}")
+    public Map findPass(@PathVariable String stu_id_email) {
         Map<String, String> map = new HashMap<>();
-        map.put("email", studentService.findPass(stu_id, stu_email));
+        map.put("email", studentService.findPass(stu_id_email));
         return map;
     }
 
@@ -77,31 +77,39 @@ public class StudentController {
     public Map signIn(@RequestBody StudentJwtRequestDto studentJwtRequestDto, HttpServletResponse response, HttpServletRequest request) {
         Map<String, String> map = new HashMap<>();
         String secPass = encrypt(studentJwtRequestDto.getStu_password());
-        StudentJwtResponseDto studentJwtResponseDto = studentService.signIn(studentJwtRequestDto.getStu_id(), secPass);
+        StudentJwtResponseDto studentJwtResponseDto = studentService.signIn(studentJwtRequestDto.getStu_id_email(), secPass);
         if (studentJwtResponseDto != null && request.getCookies() == null) {
             String token = jwtService.create(studentJwtResponseDto);
             cm.CookieMake(request, response, token);
             map.put("token", token);
+            System.out.println("기존");
+            System.out.println("token");
+            System.out.println(token);
             return map;
         }
         map.put("token", request.getCookies()[0].getValue());
+        System.out.println("새롭게");
+        System.out.println("token");
+        System.out.println(request.getCookies()[0].getValue());
         return map;
     }
 
 
     // 회원 정보 수정
-    @ApiOperation("회원정보 수정 -> Authorization필요(하면 500에러남)")
-    @PutMapping("/update")
-    public void update(HttpServletResponse response, HttpServletRequest request, @RequestBody StudentUpdateRequestDto studentUpdateRequestDto) {
+    @ApiOperation("회원정보 수정 -> Authorization필요")
+    @PutMapping("")
+    public void update(HttpServletResponse response, HttpServletRequest request,
+                       @RequestBody StudentUpdateRequestDto studentUpdateRequestDto) {
         String jwt = request.getHeader("Authorization");
         if (!jwtService.isUsable(jwt)) return;
         StudentJwtResponseDto student = jwtService.getUser(jwt);
-        studentService.update(student.getStu_id(), studentUpdateRequestDto);
+        // 비밀번호 encrypt(암호화 과정 필요)
+        studentService.update(student.getStu_id_email(), studentUpdateRequestDto);
         // 기존 토큰 죽이기
         cm.CookieDelete(request, response);
         //토큰 재발행
         System.out.println("토큰을 재발행합니다.");
-        String token = jwtService.create(new StudentJwtResponseDto(studentService.findByuid(student.getStu_id())));
+        String token = jwtService.create(new StudentJwtResponseDto(studentService.findBystu_id(student.getStu_id_email())));
         cm.CookieMake(request, response, token);
     }
 
@@ -116,15 +124,15 @@ public class StudentController {
 
     // 삭제
     @ApiOperation("회원 탈퇴 -> Authorization필요(하면 500에러남)")
-    @DeleteMapping("/delete")
+    @DeleteMapping()
     public void delete(@RequestBody StudentDeleteRequestDto studentDeleteRequestDto, HttpServletResponse response, HttpServletRequest request) {
         String jwt = request.getHeader("Authorization");
         //유효성 검사
         if (!jwtService.isUsable(jwt)) throw new UnauthorizedException(); // 예외
         StudentJwtResponseDto student = jwtService.getUser(jwt);
 
-        if (student.getStu_id().equals(studentDeleteRequestDto.getStu_id())) {
-            studentService.delete(student.getStu_id());
+        if (student.getStu_id_email().equals(studentDeleteRequestDto.getStu_id_email())) {
+            studentService.delete(student.getStu_id_email());
             Cookie cookie = request.getCookies()[0];
             cookie.setValue(null);
             cookie.setPath("/"); // <- 여기 잘 모르겠음
@@ -164,12 +172,13 @@ public class StudentController {
 
     // 학생 상태 변경 -> 일반:0, 우수:1
     @ApiOperation("학생 상태 변경 -> 일반:0, 우수:1")
-    @PostMapping("/manage/stu_auth")
+    @PutMapping("/stu_auth")
     public Student change_stu_auth(@RequestBody StudentAuthRequestDto studentAuthRequestDto) {
-        Long stu_no = studentAuthRequestDto.getStu_no();
+        String stu_id_email = studentAuthRequestDto.getStu_id_email();
         int stu_auth = studentAuthRequestDto.getStu_auth();
-        studentService.change_stu_auth(stu_no, stu_auth);
-        return studentService.findBystu_no(stu_no);
+        studentService.change_stu_auth(stu_id_email, stu_auth);
+        System.out.println(studentService.findBystu_id_email(stu_id_email));
+        return studentService.findBystu_id_email(stu_id_email);
     }
 
     // 학생 상태에 따른 리스트 보여주기

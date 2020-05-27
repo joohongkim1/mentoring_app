@@ -33,10 +33,7 @@ public class Student extends BaseTimeEntity {
     private String stu_major;
 
     @Column
-    private String stu_id;
-
-    @Column
-    private String stu_email;
+    private String stu_id_email;  // email = id
 
     @Column
     private String stu_password;
@@ -51,14 +48,13 @@ public class Student extends BaseTimeEntity {
 
 
     @Builder
-    public Student(int stu_auth, String stu_name, String stu_school, String stu_major, String stu_id,
-                   String stu_email, String stu_password, Long stu_total_mileage) {
+    public Student(int stu_auth, String stu_name, String stu_school, String stu_major,
+                   String stu_id_email, String stu_password, Long stu_total_mileage) {
         this.stu_auth = stu_auth;
         this.stu_name = stu_name;
         this.stu_school = stu_school;
         this.stu_major = stu_major;
-        this.stu_id = stu_id;
-        this.stu_email = stu_email;
+        this.stu_id_email = stu_id_email;
         this.stu_password = stu_password;
         this.stu_total_mileage = stu_total_mileage;
     }
@@ -70,5 +66,9 @@ public class Student extends BaseTimeEntity {
         this.stu_school = stu_school;
         this.stu_major = stu_major;
         this.stu_password = stu_password;
+    }
+
+    public void setStu_auth(int stu_auth){
+        this.stu_auth = stu_auth;
     }
 }

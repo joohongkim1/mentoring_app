@@ -43,7 +43,7 @@ public class ExperienceController {
 
     // 경험 저장
     @ApiOperation("경험 저장 -> 권한 있을 때")
-    @PostMapping("/save/{experience_no}")
+    @PostMapping("/save")
     public Map save(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse,
                     @PathVariable Long experience_no, @RequestBody ExperienceSaveRequestDto experienceSaveRequestDto) {
         String jwt = httpServletRequest.getHeader("Authorization");
