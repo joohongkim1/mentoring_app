@@ -28,11 +28,6 @@ public class StudentService {
         return studentRepository.findAll();
     }
 
-    // 이메일로 아이디 찾기
-    @Transactional
-    public Student findBystu_id_email(String stu_id_email) {
-        return studentRepository.findBystu_id_email(stu_id_email);
-    }
 
     // 회원 가입
     @Transactional
@@ -153,8 +148,8 @@ public class StudentService {
         if (student == null)
             System.out.println("사용자가 없습니다");
 
+        assert student != null;
         if (student.getStu_password().equals(stu_password)) {
-
             return new StudentJwtResponseDto(student);
         } else {
             System.out.println("아이디/비밀번호가 일치하지 않습니다.");
@@ -164,14 +159,20 @@ public class StudentService {
 
     // 학생 상태 변경 -> 일반:0, 우수:1
     @Transactional
-    public void change_stu_auth(Long stu_no,int stu_auth){
-        studentRepository.change_stu_auth(stu_no,stu_auth);
+    public void change_stu_auth(String stu_id_email,int stu_auth){
+        studentRepository.change_stu_auth(stu_id_email,stu_auth);
     }
 
-    // stu_no로 학생 정보 가지고오기
+    // stu_no로 학생 정보 가지고오기 , 이메일로 아이디 찾기
     @Transactional
     public Student findBystu_no(Long stu_no){
         return studentRepository.findBystu_no(stu_no);
+    }
+
+    // stu_id_email로 학생 정보 가지고오기
+    @Transactional
+    public Student findBystu_id_email(String stu_id_email){
+        return studentRepository.findBystu_id_email(stu_id_email);
     }
 
 

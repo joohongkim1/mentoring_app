@@ -67,4 +67,8 @@ public class Student extends BaseTimeEntity {
         this.stu_major = stu_major;
         this.stu_password = stu_password;
     }
+
+    public void setStu_auth(int stu_auth){
+        this.stu_auth = stu_auth;
+    }
 }
