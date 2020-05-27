@@ -151,14 +151,13 @@ public class StudentService {
     public StudentJwtResponseDto signIn(String stu_id_email, String stu_password) {
         Student student = studentRepository.findBystu_id_email(stu_id_email);
         if (student == null)
-            new IllegalArgumentException("해당 사용자가 없습니다.");
+            System.out.println("사용자가 없습니다");
 
-
-        assert student != null;
         if (student.getStu_password().equals(stu_password)) {
+
             return new StudentJwtResponseDto(student);
         } else {
-            new IllegalArgumentException("아이디/비밀번호가 일치하지 않습니다.");
+            System.out.println("아이디/비밀번호가 일치하지 않습니다.");
             return null;
         }
     }
