@@ -167,7 +167,7 @@ const Login = () => {
           variant="body2"
         >
           <Box>
-            <Link className={classes.textRegister} to="/register">
+            <Link className={classes.textRegister} to="/signup">
               회원가입
             </Link>
             <Box>
