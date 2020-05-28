@@ -42,7 +42,7 @@ public class Student extends BaseTimeEntity {
     private Long stu_total_mileage;
 
     // fk -> 1:N = student:experience
-    @OneToMany(cascade=CascadeType.ALL, mappedBy = "stu_no")
+    @OneToMany(cascade=CascadeType.ALL, mappedBy = "stuexperience")
     @JsonManagedReference
     private List<Experience> experience;
 

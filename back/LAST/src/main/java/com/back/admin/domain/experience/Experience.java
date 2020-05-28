@@ -22,8 +22,7 @@ public class Experience {
     // stu_no:1,2,3,4,올라가는 값인데, int보다 long이 큰 의미라서 int stu_no보다 Long stu_no을 보편적으로 사용합니다
     private Long experience_no;
 
-//    @Column
-//    private Long stu_no;  // 0: 일반, 1: 우수 , 2: 스탭, 3: 관리
+    private Long stu_no;
 
     @Column
     private Date experience_start;
@@ -40,7 +39,7 @@ public class Experience {
     // fk -> 1:N = student:experience
     @ManyToOne(optional = false)
     @JsonBackReference
-    private Student stu_no;
+    private Student stuexperience;
 
     // fk -> 1:N = experience:board
     @OneToMany(cascade=CascadeType.ALL, mappedBy = "experienceboard")
@@ -48,13 +47,14 @@ public class Experience {
     private List<Board> boards=new ArrayList<>();
 
     @Builder
-    public Experience(Date experience_start, Date experience_end, String experience_title,
-                      String experience_content, Student stu_no) {
+    public Experience(Long stu_no, Date experience_start, Date experience_end, String experience_title,
+                      String experience_content, Student stuexperience) {
+        this.stu_no = stu_no;
         this.experience_start = experience_start;
         this.experience_end = experience_end;
         this.experience_title = experience_title;
         this.experience_content = experience_content;
-        this.stu_no = stu_no;
+        this.stuexperience = stuexperience;
     }
 
     public void update(Date experience_start, Date experience_end,
