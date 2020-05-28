@@ -15,24 +15,24 @@ public class ExperienceSaveRequestDto {
     private Date experience_end;
     private String experience_title;
     private String experience_content;
-    private Student stu_no;
 
     @Builder
-    public ExperienceSaveRequestDto(Experience entity) {
-        this.experience_start = entity.getExperience_start();
-        this.experience_end = entity.getExperience_end();
-        this.experience_title = entity.getExperience_title();
-        this.experience_content = entity.getExperience_content();
-        this.stu_no=entity.getStu_no();
+    public ExperienceSaveRequestDto(Date experience_start, Date experience_end,
+                                    String experience_title, String experience_content) {
+        this.experience_start = experience_start;
+        this.experience_end = experience_end;
+        this.experience_title = experience_title;
+        this.experience_content = experience_content;
     }
 
-    public Experience toEntity() {
+    public Experience toEntity(Student stuexperience, Long stu_no) {
         return Experience.builder()
                 .experience_start(experience_start)
                 .experience_end(experience_end)
                 .experience_title(experience_title)
                 .experience_content(experience_content)
                 .stu_no(stu_no)
+                .stuexperience(stuexperience)
                 .build();
     }
 }
