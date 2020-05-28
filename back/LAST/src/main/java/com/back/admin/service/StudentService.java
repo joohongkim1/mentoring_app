@@ -121,8 +121,6 @@ public class StudentService {
     @Transactional
     public String update(String stu_id_email, StudentUpdateRequestDto studentUpdateRequestDto) {
         Student student = studentRepository.findBystu_id_email(stu_id_email);
-        if (student == null)
-            new IllegalArgumentException("해당 사용자가 없습니다.");
 
         assert student != null;  // 우리가 not null 안해놔서 붙인것!!
         student.update(studentUpdateRequestDto.getStu_school(), studentUpdateRequestDto.getStu_major(),
