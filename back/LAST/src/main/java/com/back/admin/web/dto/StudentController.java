@@ -114,6 +114,7 @@ public class StudentController {
     }
 
 
+
     // 로그아웃
     @ApiOperation("로그아웃 -> Authorization 필요")
     @GetMapping("/logout")
@@ -123,7 +124,7 @@ public class StudentController {
 
 
     // 삭제
-    @ApiOperation("회원 탈퇴 -> Authorization필요")
+    @ApiOperation("회원 탈퇴 -> Authorization필요(하면 500에러남)")
     @DeleteMapping()
     public void delete(@RequestBody StudentDeleteRequestDto studentDeleteRequestDto, HttpServletResponse response, HttpServletRequest request) {
         String jwt = request.getHeader("Authorization");
