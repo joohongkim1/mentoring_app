@@ -122,7 +122,7 @@ public class StudentService {
     public String update(String stu_id_email, StudentUpdateRequestDto studentUpdateRequestDto) {
         Student student = studentRepository.findBystu_id_email(stu_id_email);
         if (student == null) {
-            System.out.println("해당 사용자가 없습니다.");
+            throw new IllegalArgumentException("해당사람 없음");
         }
         assert student != null;  // 우리가 not null 안해놔서 붙인것!!
         student.update(studentUpdateRequestDto.getStu_school(), studentUpdateRequestDto.getStu_major(),
