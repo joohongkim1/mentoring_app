@@ -20,7 +20,7 @@ import java.util.Map;
 
 @CrossOrigin("*")
 @RestController
-@RequestMapping("/api/v1")
+@RequestMapping("/api/m1")
 @RequiredArgsConstructor
 public class MentorController {
     private final MentorService mentorService;

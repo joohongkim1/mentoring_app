@@ -12,6 +12,8 @@ public class MentorResponseDto {
     private Long mentor_no;
     private int mentor_auth;  // 0: 일반, 1: 우수 , 2: 스탭, 3: 관리
     private String mentor_name;
+    private String mentor_identification_url;
+    private Boolean mentor_check;
     private String mentor_company;
     private String mentor_job;
     private String mentor_major;
@@ -24,6 +26,8 @@ public class MentorResponseDto {
         this.mentor_no = entity.getMentor_no();
         this.mentor_auth = entity.getMentor_auth();
         this.mentor_name = entity.getMentor_name();
+        this.mentor_identification_url = entity.getMentor_identification_url();
+        this.mentor_check = entity.getMentor_check();
         this.mentor_company = entity.getMentor_company();
         this.mentor_job = entity.getMentor_job();
         this.mentor_major = entity.getMentor_major();
