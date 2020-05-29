@@ -103,7 +103,7 @@ const Login = () => {
     doLogin,
   ] = useAxios(
     {
-      url: 'signin',
+      url: '/api/v1/signin',
       method: 'POST',
       data: {
         stu_id_email: values.email,
@@ -112,6 +112,7 @@ const Login = () => {
     },
     { manual: true },
   );
+
   const handleFieldChange = (e) => {
     setValues({
       ...values,
