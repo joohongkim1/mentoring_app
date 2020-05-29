@@ -2,6 +2,8 @@ package com.back.admin.service;
 
 import com.back.admin.domain.experience.Experience;
 import com.back.admin.domain.experience.ExperienceRepository;
+import com.back.admin.domain.student.Student;
+import com.back.admin.domain.student.StudentRepository;
 import com.back.admin.web.dto.experience.ExperienceResponseDto;
 import com.back.admin.web.dto.experience.ExperienceSaveRequestDto;
 import com.back.admin.web.dto.experience.ExperienceUpdateRequestDto;
@@ -15,6 +17,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ExperienceService {
     private final ExperienceRepository experienceRepository;
+    private final StudentRepository studentRepository;
 
     // 관리자가 모든 학생의 경험을 확인하기
     public List<Experience> selectAll() {
@@ -33,8 +36,9 @@ public class ExperienceService {
 
     // 경험 저장
     @Transactional
-    public void save(Experience experience) {
-        experienceRepository.save(experience);
+    public void save(ExperienceSaveRequestDto experienceSaveRequestDto, Long stu_no) {
+        Student student = studentRepository.findBystu_no(stu_no);
+        experienceRepository.save(experienceSaveRequestDto.toEntity(student, stu_no));
     }
 
 

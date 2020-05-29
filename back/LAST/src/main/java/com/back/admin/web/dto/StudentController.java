@@ -82,12 +82,14 @@ public class StudentController {
             String token = jwtService.create(studentJwtResponseDto);
             cm.CookieMake(request, response, token);
             map.put("token", token);
+            map.put("result", "성공");
             System.out.println("기존");
             System.out.println("token");
             System.out.println(token);
             return map;
         }
         map.put("token", request.getCookies()[0].getValue());
+        map.put("result", "성공");
         System.out.println("새롭게");
         System.out.println("token");
         System.out.println(request.getCookies()[0].getValue());

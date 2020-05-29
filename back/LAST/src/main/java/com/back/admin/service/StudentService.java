@@ -121,9 +121,9 @@ public class StudentService {
     @Transactional
     public String update(String stu_id_email, StudentUpdateRequestDto studentUpdateRequestDto) {
         Student student = studentRepository.findBystu_id_email(stu_id_email);
-        if (student == null)
-            new IllegalArgumentException("해당 사용자가 없습니다.");
-
+        if (student == null) {
+            System.out.println("해당 사용자가 없습니다.");
+        }
         assert student != null;  // 우리가 not null 안해놔서 붙인것!!
         student.update(studentUpdateRequestDto.getStu_school(), studentUpdateRequestDto.getStu_major(),
                 studentUpdateRequestDto.getStu_password());
@@ -146,8 +146,11 @@ public class StudentService {
     @Transactional
     public StudentJwtResponseDto signIn(String stu_id_email, String stu_password) {
         Student student = studentRepository.findBystu_id_email(stu_id_email);
-        if (student == null)
+        if (student == null) {
+            assert student != null;
+
             System.out.println("사용자가 없습니다");
+        }
 
         assert student != null;
         if (student.getStu_password().equals(stu_password)) {
@@ -156,8 +159,8 @@ public class StudentService {
             System.out.println("아이디/비밀번호가 일치하지 않습니다.");
             return null;
         }
-    }
 
+    }
 
 
     // 학생 상태 변경 -> 일반:0, 우수:1
@@ -165,6 +168,7 @@ public class StudentService {
     public void change_stu_auth(String stu_id_email,int stu_auth){
         studentRepository.change_stu_auth(stu_id_email,stu_auth);
     }
+
 
     // stu_no로 학생 정보 가지고오기 , 이메일로 아이디 찾기
     @Transactional
