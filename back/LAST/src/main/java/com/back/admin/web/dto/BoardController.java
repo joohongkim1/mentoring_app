@@ -1,7 +1,9 @@
 package com.back.admin.web.dto;
 
 import com.back.admin.domain.board.Board;
+import com.back.admin.domain.experience.Experience;
 import com.back.admin.service.BoardService;
+import com.back.admin.service.ExperienceService;
 import com.back.admin.service.jwt.JwtService;
 import com.back.admin.service.jwt.UnauthorizedException;
 import com.back.admin.web.dto.board.BoardResponseDto;
@@ -25,7 +27,7 @@ import java.util.Map;
 public class BoardController {
 
     private final BoardService boardService;
-    // 인증을 해야하나???
+    private final ExperienceService experienceService;
     private final JwtService jwtService;
 
 
@@ -37,12 +39,12 @@ public class BoardController {
     }
 
 
-    // 특정 학생의 자소서 보여주기
-    @ApiOperation("특정 학생의 자소서를 보여주기")
-    @GetMapping("/{stu_no}")  // stu_no로 할지 stu_id로 할지 결정이 필요할것같아여~
-    public List<BoardResponseDto> selectAll(@PathVariable Long stu_no) {
-        return boardService.findBoardByStu_no(stu_no);
-    }
+//    // 특정 학생의 자소서 보여주기
+//    @ApiOperation("특정 학생의 자소서를 보여주기")
+//    @GetMapping("/{stu_no}")  // stu_no로 할지 stu_id로 할지 결정이 필요할것같아여~
+//    public List<BoardResponseDto> selectAll(@PathVariable Long stu_no) {
+//        return boardService.findBoardByStu_no(stu_no);
+//    }
 
 
     // 자소서 저장
@@ -84,9 +86,21 @@ public class BoardController {
     // 자소서 삭제
     @ApiOperation("경험 삭제 -> Authorization필요(권한이 있을때 삭제?)")
     @DeleteMapping("/delete/{experience_no}")
-    public void delete(@PathVariable Long board_no,
+    public Map delete(@PathVariable Long board_no,
                        HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse){
-        boardService.delete(board_no);
+        String jwt = httpServletRequest.getHeader("Authorization");
+        //유효성 검사
+        if (!jwtService.isUsable(jwt)) throw new UnauthorizedException(); // 예외
+        StudentJwtResponseDto user=jwtService.getUser(jwt);
+
+        Map<String,String> map=new HashMap<>();
+        boolean board=boardService.delete(board_no, user.getStu_no());
+        if(board){
+            map.put("result","자소서가 삭제되었습니다~");
+        }else{
+            map.put("result","자소서 삭제중 오류가 발생했습니다.");
+        }
+        return map;
     }
 
 }

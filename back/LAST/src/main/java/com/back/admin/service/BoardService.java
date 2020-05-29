@@ -28,7 +28,7 @@ public class BoardService {
 
     // 특정 학생의 자소서 보여주기 findBoardByStu_id
     @Transactional
-    public List<BoardResponseDto> findBoardByStu_no(Long stu_no) {
+    public Board findBoardByStu_no(Long stu_no) {
         return boardRepository.findByStu_no(stu_no);
     }
 
@@ -51,8 +51,15 @@ public class BoardService {
 
     // 자소서 삭제 delete
     @Transactional
-    public void delete(Long board_no){
+    public boolean delete(Long board_no, Long stu_no){
         Board board = boardRepository.findByBoard_no(board_no);
-        boardRepository.delete(board);
+        Long board_stu = board.getExperienceboard().getStu_no();
+        if (board_stu.equals(stu_no)) {
+            boardRepository.delete(board);
+            return true;
+        } else {
+            return false;
+        }
+
     }
 }
