@@ -39,6 +39,7 @@ public interface StudentRepository extends JpaRepository<Student,Long> {
     @Query("update Student s set s.stu_auth=:stu_auth where s.stu_id_email=:stu_id_email")
     void change_stu_auth(@Param("stu_id_email") String stu_id_email,@Param("stu_auth") int stu_auth);
 
+
     // 관리자페이지에서 stu_auth 별로 보여주기
     @Query("select s from Student s where s.stu_auth=:stu_auth")
     List<Student> show_by_stu_auth(@Param("stu_auth") int stu_auth);
