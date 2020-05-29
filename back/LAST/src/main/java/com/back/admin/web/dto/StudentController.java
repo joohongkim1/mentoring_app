@@ -79,20 +79,21 @@ public class StudentController {
         String secPass = encrypt(studentJwtRequestDto.getStu_password());
         StudentJwtResponseDto studentJwtResponseDto = studentService.signIn(studentJwtRequestDto.getStu_id_email(), secPass);
         if (studentJwtResponseDto != null && request.getCookies() == null) {
-            String token = jwtService.create(studentJwtResponseDto);
-            cm.CookieMake(request, response, token);
-            map.put("token", token);
+
+            map.put("token", request.getCookies()[0].getValue());
             map.put("result", "성공");
             System.out.println("기존");
             System.out.println("token");
-            System.out.println(token);
+            System.out.println(request.getCookies()[0].getValue());
             return map;
         }
-        map.put("token", request.getCookies()[0].getValue());
+        String token = jwtService.create(studentJwtResponseDto);
+        cm.CookieMake(request, response, token);
+        map.put("token", token);
         map.put("result", "성공");
         System.out.println("새롭게");
         System.out.println("token");
-        System.out.println(request.getCookies()[0].getValue());
+        System.out.println(token);
         return map;
     }
 

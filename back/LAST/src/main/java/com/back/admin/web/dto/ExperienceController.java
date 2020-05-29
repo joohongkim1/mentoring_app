@@ -49,19 +49,21 @@ public class ExperienceController {
 
     // 경험 저장
     @ApiOperation("경험 저장 -> 권한 있을 때")
-    @PostMapping("/save")
+    @PostMapping("/save/{stu_no}")
     public Map save(@PathVariable Long stu_no, HttpServletRequest httpServletRequest,
                     HttpServletResponse httpServletResponse, @RequestBody ExperienceSaveRequestDto experienceSaveRequestDto) {
         String jwt = httpServletRequest.getHeader("Authorization");
         //유효성 검사
         if (!jwtService.isUsable(jwt)) throw new UnauthorizedException(); // 예외
-        StudentJwtResponseDto user=jwtService.getUser(jwt);
+        StudentJwtResponseDto user = jwtService.getUser(jwt);
 
-        experienceService.save(experienceSaveRequestDto, stu_no);
+        if (user.getStu_no().equals(stu_no)) {
+            experienceService.save(experienceSaveRequestDto, stu_no);
+        }
+        Map<String, String> map = new HashMap<>();
+        map.put("result", "경험이 저장되었습니다~");
+        System.out.println("경험이 저장되었습니다~");
 
-        Map<String,String> map=new HashMap<>();
-        map.put("result","리뷰가 저장되었습니다~");
-        System.out.println("리뷰가 저장되었습니다~");
         return map;
     }
 
@@ -69,7 +71,7 @@ public class ExperienceController {
     // 경험 수정하기
     // service단에서 boolean으로 맞춰둠. equals부분 확인필요!!!
     @ApiOperation("경험 수정 -> 권한 있을 때")
-    @PutMapping("/{experience_no}")
+    @PutMapping("/{exprience_no}")
     public Map update(@PathVariable Long exprience_no, HttpServletRequest httpServletRequest , @RequestBody ExperienceUpdateRequestDto experienceUpdateRequestDto) {
         String jwt = httpServletRequest.getHeader("Authorization");
         //유효성 검사
@@ -79,6 +81,7 @@ public class ExperienceController {
 
         boolean state=experienceService.update(exprience_no,user.getStu_id_email(), experienceUpdateRequestDto);
         if(state){
+
             map.put("result","리뷰가 수정되었습니다~");
         }else{
             map.put("result","수정중 오류가 발생했습니다.");
@@ -99,7 +102,7 @@ public class ExperienceController {
         Map<String,String> map=new HashMap<>();
         boolean experience=experienceService.delete(experience_no,user.getStu_id_email());
         if(experience){
-            map.put("result","리뷰가 삭제되었습니다~");
+            map.put("result","경험이 삭제되었습니다~");
         }else{
             map.put("result","삭제중 오류가 발생했습니다.");
         }
