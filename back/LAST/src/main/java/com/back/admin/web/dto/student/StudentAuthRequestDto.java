@@ -8,12 +8,12 @@ import lombok.NoArgsConstructor;
 @Getter
 public class StudentAuthRequestDto {
 
-    private Long stu_no;
+    private String stu_id_email;
     private int stu_auth;
 
     @Builder
-    public StudentAuthRequestDto(Long stu_no, int stu_auth) {
-        this.stu_no = stu_no;
+    public StudentAuthRequestDto(String stu_id_email, int stu_auth) {
+        this.stu_id_email = stu_id_email;
         this.stu_auth = stu_auth;
     }
 }

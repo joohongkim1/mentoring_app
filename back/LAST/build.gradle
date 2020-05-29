@@ -11,15 +11,28 @@ buildscript {
     }
 }
 
+//jar {
+//    manifest {
+//        attributes 'Main-Class': 'com.minsub.sample.jar.Main'
+//    }
+//    from {
+//        configurations.compile.collect {
+//            it.isDirectory() ? it : zipTree(it)
+//        }
+//    }
+//}
+
+
 apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
-apply plugin: 'application'
+//apply plugin: 'application'
 
 
 group 'org.example'
 version '1.0-SNAPSHOT'
+sourceCompatibility = 1.8
 
 repositories {
     mavenCentral()
@@ -32,12 +45,16 @@ dependencies {
     compile "org.springframework.boot:spring-boot-starter-jdbc"
     compile group: 'org.xerial', name: 'sqlite-jdbc', version: '3.8.11.2'
     compile('org.projectlombok:lombok')
+    compile files('libs/lombok-1.16.8.jar')
     annotationProcessor('org.projectlombok:lombok')
     compile('org.springframework.boot:spring-boot-starter-data-jpa') //스프링 부트용 Spring Data Jpa 추상화 라이브러리입니다.
 
 
     //스프링 부트 버전에 맞춰 자동으로 JPA 관련 라이브러리들의 버전을 관리해 줍니다.
-    compile('com.h2database:h2') //인메모리 관계형 데이터 베이스입니다.
+//    compile('com.h2database:h2') //인메모리 관계형 데이터 베이스입니다.
+    implementation 'org.springframework.boot:spring-boot-starter'
+    runtimeOnly 'mysql:mysql-connector-java'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
     //메모리에서 실행되기 때문에 애플리케이션을 재시작 할 때마다 초기화된다는 점을 이용하여 테스트 용도로 자주 사용합니다.
     compile('org.springframework.boot:spring-boot-starter-mustache')
@@ -57,13 +74,21 @@ dependencies {
     // security
     implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity5'
+    implementation 'io.jsonwebtoken:jjwt:0.9.1'
+    //json
+    implementation 'com.google.code.gson:gson:2.8.6'
+
 
     //servlet
-    compile group: 'javax.servlet', name: 'javax.servlet-api', version:'3.1.0'
+    testCompile group: 'javax.servlet', name: 'javax.servlet-api', version:'3.1.0'
     testCompile group: 'junit', name: 'junit', version: '4.12'
 
     // swagger
     compile group: 'io.springfox', name: 'springfox-swagger2', version: '2.5.0'
     compile group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.5.0'
     compile group: 'io.swagger', name: 'swagger-annotations', version: '1.6.0'
+
+    //socket
+    implementation 'org.springframework.boot:spring-boot-starter-websocket'
+
 }

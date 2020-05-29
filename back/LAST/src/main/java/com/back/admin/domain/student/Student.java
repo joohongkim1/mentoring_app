@@ -1,6 +1,5 @@
 package com.back.admin.domain.student;
 
-import com.back.admin.domain.BaseTimeEntity;
 import com.back.admin.domain.experience.Experience;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Builder;
@@ -13,7 +12,7 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 @Entity
-public class Student extends BaseTimeEntity {
+public class Student{
 
     @Id  // pk
     @GeneratedValue(strategy = GenerationType.IDENTITY)  // auto-increment
@@ -33,10 +32,7 @@ public class Student extends BaseTimeEntity {
     private String stu_major;
 
     @Column
-    private String stu_id;
-
-    @Column
-    private String stu_email;
+    private String stu_id_email;  // email = id
 
     @Column
     private String stu_password;
@@ -45,20 +41,19 @@ public class Student extends BaseTimeEntity {
     private Long stu_total_mileage;
 
     // fk -> 1:N = student:experience
-    @OneToMany(cascade=CascadeType.ALL, mappedBy = "stu_no")
+    @OneToMany(cascade=CascadeType.ALL, mappedBy = "stuexperience")
     @JsonManagedReference
     private List<Experience> experience;
 
 
     @Builder
-    public Student(int stu_auth, String stu_name, String stu_school, String stu_major, String stu_id,
-                   String stu_email, String stu_password, Long stu_total_mileage) {
+    public Student(int stu_auth, String stu_name, String stu_school, String stu_major,
+                   String stu_id_email, String stu_password, Long stu_total_mileage, boolean checklogin) {
         this.stu_auth = stu_auth;
         this.stu_name = stu_name;
         this.stu_school = stu_school;
         this.stu_major = stu_major;
-        this.stu_id = stu_id;
-        this.stu_email = stu_email;
+        this.stu_id_email = stu_id_email;
         this.stu_password = stu_password;
         this.stu_total_mileage = stu_total_mileage;
     }
@@ -70,5 +65,9 @@ public class Student extends BaseTimeEntity {
         this.stu_school = stu_school;
         this.stu_major = stu_major;
         this.stu_password = stu_password;
+    }
+
+    public void setStu_auth(int stu_auth){
+        this.stu_auth = stu_auth;
     }
 }
