@@ -22,7 +22,7 @@ import java.util.Map;
 
 @CrossOrigin("*")
 @RestController
-@RequestMapping("/last/board")
+@RequestMapping("/api/v3")
 @RequiredArgsConstructor
 public class BoardController {
 
@@ -50,17 +50,23 @@ public class BoardController {
     // 자소서 저장
     @ApiOperation("자소서 저장 -> 권한 있을 때")
     @PostMapping("/save/{experience_no}")
-    public Map save(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse,
-                    @PathVariable Long board_no, @RequestBody BoardSaveRequestDto boardSaveRequestDto) {
+    public Map save(HttpServletRequest httpServletRequest,
+                    @PathVariable Long experience_no, @RequestBody BoardSaveRequestDto boardSaveRequestDto) {
         String jwt = httpServletRequest.getHeader("Authorization");
         //유효성 검사
         if (!jwtService.isUsable(jwt)) throw new UnauthorizedException(); // 예외
         StudentJwtResponseDto student=jwtService.getUser(jwt);
         Map<String,String> map=new HashMap<>();
 
-        Long id = boardService.save(board_no, boardSaveRequestDto); {
-            map.put("result", "저장이 완료되었습니다~");
+        if (boardService.save(experience_no, boardSaveRequestDto)) {
+            map.put("result", "자소서가 저장되었습니다~");
+            System.out.println("자소서가 저장되었습니다~");
+        } else {
+            map.put("result", "자소서 저장에 실패했습니다...ㅠ");
+            System.out.println("자소서 저장에 실패했습니다...ㅠ");
         }
+
+
         return map;
     }
 
@@ -68,24 +74,27 @@ public class BoardController {
     // 자소서 수정
     @ApiOperation("자소서 수정 -> 권한 있을 때")
     @PutMapping("/update/experience/{board_no}")
-    public Boolean update(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse,
+    public Map update(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse,
                       @RequestBody BoardUpdateRequestDto boardUpdateRequestDto, @PathVariable Long board_no) {
         String jwt = httpServletRequest.getHeader("Authorization");
         //유효성 검사
         if (!jwtService.isUsable(jwt)) throw new UnauthorizedException(); // 예외
-        StudentJwtResponseDto student=jwtService.getUser(jwt);
+        StudentJwtResponseDto user=jwtService.getUser(jwt);
         Map<String,String> map=new HashMap<>();
 
-        // 앞에꺼는 student타입이고 equals 뒤에있는 것은 long타입 -> 타입 맞춰줄 필요가 있다.
-//        if(boardUpdateRequestDto.ge().equals(student.getStu_no())){ //수정할 권한이 있으면
-        if (boardService.update(board_no,boardUpdateRequestDto)) {
-            return true;
-        }else return false;
+        boolean state=boardService.update(board_no,user.getStu_no(), boardUpdateRequestDto);
+        if(state){
+
+            map.put("result","리뷰가 수정되었습니다~");
+        }else{
+            map.put("result","수정중 오류가 발생했습니다.");
+        }
+        return map;
     }
 
     // 자소서 삭제
     @ApiOperation("경험 삭제 -> Authorization필요(권한이 있을때 삭제?)")
-    @DeleteMapping("/delete/{experience_no}")
+    @DeleteMapping("/delete/{board_no}")
     public Map delete(@PathVariable Long board_no,
                        HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse){
         String jwt = httpServletRequest.getHeader("Authorization");
