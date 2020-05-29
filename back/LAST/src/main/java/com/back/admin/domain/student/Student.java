@@ -1,6 +1,5 @@
 package com.back.admin.domain.student;
 
-import com.back.admin.domain.BaseTimeEntity;
 import com.back.admin.domain.experience.Experience;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Builder;
@@ -13,7 +12,7 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 @Entity
-public class Student extends BaseTimeEntity {
+public class Student{
 
     @Id  // pk
     @GeneratedValue(strategy = GenerationType.IDENTITY)  // auto-increment
@@ -49,7 +48,7 @@ public class Student extends BaseTimeEntity {
 
     @Builder
     public Student(int stu_auth, String stu_name, String stu_school, String stu_major,
-                   String stu_id_email, String stu_password, Long stu_total_mileage) {
+                   String stu_id_email, String stu_password, Long stu_total_mileage, boolean checklogin) {
         this.stu_auth = stu_auth;
         this.stu_name = stu_name;
         this.stu_school = stu_school;

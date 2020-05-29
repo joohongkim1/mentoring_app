@@ -28,6 +28,7 @@ public class ExperienceController {
     private final ExperienceService experienceService;
     private final StudentService studentService;
     private final JwtService jwtService;
+    private Student student;
 
 
     // 모든 경험 보여주기
@@ -50,14 +51,13 @@ public class ExperienceController {
     @ApiOperation("경험 저장 -> 권한 있을 때")
     @PostMapping("/save")
     public Map save(@PathVariable Long stu_no, HttpServletRequest httpServletRequest,
-                    @RequestBody ExperienceSaveRequestDto experienceSaveRequestDto) {
+                    HttpServletResponse httpServletResponse, @RequestBody ExperienceSaveRequestDto experienceSaveRequestDto) {
         String jwt = httpServletRequest.getHeader("Authorization");
         //유효성 검사
         if (!jwtService.isUsable(jwt)) throw new UnauthorizedException(); // 예외
         StudentJwtResponseDto user=jwtService.getUser(jwt);
 
-        Student student=studentService.findBystu_no(stu_no);
-        experienceService.save(experienceSaveRequestDto.toEntity(student,user.getStu_no()));
+        experienceService.save(experienceSaveRequestDto, stu_no);
 
         Map<String,String> map=new HashMap<>();
         map.put("result","리뷰가 저장되었습니다~");
