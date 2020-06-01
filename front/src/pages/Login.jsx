@@ -137,6 +137,7 @@ const Login = () => {
     history.push('/');
     return <></>;
   }
+
   if (loading) {
     return <Loading />;
   }
@@ -153,7 +154,7 @@ const Login = () => {
             로그인
           </Typography>
           <TextField
-            error={result.status === 'failure'}
+            error={result.status === '실패'}
             // InputLabelProps={inputLabelProps}
             // InputProps={inputProps}
             autoFocus
@@ -167,7 +168,7 @@ const Login = () => {
             margin="normal"
           />
           <TextField
-            error={result.status === 'failure'}
+            error={result.status === '실패'}
             // InputLabelProps={inputLabelProps}
             // InputProps={inputProps}
             name="password"
