@@ -35,18 +35,24 @@ public class BoardService {
 
     // 자소서 저장 save
     @Transactional
-    public Long save(Long experience_no, BoardSaveRequestDto boardSaveRequestDto) {
+    public boolean save(Long experience_no, BoardSaveRequestDto boardSaveRequestDto) {
         Experience experience=experienceRepository.findByExperience_no(experience_no);
-        return boardRepository.save(boardSaveRequestDto.toEntity(experience)).getBoard_no();
+        boardRepository.save(boardSaveRequestDto.toEntity(experience));
+        return true;
     }
 
 
     // 자소서 수정 update
     @Transactional
-    public boolean update(Long board_no, BoardUpdateRequestDto boardUpdateRequestDto) {
+    public boolean update(Long board_no, Long stu_no, BoardUpdateRequestDto boardUpdateRequestDto) {
         Board board = boardRepository.findByBoard_no(board_no);
-        board.update(boardUpdateRequestDto.getBoard_question(), boardUpdateRequestDto.getBoard_content());
-        return true;
+        Long board_stu_id = board.getExperienceboard().getStu_no();
+        if (board_stu_id.equals(stu_no)) { //수정 권한이 있어
+            board.update(boardUpdateRequestDto.getBoard_question(), boardUpdateRequestDto.getBoard_content());
+            return true;
+        } else { //수정 권한이 없어
+            return false;
+        }
     }
 
     // 자소서 삭제 delete
