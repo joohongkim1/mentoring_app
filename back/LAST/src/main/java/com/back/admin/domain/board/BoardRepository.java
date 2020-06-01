@@ -1,6 +1,5 @@
 package com.back.admin.domain.board;
 
-import com.back.admin.web.dto.board.BoardResponseDto;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
