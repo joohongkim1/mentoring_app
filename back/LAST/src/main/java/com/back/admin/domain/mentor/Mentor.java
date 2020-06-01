@@ -32,6 +32,9 @@ public class Mentor extends BaseTimeEntity {
     private String mentor_company;
 
     @Column
+    private String mentor_school;
+
+    @Column
     private String mentor_major;
 
     @Column
@@ -49,12 +52,13 @@ public class Mentor extends BaseTimeEntity {
 
     @Builder
     public Mentor(int mentor_auth, String mentor_name, String mentor_identification_url, Boolean mentor_check,
-                  String mentor_company, String mentor_major, String mentor_job, String mentor_id_email, String mentor_password, Long mentor_total_mileage) {
+                  String mentor_company,String mentor_school, String mentor_major, String mentor_job, String mentor_id_email, String mentor_password, Long mentor_total_mileage) {
         this.mentor_auth = mentor_auth;
         this.mentor_name = mentor_name;
         this.mentor_identification_url = mentor_identification_url;
         this.mentor_check = mentor_check;
         this.mentor_company = mentor_company;
+        this.mentor_school = mentor_school;
         this.mentor_major = mentor_major;
         this.mentor_job = mentor_job;
         this.mentor_id_email = mentor_id_email;

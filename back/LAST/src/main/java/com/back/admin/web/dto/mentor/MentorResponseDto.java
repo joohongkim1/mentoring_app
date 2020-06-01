@@ -16,6 +16,7 @@ public class MentorResponseDto {
     private Boolean mentor_check;
     private String mentor_company;
     private String mentor_job;
+    private String mentor_school;
     private String mentor_major;
     private String mentor_id_email;
     private String mentor_password;
@@ -30,6 +31,7 @@ public class MentorResponseDto {
         this.mentor_check = entity.getMentor_check();
         this.mentor_company = entity.getMentor_company();
         this.mentor_job = entity.getMentor_job();
+        this.mentor_school = entity.getMentor_school();
         this.mentor_major = entity.getMentor_major();
         this.mentor_id_email = entity.getMentor_id_email();
         this.mentor_password = entity.getMentor_password();
