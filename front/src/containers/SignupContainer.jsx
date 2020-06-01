@@ -6,11 +6,11 @@ import { changeField, registerSuccess, registerError, emailState } from '../modu
 
 function SignupContainer() {
   const { user } = useSelector(state => ({
-    user: state.user
+    user: state.signupReducer.user
   }));
 
   const dispatch = useDispatch();
-
+  
   return (
     <SingupForm
       user={user}
