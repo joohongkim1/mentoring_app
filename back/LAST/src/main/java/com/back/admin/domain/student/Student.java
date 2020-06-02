@@ -1,7 +1,8 @@
 package com.back.admin.domain.student;
 
 import com.back.admin.domain.experience.Experience;
-import com.back.admin.domain.so_question.SolQuestion;
+import com.back.admin.domain.sol_answer.SolAnswer;
+import com.back.admin.domain.sol_question.SolQuestion;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Builder;
 import lombok.Getter;
@@ -51,6 +52,7 @@ public class Student{
     @OneToMany(cascade=CascadeType.ALL, mappedBy = "studentsolq")
     @JsonManagedReference
     private List<SolQuestion> solquestion=new ArrayList<>();
+
 
     @Builder
     public Student(int stu_auth, String stu_name, String stu_school, String stu_major,

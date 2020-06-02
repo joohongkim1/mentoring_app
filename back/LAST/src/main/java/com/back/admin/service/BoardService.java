@@ -46,7 +46,7 @@ public class BoardService {
     @Transactional
     public boolean update(Long board_no, Long stu_no, BoardUpdateRequestDto boardUpdateRequestDto) {
         Board board = boardRepository.findByBoard_no(board_no);
-        Long board_stu_id = board.getExperienceboard().getStu_no();
+        Long board_stu_id = board.getExperienceboard().getStuexperience().getStu_no();
         if (board_stu_id.equals(stu_no)) { //수정 권한이 있어
             board.update(boardUpdateRequestDto.getBoard_question(), boardUpdateRequestDto.getBoard_content());
             return true;
@@ -59,7 +59,7 @@ public class BoardService {
     @Transactional
     public boolean delete(Long board_no, Long stu_no){
         Board board = boardRepository.findByBoard_no(board_no);
-        Long board_stu = board.getExperienceboard().getStu_no();
+        Long board_stu = board.getExperienceboard().getStuexperience().getStu_no();
         if (board_stu.equals(stu_no)) {
             boardRepository.delete(board);
             return true;
