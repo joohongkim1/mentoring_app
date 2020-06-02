@@ -1,12 +1,14 @@
 package com.back.admin.domain.student;
 
 import com.back.admin.domain.experience.Experience;
+import com.back.admin.domain.so_question.SolQuestion;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -43,12 +45,16 @@ public class Student{
     // fk -> 1:N = student:experience
     @OneToMany(cascade=CascadeType.ALL, mappedBy = "stuexperience")
     @JsonManagedReference
-    private List<Experience> experience;
+    private List<Experience> experience=new ArrayList<>();
 
+    // 1:N = student:sol_q
+    @OneToMany(cascade=CascadeType.ALL, mappedBy = "studentsolq")
+    @JsonManagedReference
+    private List<SolQuestion> solquestion=new ArrayList<>();
 
     @Builder
     public Student(int stu_auth, String stu_name, String stu_school, String stu_major,
-                   String stu_id_email, String stu_password, Long stu_total_mileage, boolean checklogin) {
+                   String stu_id_email, String stu_password, Long stu_total_mileage) {
         this.stu_auth = stu_auth;
         this.stu_name = stu_name;
         this.stu_school = stu_school;
