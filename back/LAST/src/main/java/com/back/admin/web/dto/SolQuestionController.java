@@ -1,6 +1,6 @@
 package com.back.admin.web.dto;
 
-import com.back.admin.domain.so_question.SolQuestion;
+import com.back.admin.domain.sol_question.SolQuestion;
 import com.back.admin.service.SolQuestionService;
 import com.back.admin.service.jwt.JwtService;
 import com.back.admin.service.jwt.UnauthorizedException;
@@ -27,25 +27,41 @@ public class SolQuestionController {
     private final JwtService jwtService;
 
 
-    // 모든 자소서 보여주기
-    @ApiOperation("모든 학생의 자소서를 보여준다")
+    // 모든 질문 보여주기
+    @ApiOperation("모든 학생의 질문을 보여준다")
     @GetMapping("/all")
     public List<SolQuestion> selectAll() {
         return solQuestionService.selectAll();
     }
 
 
-    // 특정 학생의 자소서 보여주기
-    @ApiOperation("특정 학생의 자소서를 보여주기")
-    @GetMapping("/{stu_no}")  // stu_no로 할지 stu_id로 할지 결정이 필요할것같아여~
+    // 특정 학생의 질문 보여주기
+    @ApiOperation("특정 학생의 질문을 보여주기")
+    @GetMapping("show/{stu_no}")  // stu_no로 할지 stu_id로 할지 결정이 필요할것같아여~
     public SolQuestion selectAll(@PathVariable Long stu_no) {
         return solQuestionService.findByStu_no(stu_no);
     }
 
 
-    // 자소서 저장
-    @ApiOperation("자소서 저장 -> 권한 있을 때")
-    @PostMapping("/save/{experience_no}")
+    // 특정 회사의 질문 보여주기
+    @ApiOperation("특정 학생의 질문을 보여주기")
+    @GetMapping("show/{sol_q_company}")  // stu_no로 할지 stu_id로 할지 결정이 필요할것같아여~
+    public SolQuestion findByCompany(@PathVariable String sol_q_company) {
+        return solQuestionService.findByCompany(sol_q_company);
+    }
+
+
+    // 특정 sol_q_want_job(직무)의 질문 보여주기
+    @ApiOperation("특정 학생의 질문을 보여주기")
+    @GetMapping("show/{sol_q_want_job}")  // stu_no로 할지 stu_id로 할지 결정이 필요할것같아여~
+    public SolQuestion findByWant_job(@PathVariable String sol_q_want_job) {
+        return solQuestionService.findByWant_job(sol_q_want_job);
+    }
+
+
+    // 질문 저장
+    @ApiOperation("질문 저장 -> 권한 있을 때")
+    @PostMapping("/{stu_no}")
     public Map save(HttpServletRequest httpServletRequest,
                     @PathVariable Long stu_no, @RequestBody SolQuestionSaveRequestDto solQuestionSaveRequestDto) {
         String jwt = httpServletRequest.getHeader("Authorization");
@@ -66,9 +82,9 @@ public class SolQuestionController {
     }
 
 
-    // 자소서 수정
-    @ApiOperation("자소서 수정 -> 권한 있을 때")
-    @PutMapping("/update/experience/{board_no}")
+    // 질문 수정
+    @ApiOperation("질문 수정 -> 권한 있을 때")
+    @PutMapping("/{sol_q_no}")
     public Map update(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse,
                       @RequestBody SolQuestionUpdateRequestDto solQuestionUpdateRequestDto, @PathVariable Long sol_q_no) {
         String jwt = httpServletRequest.getHeader("Authorization");
@@ -87,9 +103,9 @@ public class SolQuestionController {
         return map;
     }
 
-    // 자소서 삭제
-    @ApiOperation("경험 삭제 -> Authorization필요(권한이 있을때 삭제?)")
-    @DeleteMapping("/delete/{board_no}")
+    // 질문 삭제
+    @ApiOperation("질문 삭제 -> Authorization필요(권한이 있을때 삭제?)")
+    @DeleteMapping("/{sol_q_no}")
     public Map delete(@PathVariable Long sol_q_no,
                       HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse){
         String jwt = httpServletRequest.getHeader("Authorization");

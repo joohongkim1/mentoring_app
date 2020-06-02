@@ -1,12 +1,9 @@
 package com.back.admin.web.dto.sol_question;
 
-import com.back.admin.domain.board.Board;
-import com.back.admin.domain.so_question.SolQuestion;
+import com.back.admin.domain.sol_question.SolQuestion;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
-import java.time.LocalDateTime;
 
 @Getter
 @NoArgsConstructor
@@ -17,7 +14,6 @@ public class SolQuestionResponseDto {
     private String sol_q_time;  // time이 뭐였지?
     private String sol_q_company;
     private String sol_q_content;
-    private LocalDateTime createdDate;
 
     @Builder
     public SolQuestionResponseDto(SolQuestion entity) {

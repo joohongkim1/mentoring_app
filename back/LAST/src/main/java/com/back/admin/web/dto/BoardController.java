@@ -38,12 +38,12 @@ public class BoardController {
     }
 
 
-//    // 특정 학생의 자소서 보여주기
-//    @ApiOperation("특정 학생의 자소서를 보여주기")
-//    @GetMapping("/{stu_no}")  // stu_no로 할지 stu_id로 할지 결정이 필요할것같아여~
-//    public List<BoardResponseDto> selectAll(@PathVariable Long stu_no) {
-//        return boardService.findBoardByStu_no(stu_no);
-//    }
+    // 특정 학생의 자소서 보여주기
+    @ApiOperation("특정 학생의 자소서를 보여주기")
+    @GetMapping("/{stu_no}")  // stu_no로 할지 stu_id로 할지 결정이 필요할것같아여~
+    public Board selectAll(@PathVariable Long stu_no) {
+        return boardService.findBoardByStu_no(stu_no);
+    }
 
 
     // 자소서 저장

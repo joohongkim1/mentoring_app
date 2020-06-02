@@ -13,7 +13,7 @@ public interface BoardRepository extends JpaRepository<Board,Long> {
     List<Board> findAll();
 
     // 특정 학생의 자소서 보여주기 findBoardByStu_id
-    @Query("select b from Board b where b.experienceboard.stu_no=:stu_no")
+    @Query("select b from Board b where b.experienceboard.stuexperience.stu_no=:stu_no")
     Board findByStu_no(@Param("stu_no") Long stu_no);
 
     // 특정 자소서 찾기 findByBoard_no
