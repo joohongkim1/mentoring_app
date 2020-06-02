@@ -44,7 +44,7 @@ public class SolQuestionController {
 
 
     // 특정 회사의 질문 보여주기
-    @ApiOperation("특정 학생의 질문을 보여주기")
+    @ApiOperation("특정 회사 질문을 보여주기")
     @GetMapping("show/{sol_q_company}")  // stu_no로 할지 stu_id로 할지 결정이 필요할것같아여~
     public SolQuestion findByCompany(@PathVariable String sol_q_company) {
         return solQuestionService.findByCompany(sol_q_company);
@@ -52,7 +52,7 @@ public class SolQuestionController {
 
 
     // 특정 sol_q_want_job(직무)의 질문 보여주기
-    @ApiOperation("특정 학생의 질문을 보여주기")
+    @ApiOperation("특정 직무 질문을 보여주기")
     @GetMapping("show/{sol_q_want_job}")  // stu_no로 할지 stu_id로 할지 결정이 필요할것같아여~
     public SolQuestion findByWant_job(@PathVariable String sol_q_want_job) {
         return solQuestionService.findByWant_job(sol_q_want_job);
