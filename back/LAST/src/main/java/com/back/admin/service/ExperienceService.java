@@ -38,7 +38,7 @@ public class ExperienceService {
     @Transactional
     public void save(ExperienceSaveRequestDto experienceSaveRequestDto, Long stu_no) {
         Student student = studentRepository.findBystu_no(stu_no);
-        experienceRepository.save(experienceSaveRequestDto.toEntity(student, stu_no));
+        experienceRepository.save(experienceSaveRequestDto.toEntity(student));
     }
 
 

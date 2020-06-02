@@ -25,13 +25,12 @@ public class ExperienceSaveRequestDto {
         this.experience_content = experience_content;
     }
 
-    public Experience toEntity(Student stuexperience, Long stu_no) {
+    public Experience toEntity(Student stuexperience) {
         return Experience.builder()
                 .experience_start(experience_start)
                 .experience_end(experience_end)
                 .experience_title(experience_title)
                 .experience_content(experience_content)
-                .stu_no(stu_no)
                 .stuexperience(stuexperience)
                 .build();
     }

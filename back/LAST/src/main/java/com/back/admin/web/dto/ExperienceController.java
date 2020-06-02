@@ -102,6 +102,8 @@ public class ExperienceController {
         Map<String,String> map=new HashMap<>();
         boolean experience=experienceService.delete(experience_no,user.getStu_id_email());
         if(experience){
+
+
             map.put("result","경험이 삭제되었습니다~");
         }else{
             map.put("result","삭제중 오류가 발생했습니다.");
@@ -109,3 +111,4 @@ public class ExperienceController {
         return map;
     }
 }
+
