@@ -1,7 +1,5 @@
 package com.back.admin.domain.mentor;
 
-import com.back.admin.domain.BaseTimeEntity;
-import com.back.admin.domain.sol_answer.SolAnswer;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Builder;
 import lombok.Getter;
@@ -9,7 +7,6 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.ArrayList;
-import java.util.List;
 
 @Getter
 @NoArgsConstructor
@@ -52,11 +49,6 @@ public class Mentor{
 
     @Column
     private Long mentor_total_mileage;
-
-    // 1:N = mentor:sol_a
-    @OneToMany(cascade=CascadeType.ALL, mappedBy = "mentorsolanswer")
-    @JsonManagedReference
-    private List<SolAnswer> solAnswer=new ArrayList<>();
 
 
     @Builder

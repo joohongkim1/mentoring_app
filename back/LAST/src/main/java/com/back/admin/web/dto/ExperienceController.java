@@ -26,9 +26,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class ExperienceController {
     private final ExperienceService experienceService;
-    private final StudentService studentService;
     private final JwtService jwtService;
-    private Student student;
 
 
     // 모든 경험 보여주기

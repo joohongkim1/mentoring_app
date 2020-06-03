@@ -34,6 +34,9 @@ public class Experience {
     @Column(length = 500)
     private String experience_content;
 
+    @Column(length = 500)
+    private String experience_tag;
+
     // fk -> 1:N = student:experience
     @ManyToOne(optional = false)
     @JsonBackReference
@@ -46,19 +49,21 @@ public class Experience {
 
     @Builder
     public Experience(Date experience_start, Date experience_end, String experience_title,
-                      String experience_content, Student stuexperience) {
+                      String experience_content, String experience_tag, Student stuexperience) {
         this.experience_start = experience_start;
         this.experience_end = experience_end;
         this.experience_title = experience_title;
         this.experience_content = experience_content;
+        this.experience_tag = experience_tag;
         this.stuexperience = stuexperience;
     }
 
-    public void update(Date experience_start, Date experience_end,
-                       String experience_title, String experience_content) {
+    public void update(Date experience_start, Date experience_end, String experience_title,
+                       String experience_content, String experience_tag) {
         this.experience_start = experience_start;
         this.experience_end = experience_end;
         this.experience_title = experience_title;
         this.experience_content = experience_content;
+        this.experience_tag = experience_tag;
     }
 }
