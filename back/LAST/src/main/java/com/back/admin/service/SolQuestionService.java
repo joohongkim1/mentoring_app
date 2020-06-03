@@ -59,7 +59,8 @@ public class SolQuestionService {
         Long sol_q_stu_id = solQuestion.getStudentsolq().getStu_no();
         if (sol_q_stu_id.equals(stu_no)) { //수정 권한이 있어
             solQuestion.update(solQuestionUpdateRequestDto.getSol_q_title(), solQuestionUpdateRequestDto.getSol_q_company(),
-                    solQuestionUpdateRequestDto.getSol_q_want_job(), solQuestionUpdateRequestDto.getSol_q_content());
+                    solQuestionUpdateRequestDto.getSol_q_want_job(), solQuestionUpdateRequestDto.getSol_q_content(),
+                    solQuestionUpdateRequestDto.getSol_q_tag());
             return true;
         } else { //수정 권한이 없어
             return false;

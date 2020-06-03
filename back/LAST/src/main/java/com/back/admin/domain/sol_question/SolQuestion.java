@@ -30,6 +30,9 @@ public class SolQuestion extends BaseTimeEntity {
     @Column(columnDefinition = "TEXT")
     private String sol_q_content;
 
+    @Column(columnDefinition = "TEXT")
+    private String sol_q_tag;
+
     // 1:N = student:sol_q
     @ManyToOne(optional = false)
     @JsonBackReference
@@ -37,19 +40,22 @@ public class SolQuestion extends BaseTimeEntity {
 
     @Builder
     public SolQuestion(String sol_q_title, String sol_q_want_job,
-                       String sol_q_company, String sol_q_content, Student studentsolq) {
+                       String sol_q_company, String sol_q_content,
+                       String sol_q_tag, Student studentsolq) {
         this.sol_q_title=sol_q_title;
         this.sol_q_want_job=sol_q_want_job;
         this.sol_q_company=sol_q_company;
         this.sol_q_content=sol_q_content;
+        this.sol_q_tag=sol_q_tag;
         this.studentsolq=studentsolq;
     }
 
     public void update(String sol_q_title, String sol_q_want_job,
-                       String sol_q_company, String sol_q_content) {
+                       String sol_q_company, String sol_q_content, String sol_q_tag) {
         this.sol_q_title=sol_q_title;
         this.sol_q_want_job=sol_q_want_job;
         this.sol_q_company=sol_q_company;
         this.sol_q_content=sol_q_content;
+        this.sol_q_tag=sol_q_tag;
     }
 }
