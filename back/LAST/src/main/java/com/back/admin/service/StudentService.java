@@ -12,6 +12,7 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.security.MessageDigest;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -119,16 +120,43 @@ public class StudentService {
 
     // 회원 정보 수정
     @Transactional
-    public String update(String stu_id_email, StudentUpdateRequestDto studentUpdateRequestDto) {
+    public void update(String stu_id_email, StudentUpdateRequestDto studentUpdateRequestDto) {
         Student student = studentRepository.findBystu_id_email(stu_id_email);
         if (student == null) {
-            throw new IllegalArgumentException("해당사람 없음");
+            throw new IllegalArgumentException("해당 사용자 없음");
         }
+
         assert student != null;  // 우리가 not null 안해놔서 붙인것!!
-        student.update(studentUpdateRequestDto.getStu_school(), studentUpdateRequestDto.getStu_major(),
-                studentUpdateRequestDto.getStu_password());
-        return stu_id_email;
+        student.update(studentUpdateRequestDto.getStu_id_email(), studentUpdateRequestDto.getStu_school(),
+                studentUpdateRequestDto.getStu_major(), encrypt(studentUpdateRequestDto.getStu_password()));
     }
+
+    // 암호화
+    public static String encrypt(String rawpass) {
+        try {
+            MessageDigest md = MessageDigest.getInstance("SHA-256");
+            md.update(rawpass.getBytes());
+            byte byteData[] = md.digest();
+            StringBuffer sb = new StringBuffer();
+            for (int i = 0; i < byteData.length; i++) {
+                sb.append(Integer.toString((byteData[i] & 0xff) + 0x100, 16).substring(1));
+            }
+            StringBuffer hexString = new StringBuffer();
+            for (int i = 0; i < byteData.length; i++) {
+                String hex = Integer.toHexString(0xff & byteData[i]);
+                if (hex.length() == 1) {
+                    hexString.append('0');
+                }
+                hexString.append(hex);
+            }
+            return hexString.toString();
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException();
+        }
+    }
+
+    static String Static_access_Token = null;
 
 
     // 탈퇴(삭제)

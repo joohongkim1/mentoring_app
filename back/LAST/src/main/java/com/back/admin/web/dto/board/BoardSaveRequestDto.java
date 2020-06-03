@@ -11,12 +11,15 @@ import lombok.NoArgsConstructor;
 public class BoardSaveRequestDto {
     private String board_question;
     private String board_content;
+    private String board_when;
     private Long experience_no;
+
 
     @Builder
     public BoardSaveRequestDto(Board entity) {
         this.board_question=entity.getBoard_question();
         this.board_content=entity.getBoard_content();
+        this.board_when=entity.getBoard_when();
         this.experience_no=entity.getExperienceboard().getExperience_no();
     }
 
@@ -24,6 +27,7 @@ public class BoardSaveRequestDto {
         return Board.builder()
                 .board_question(board_question)
                 .board_content(board_content)
+                .board_when(board_when)
                 .experienceboard(experience)
                 .build();
     }

@@ -1,7 +1,6 @@
 package com.back.admin.domain.student;
 
 import com.back.admin.domain.experience.Experience;
-import com.back.admin.domain.sol_answer.SolAnswer;
 import com.back.admin.domain.sol_question.SolQuestion;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Builder;
@@ -69,7 +68,8 @@ public class Student{
     // 회원가입 이후, 수정할 수 있는 정보들
     // auth, mileage는 관리자만 수정 가능!!
     // 관리자 페이지 따로 만들어야할듯 -> student, mentor 마일리지 관리, 권한 관리
-    public void update(String stu_school, String stu_major, String stu_password) {
+    public void update(String stu_id_email, String stu_school, String stu_major, String stu_password) {
+        this.stu_id_email=stu_id_email;
         this.stu_school = stu_school;
         this.stu_major = stu_major;
         this.stu_password = stu_password;

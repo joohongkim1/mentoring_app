@@ -49,7 +49,8 @@ public class ExperienceService {
         String exp_stu_id = experience.getStuexperience().getStu_id_email();
         if (exp_stu_id.equals(stu_id_email)) { //수정 권한이 있어
             experience.update(experienceUpdateRequestDto.getExperience_start(), experienceUpdateRequestDto.getExperience_end(),
-                    experienceUpdateRequestDto.getExperience_title(), experienceUpdateRequestDto.getExperience_content());
+                    experienceUpdateRequestDto.getExperience_title(), experienceUpdateRequestDto.getExperience_content(),
+                    experienceUpdateRequestDto.getExperience_tag());
             return true;
         } else { //수정 권한이 없어
             return false;
