@@ -1,18 +1,13 @@
 package com.back.admin.domain.sol_question;
 
 import com.back.admin.domain.BaseTimeEntity;
-import com.back.admin.domain.mentor.Mentor;
-import com.back.admin.domain.sol_answer.SolAnswer;
 import com.back.admin.domain.student.Student;
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 @Getter
 @NoArgsConstructor
@@ -39,11 +34,6 @@ public class SolQuestion extends BaseTimeEntity {
     @ManyToOne(optional = false)
     @JsonBackReference
     private Student studentsolq;
-
-    // 1:N = sol_q:sol_a
-    @OneToMany(cascade=CascadeType.ALL, mappedBy = "sol_q_a")
-    @JsonManagedReference
-    private List<SolAnswer> solAnswers=new ArrayList<>();
 
     @Builder
     public SolQuestion(String sol_q_title, String sol_q_want_job,

@@ -102,16 +102,18 @@ public class StudentController {
     @ApiOperation("회원정보 수정 -> Authorization필요")
     @PutMapping("")
     public Map update(HttpServletResponse response, HttpServletRequest request,
-                       @RequestBody StudentUpdateRequestDto studentUpdateRequestDto) {
+                      @RequestBody StudentUpdateRequestDto studentUpdateRequestDto) {
         Map<String, String> map = new HashMap<>();
         String jwt = request.getHeader("Authorization");
         if (!jwtService.isUsable(jwt)) {
             map.put("token", "불가능(실패)");
             return map;
         }
+
         StudentJwtResponseDto student = jwtService.getUser(jwt);
         // 비밀번호 encrypt(암호화 과정 필요)
         studentService.update(student.getStu_id_email(), studentUpdateRequestDto);
+
         // 기존 토큰 죽이기
         cm.CookieDelete(request, response);
         //토큰 재발행
@@ -120,6 +122,7 @@ public class StudentController {
         cm.CookieMake(request, response, token);
         map.put("token", token);
         return map;
+
     }
 
 
