@@ -1,12 +1,33 @@
 import React from 'react';
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
+import { createMuiTheme, MuiThemeProvider } from '@material-ui/core';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 
 import rootReducer from './modules';
+
+const theme = createMuiTheme({
+  // typography: {
+  //   fontFamily: 'SCDream',
+  // },
+  // palette: {
+  //   primary: {
+  //     main: '#7dabd0',
+  //     contrastText: '#fff',
+  //   },
+  //   secondary: {
+  //     main: '#de586d',
+  //     contrastText: '#fff',
+  //   },
+  //   warning: {
+  //     main: '#ecdb54',
+  //     contrastText: '#fff',
+  //   },
+  // },
+});
 
 const store = createStore(
   rootReducer,
@@ -15,7 +36,9 @@ const store = createStore(
 
 ReactDOM.render(
   <Provider store={store}>
-    <App />
+    <MuiThemeProvider theme={theme}>
+      <App />
+    </MuiThemeProvider>
   </Provider>,
 
   document.getElementById('root'),

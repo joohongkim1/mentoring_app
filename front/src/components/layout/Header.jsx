@@ -196,7 +196,7 @@ const Header = (props) => {
     <>
       <CssBaseline />
       <HideOnScroll {...props}>
-        <AppBar>
+        <AppBar color="default">
           <Toolbar>
             <Typography className={classes.title} variant="h6" noWrap>
               자소서. 취업. 멘토링

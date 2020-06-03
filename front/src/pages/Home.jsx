@@ -2,16 +2,39 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import Header from '../components/layout/Header';
 import { Box } from '@material-ui/core';
+import { makeStyles } from '@material-ui/styles';
+import mainBanner from '../assets/images/main_banner.png';
 
-const Home = () => (
-  <>
-    <Header />
-    <Link to="/signup">회원가입</Link>
-    <Link to="/login">로그인</Link>
-    <p>Home</p>
+const useStyles = makeStyles((theme) => ({
+  page: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    // color : lightBlue[300]
+  },
+  banner: {
+    width: '60%',
+  },
+  bannerBackground: {
+    backgroundColor: '#d9d9d9',
+  },
+}));
 
-    {/* Test용 */}
-    <Box height={5000}></Box>
-  </>
-);
+const Home = () => {
+  const classes = useStyles();
+
+  return (
+    <>
+      <Header />
+      <div className={classes.page}>
+        <Box display="flex" flexDirection="column" alignItems="center" className={classes.bannerBackground}>
+          <img src={mainBanner} alt="main banner" className={classes.banner} />
+        </Box>
+      </div>
+
+      {/* Test용 */}
+      <Box height={5000}></Box>
+    </>
+  );
+};
 export default Home;
