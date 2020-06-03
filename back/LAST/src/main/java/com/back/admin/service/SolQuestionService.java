@@ -1,7 +1,9 @@
 package com.back.admin.service;
 
-import com.back.admin.domain.so_question.SolQuestion;
-import com.back.admin.domain.so_question.SolQuestionRepository;
+import com.back.admin.domain.sol_question.SolQuestion;
+import com.back.admin.domain.sol_question.SolQuestionRepository;
+import com.back.admin.domain.student.Student;
+import com.back.admin.domain.student.StudentRepository;
 import com.back.admin.web.dto.sol_question.SolQuestionSaveRequestDto;
 import com.back.admin.web.dto.sol_question.SolQuestionUpdateRequestDto;
 import lombok.RequiredArgsConstructor;
@@ -14,6 +16,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class SolQuestionService {
     private final SolQuestionRepository solQuestionRepository;
+    private final StudentRepository studentRepository;
 
     // 모든 질문 보여주기 selectAll
     public List<SolQuestion> selectAll() {
@@ -27,12 +30,24 @@ public class SolQuestionService {
         return solQuestionRepository.findByStu_no(stu_no);
     }
 
+    // 특정 회사의 질문 보여주기
+    @Transactional
+    public SolQuestion findByCompany(String sol_q_company) {
+        return solQuestionRepository.findByCompany(sol_q_company);
+    }
+
+    // 특정 sol_q_want_job(직무)의 질문 보여주기
+    @Transactional
+    public SolQuestion findByWant_job(String sol_q_want_job) {
+        return solQuestionRepository.findByWant_job(sol_q_want_job);
+    }
+
 
     // 질문 저장 save
     @Transactional
     public boolean save(Long stu_no, SolQuestionSaveRequestDto solQuestionSaveRequestDto) {
-        SolQuestion solQuestion = solQuestionRepository.findByStu_no(stu_no);
-        solQuestionRepository.save(solQuestionSaveRequestDto.toEntity(solQuestion));
+        Student student = studentRepository.findBystu_no(stu_no);
+        solQuestionRepository.save(solQuestionSaveRequestDto.toEntity(student));
         return true;
     }
 
@@ -44,8 +59,8 @@ public class SolQuestionService {
         Long sol_q_stu_id = solQuestion.getStudentsolq().getStu_no();
         if (sol_q_stu_id.equals(stu_no)) { //수정 권한이 있어
             solQuestion.update(solQuestionUpdateRequestDto.getSol_q_title(), solQuestionUpdateRequestDto.getSol_q_company(),
-                    solQuestionUpdateRequestDto.getSol_q_want_job(), solQuestionUpdateRequestDto.getSol_q_time(),
-                    solQuestionUpdateRequestDto.getSol_q_content());
+                    solQuestionUpdateRequestDto.getSol_q_want_job(), solQuestionUpdateRequestDto.getSol_q_content(),
+                    solQuestionUpdateRequestDto.getSol_q_tag());
             return true;
         } else { //수정 권한이 없어
             return false;

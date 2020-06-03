@@ -38,7 +38,7 @@ public class ExperienceService {
     @Transactional
     public void save(ExperienceSaveRequestDto experienceSaveRequestDto, Long stu_no) {
         Student student = studentRepository.findBystu_no(stu_no);
-        experienceRepository.save(experienceSaveRequestDto.toEntity(student, stu_no));
+        experienceRepository.save(experienceSaveRequestDto.toEntity(student));
     }
 
 
@@ -49,7 +49,8 @@ public class ExperienceService {
         String exp_stu_id = experience.getStuexperience().getStu_id_email();
         if (exp_stu_id.equals(stu_id_email)) { //수정 권한이 있어
             experience.update(experienceUpdateRequestDto.getExperience_start(), experienceUpdateRequestDto.getExperience_end(),
-                    experienceUpdateRequestDto.getExperience_title(), experienceUpdateRequestDto.getExperience_content());
+                    experienceUpdateRequestDto.getExperience_title(), experienceUpdateRequestDto.getExperience_content(),
+                    experienceUpdateRequestDto.getExperience_tag());
             return true;
         } else { //수정 권한이 없어
             return false;

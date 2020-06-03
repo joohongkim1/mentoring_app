@@ -1,4 +1,4 @@
-package com.back.admin.domain.so_question;
+package com.back.admin.domain.sol_question;
 
 import com.back.admin.domain.BaseTimeEntity;
 import com.back.admin.domain.student.Student;
@@ -25,13 +25,13 @@ public class SolQuestion extends BaseTimeEntity {
     private String sol_q_want_job;
 
     @Column(length = 200)
-    private String sol_q_time;  // time이 뭐였지?
-
-    @Column(length = 200)
     private String sol_q_company;
 
     @Column(columnDefinition = "TEXT")
     private String sol_q_content;
+
+    @Column(columnDefinition = "TEXT")
+    private String sol_q_tag;
 
     // 1:N = student:sol_q
     @ManyToOne(optional = false)
@@ -40,21 +40,22 @@ public class SolQuestion extends BaseTimeEntity {
 
     @Builder
     public SolQuestion(String sol_q_title, String sol_q_want_job,
-                       String sol_q_time, String sol_q_company, String sol_q_content, Student studentsolq) {
+                       String sol_q_company, String sol_q_content,
+                       String sol_q_tag, Student studentsolq) {
         this.sol_q_title=sol_q_title;
         this.sol_q_want_job=sol_q_want_job;
-        this.sol_q_time=sol_q_time;
         this.sol_q_company=sol_q_company;
         this.sol_q_content=sol_q_content;
+        this.sol_q_tag=sol_q_tag;
         this.studentsolq=studentsolq;
     }
 
     public void update(String sol_q_title, String sol_q_want_job,
-                       String sol_q_time, String sol_q_company, String sol_q_content) {
+                       String sol_q_company, String sol_q_content, String sol_q_tag) {
         this.sol_q_title=sol_q_title;
         this.sol_q_want_job=sol_q_want_job;
-        this.sol_q_time=sol_q_time;
         this.sol_q_company=sol_q_company;
         this.sol_q_content=sol_q_content;
+        this.sol_q_tag=sol_q_tag;
     }
 }

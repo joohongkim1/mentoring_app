@@ -1,16 +1,17 @@
 package com.back.admin.domain.mentor;
 
-import com.back.admin.domain.BaseTimeEntity;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 
 @Getter
 @NoArgsConstructor
 @Entity
-public class Mentor extends BaseTimeEntity {
+public class Mentor{
     @Id  // pk
     @GeneratedValue(strategy = GenerationType.IDENTITY)  // auto-increment
     // stu_no:1,2,3,4,올라가는 값인데, int보다 long이 큰 의미라서 int stu_no보다 Long stu_no을 보편적으로 사용합니다

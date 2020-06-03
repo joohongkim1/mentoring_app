@@ -14,7 +14,7 @@ public interface ExperienceRepository extends JpaRepository<Experience,Long> {
 //    List<Experience> findAllByAsc();
 
     // 학생별 경험 보여주기
-    @Query("select e from Experience e where e.stu_no=:stu_no")
+    @Query("select e from Experience e where e.stuexperience=:stu_no")
     List<ExperienceResponseDto> findByStu_no(@Param("stu_no") Long stu_no);
 
     // 하나하나경험 보여주기
