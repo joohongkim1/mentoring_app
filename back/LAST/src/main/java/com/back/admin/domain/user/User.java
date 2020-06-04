@@ -1,6 +1,7 @@
 package com.back.admin.domain.user;
 
 import com.back.admin.domain.experience.Experience;
+import com.back.admin.domain.mentor.Mentor;
 import com.back.admin.domain.sol_question.SolQuestion;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Builder;
@@ -54,6 +55,11 @@ public class User {
     @OneToMany(cascade=CascadeType.ALL, mappedBy = "studentsolq")
     @JsonManagedReference
     private List<SolQuestion> solquestion=new ArrayList<>();
+
+    // 1:N = student:mentor
+    @OneToMany(cascade=CascadeType.ALL, mappedBy = "mentor")
+    @JsonManagedReference
+    private List<Mentor> mentor=new ArrayList<>();
 
 
     @Builder

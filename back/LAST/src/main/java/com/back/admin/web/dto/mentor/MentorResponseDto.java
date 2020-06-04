@@ -11,7 +11,6 @@ public class MentorResponseDto {
 
     private Long mentor_no;
     private String mentor_identification_url;
-    private Boolean mentor_check;
     private String mentor_company;
     private String mentor_job;
 
@@ -19,8 +18,8 @@ public class MentorResponseDto {
     public MentorResponseDto(Mentor entity) {
         this.mentor_no = entity.getMentor_no();
         this.mentor_identification_url = entity.getMentor_identification_url();
-        this.mentor_check = entity.getMentor_check();
         this.mentor_company = entity.getMentor_company();
         this.mentor_job = entity.getMentor_job();
     }
+
 }

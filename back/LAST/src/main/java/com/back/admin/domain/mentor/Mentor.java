@@ -1,5 +1,7 @@
 package com.back.admin.domain.mentor;
 
+import com.back.admin.domain.user.User;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,15 +26,20 @@ public class Mentor{
     @Column
     private String mentor_job;  // 멘토 직무
 
+    // 1:N = student:mentor
+    @ManyToOne(optional = false)
+    @JsonBackReference
+    private User mentor;
+
 
     @Builder
-    public Mentor(String mentor_identification_url, String mentor_company, String mentor_job) {
+    public Mentor(String mentor_identification_url, String mentor_company, String mentor_job, User mentor) {
         this.mentor_identification_url = mentor_identification_url;
         this.mentor_company = mentor_company;
         this.mentor_job = mentor_job;
+        this.mentor = mentor;
     }
 
-    // 회원가입 이후, 수정할 수 있는 정보들
     public void update(String mentor_identification_url,String mentor_company, String mentor_job) {
         this.mentor_identification_url = mentor_identification_url;
         this.mentor_company = mentor_company;

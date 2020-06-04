@@ -26,11 +26,9 @@ public class UserController {
     private final UserService userService;
     private final JwtService jwtService;
 
-    // 쿠키
     private CookieManage cm = new CookieManage();
 
 
-    //모든 유저의 정보를 드린다.
     @ApiOperation("모든 유저의 정보를 출력합니다.")
     @GetMapping("/all")
     public List<User> selectAll() {
@@ -38,7 +36,6 @@ public class UserController {
     }
 
 
-    // 회원 가입
     @ApiOperation("회원가입 진행")
     @PostMapping(value = "/signup", consumes = "application/json")
     public void signUp(@RequestBody UserSaveRequestDto userSaveRequestDto) {
@@ -47,14 +44,14 @@ public class UserController {
         userService.signUp(userSaveRequestDto);
     }
 
-    // 아이디 중복 확인(회원가입시)
+
     @ApiOperation("회원가입시 아이디 중복 확인")
     @PostMapping("/checkid/{stu_id_email}")
     public boolean checkBystu_id_email(@PathVariable String user_id_email) {
         return userService.checkBystu_id_email(user_id_email);
     }
 
-    // 비밀번호 찾기 -> 이메일로 보내주기
+
     @ApiOperation("비밀번호 찾기")
     @PostMapping("/findpass/{stu_id_email}")
     public Map findPass(@PathVariable String user_id_email) {
@@ -63,7 +60,7 @@ public class UserController {
         return map;
     }
 
-    // 로그인
+
     @ApiOperation("로그인 -> Authorization 발행")
     @PostMapping("/signin")
     public Map signIn(@RequestBody UserJwtRequestDto userJwtRequestDto, HttpServletResponse response, HttpServletRequest request) {
@@ -90,7 +87,6 @@ public class UserController {
     }
 
 
-    // 회원 정보 수정
     @ApiOperation("회원정보 수정 -> Authorization필요")
     @PutMapping()
     public Map update(HttpServletResponse response, HttpServletRequest request,
@@ -114,12 +110,9 @@ public class UserController {
         cm.CookieMake(request, response, token);
         map.put("token", token);
         return map;
-
     }
 
 
-
-    // 로그아웃
     @ApiOperation("로그아웃 -> Authorization 필요")
     @GetMapping("/logout")
     public void logOut(HttpServletResponse response, HttpServletRequest request) {
@@ -127,7 +120,6 @@ public class UserController {
     }
 
 
-    // 삭제
     @ApiOperation("회원 탈퇴 -> Authorization필요(하면 500에러남)")
     @DeleteMapping()
     public void delete(@RequestBody UserDeleteRequestDto userDeleteRequestDto,
@@ -148,7 +140,6 @@ public class UserController {
     }
 
 
-    // 암호화
     public static String encrypt(String rawpass) {
         try {
             MessageDigest md = MessageDigest.getInstance("SHA-256");
@@ -173,10 +164,7 @@ public class UserController {
         }
     }
 
-    static String Static_access_Token = null;
 
-
-    // 학생 상태 변경 -> 일반:0, 우수:1
     @ApiOperation("학생 상태 변경 -> 일반:0, 우수:1")
     @PutMapping("/change/auth")
     public User change_stu_auth(@RequestBody UserAuthRequestDto userAuthRequestDto) {
@@ -187,7 +175,7 @@ public class UserController {
         return userService.findBystu_id_email(stu_id_email);
     }
 
-    // 학생 상태에 따른 리스트 보여주기
+
     @ApiOperation("학생 상태에 따른 리스트 보여주기")
     @PostMapping("/manage/{stu_auth}")
     public List<UserResponseDto> show_by_stu_auth(@PathVariable int stu_auth) {

@@ -27,7 +27,6 @@ public class SolQuestionController {
     private final JwtService jwtService;
 
 
-    // 모든 질문 보여주기
     @ApiOperation("모든 학생의 질문을 보여준다")
     @GetMapping("/all")
     public List<SolQuestion> selectAll() {
@@ -35,7 +34,6 @@ public class SolQuestionController {
     }
 
 
-    // 특정 학생의 질문 보여주기
     @ApiOperation("특정 학생의 질문을 보여주기")
     @GetMapping("/{stu_no}")  // stu_no로 할지 stu_id로 할지 결정이 필요할것같아여~
     public SolQuestion selectAll(@PathVariable Long stu_no) {
@@ -43,7 +41,6 @@ public class SolQuestionController {
     }
 
 
-    // 특정 회사의 질문 보여주기
     @ApiOperation("특정 회사 질문을 보여주기")
     @GetMapping("/{sol_q_company}")  // stu_no로 할지 stu_id로 할지 결정이 필요할것같아여~
     public SolQuestion findByCompany(@PathVariable String sol_q_company) {
@@ -51,7 +48,6 @@ public class SolQuestionController {
     }
 
 
-    // 특정 sol_q_want_job(직무)의 질문 보여주기
     @ApiOperation("특정 직무 질문을 보여주기")
     @GetMapping("/{sol_q_want_job}")  // stu_no로 할지 stu_id로 할지 결정이 필요할것같아여~
     public SolQuestion findByWant_job(@PathVariable String sol_q_want_job) {
@@ -59,13 +55,12 @@ public class SolQuestionController {
     }
 
 
-    // 질문 저장
     @ApiOperation("질문 저장 -> 권한 있을 때")
     @PostMapping("/{stu_no}")
     public Map save(HttpServletRequest httpServletRequest,
                     @PathVariable Long stu_no, @RequestBody SolQuestionSaveRequestDto solQuestionSaveRequestDto) {
         String jwt = httpServletRequest.getHeader("Authorization");
-        //유효성 검사
+
         if (!jwtService.isUsable(jwt)) throw new UnauthorizedException(); // 예외
         UserJwtResponseDto student=jwtService.getUser(jwt);
         Map<String,String> map=new HashMap<>();
@@ -82,13 +77,12 @@ public class SolQuestionController {
     }
 
 
-    // 질문 수정
     @ApiOperation("질문 수정 -> 권한 있을 때")
     @PutMapping("/{sol_q_no}")
     public Map update(HttpServletRequest httpServletRequest, @PathVariable Long sol_q_no,
                       @RequestBody SolQuestionUpdateRequestDto solQuestionUpdateRequestDto) {
         String jwt = httpServletRequest.getHeader("Authorization");
-        //유효성 검사
+
         if (!jwtService.isUsable(jwt)) throw new UnauthorizedException(); // 예외
         UserJwtResponseDto user=jwtService.getUser(jwt);
         Map<String,String> map=new HashMap<>();
@@ -103,12 +97,12 @@ public class SolQuestionController {
         return map;
     }
 
-    // 질문 삭제
+
     @ApiOperation("질문 삭제 -> Authorization필요(권한이 있을때 삭제?)")
     @DeleteMapping("/{sol_q_no}")
     public Map delete(@PathVariable Long sol_q_no, HttpServletRequest httpServletRequest){
         String jwt = httpServletRequest.getHeader("Authorization");
-        //유효성 검사
+
         if (!jwtService.isUsable(jwt)) throw new UnauthorizedException(); // 예외
         UserJwtResponseDto user=jwtService.getUser(jwt);
 

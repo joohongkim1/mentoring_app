@@ -29,7 +29,7 @@ public interface UserRepository extends JpaRepository<User,Long> {
     @Query("update User u set u.user_auth=:user_auth where u.user_id_email=:user_id_email")
     void change_User_auth(@Param("user_id_email") String user_id_email, @Param("user_auth") int user_auth);
 
-
+    @Modifying
     @Query("select u from User u where u.user_auth=:user_auth")
     List<User> findByUser_auth(@Param("user_auth") int user_auth);
 }
