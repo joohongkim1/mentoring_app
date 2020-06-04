@@ -1,15 +1,13 @@
 package com.back.admin.web.dto;
 
 import com.back.admin.domain.experience.Experience;
-import com.back.admin.domain.student.Student;
 import com.back.admin.service.ExperienceService;
-import com.back.admin.service.StudentService;
 import com.back.admin.service.jwt.JwtService;
 import com.back.admin.service.jwt.UnauthorizedException;
 import com.back.admin.web.dto.experience.ExperienceResponseDto;
 import com.back.admin.web.dto.experience.ExperienceSaveRequestDto;
 import com.back.admin.web.dto.experience.ExperienceUpdateRequestDto;
-import com.back.admin.web.dto.student.StudentJwtResponseDto;
+import com.back.admin.web.dto.user.UserJwtResponseDto;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -47,15 +45,15 @@ public class ExperienceController {
 
     // 경험 저장
     @ApiOperation("경험 저장 -> 권한 있을 때")
-    @PostMapping("/save/{stu_no}")
+    @PostMapping("/{stu_no}")
     public Map save(@PathVariable Long stu_no, HttpServletRequest httpServletRequest,
-                    HttpServletResponse httpServletResponse, @RequestBody ExperienceSaveRequestDto experienceSaveRequestDto) {
+                    @RequestBody ExperienceSaveRequestDto experienceSaveRequestDto) {
         String jwt = httpServletRequest.getHeader("Authorization");
         //유효성 검사
         if (!jwtService.isUsable(jwt)) throw new UnauthorizedException(); // 예외
-        StudentJwtResponseDto user = jwtService.getUser(jwt);
+        UserJwtResponseDto user = jwtService.getUser(jwt);
 
-        if (user.getStu_no().equals(stu_no)) {
+        if (user.getUser_no().equals(stu_no)) {
             experienceService.save(experienceSaveRequestDto, stu_no);
         }
         Map<String, String> map = new HashMap<>();
@@ -70,14 +68,15 @@ public class ExperienceController {
     // service단에서 boolean으로 맞춰둠. equals부분 확인필요!!!
     @ApiOperation("경험 수정 -> 권한 있을 때")
     @PutMapping("/{exprience_no}")
-    public Map update(@PathVariable Long exprience_no, HttpServletRequest httpServletRequest , @RequestBody ExperienceUpdateRequestDto experienceUpdateRequestDto) {
+    public Map update(@PathVariable Long exprience_no, HttpServletRequest httpServletRequest,
+                      @RequestBody ExperienceUpdateRequestDto experienceUpdateRequestDto) {
         String jwt = httpServletRequest.getHeader("Authorization");
         //유효성 검사
         if (!jwtService.isUsable(jwt)) throw new UnauthorizedException(); // 예외
-        StudentJwtResponseDto user=jwtService.getUser(jwt);
+        UserJwtResponseDto user=jwtService.getUser(jwt);
         Map<String,String> map=new HashMap<>();
 
-        boolean state=experienceService.update(exprience_no,user.getStu_id_email(), experienceUpdateRequestDto);
+        boolean state=experienceService.update(exprience_no,user.getUser_id_email(), experienceUpdateRequestDto);
         if(state){
 
             map.put("result","리뷰가 수정되었습니다~");
@@ -95,10 +94,10 @@ public class ExperienceController {
         String jwt = httpServletRequest.getHeader("Authorization");
         //유효성 검사
         if (!jwtService.isUsable(jwt)) throw new UnauthorizedException(); // 예외
-        StudentJwtResponseDto user=jwtService.getUser(jwt);
+        UserJwtResponseDto user=jwtService.getUser(jwt);
 
         Map<String,String> map=new HashMap<>();
-        boolean experience=experienceService.delete(experience_no,user.getStu_id_email());
+        boolean experience=experienceService.delete(experience_no,user.getUser_id_email());
         if(experience){
 
 

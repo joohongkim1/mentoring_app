@@ -1,18 +1,10 @@
 package com.back.admin.web.dto;
 
-import com.back.admin.domain.board.Board;
-import com.back.admin.service.jwt.UnauthorizedException;
-import com.back.admin.web.dto.board.BoardResponseDto;
-import com.back.admin.web.dto.board.BoardSaveRequestDto;
-import com.back.admin.web.dto.student.StudentJwtResponseDto;
 import com.google.gson.Gson;
 import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;

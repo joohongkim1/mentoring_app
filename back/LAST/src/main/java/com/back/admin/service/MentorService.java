@@ -37,7 +37,7 @@ public class MentorService {
         // insert 전에 테이블을 검색해서 중복된 이메일이 있는지 확인한다.
 
         //우리 회원가입 로직은 이메일로만 중복검사를 실행합니다.!!!
-        if (checkBymentor_id_email(mentorSaveRequestDto.getMentor_id_email())) //이미 이메일이 있으면
+        if (checkBymentor_id_email(mentorSaveRequestDto.toEntity(user_id_email))) //이미 이메일이 있으면
             return false;
         mentorRepository.save(mentorSaveRequestDto.toEntity());
         return true;

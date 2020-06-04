@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 public class SolQuestionResponseDto {
+
     private Long sol_q_no;
     private String sol_q_title;
     private String sol_q_want_job;

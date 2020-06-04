@@ -6,7 +6,7 @@ import com.back.admin.service.jwt.JwtService;
 import com.back.admin.service.jwt.UnauthorizedException;
 import com.back.admin.web.dto.sol_question.SolQuestionSaveRequestDto;
 import com.back.admin.web.dto.sol_question.SolQuestionUpdateRequestDto;
-import com.back.admin.web.dto.student.StudentJwtResponseDto;
+import com.back.admin.web.dto.user.UserJwtResponseDto;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -37,7 +37,7 @@ public class SolQuestionController {
 
     // 특정 학생의 질문 보여주기
     @ApiOperation("특정 학생의 질문을 보여주기")
-    @GetMapping("show/{stu_no}")  // stu_no로 할지 stu_id로 할지 결정이 필요할것같아여~
+    @GetMapping("/{stu_no}")  // stu_no로 할지 stu_id로 할지 결정이 필요할것같아여~
     public SolQuestion selectAll(@PathVariable Long stu_no) {
         return solQuestionService.findByStu_no(stu_no);
     }
@@ -45,7 +45,7 @@ public class SolQuestionController {
 
     // 특정 회사의 질문 보여주기
     @ApiOperation("특정 회사 질문을 보여주기")
-    @GetMapping("show/{sol_q_company}")  // stu_no로 할지 stu_id로 할지 결정이 필요할것같아여~
+    @GetMapping("/{sol_q_company}")  // stu_no로 할지 stu_id로 할지 결정이 필요할것같아여~
     public SolQuestion findByCompany(@PathVariable String sol_q_company) {
         return solQuestionService.findByCompany(sol_q_company);
     }
@@ -53,7 +53,7 @@ public class SolQuestionController {
 
     // 특정 sol_q_want_job(직무)의 질문 보여주기
     @ApiOperation("특정 직무 질문을 보여주기")
-    @GetMapping("show/{sol_q_want_job}")  // stu_no로 할지 stu_id로 할지 결정이 필요할것같아여~
+    @GetMapping("/{sol_q_want_job}")  // stu_no로 할지 stu_id로 할지 결정이 필요할것같아여~
     public SolQuestion findByWant_job(@PathVariable String sol_q_want_job) {
         return solQuestionService.findByWant_job(sol_q_want_job);
     }
@@ -67,7 +67,7 @@ public class SolQuestionController {
         String jwt = httpServletRequest.getHeader("Authorization");
         //유효성 검사
         if (!jwtService.isUsable(jwt)) throw new UnauthorizedException(); // 예외
-        StudentJwtResponseDto student=jwtService.getUser(jwt);
+        UserJwtResponseDto student=jwtService.getUser(jwt);
         Map<String,String> map=new HashMap<>();
 
         if (solQuestionService.save(stu_no, solQuestionSaveRequestDto)) {
@@ -85,15 +85,15 @@ public class SolQuestionController {
     // 질문 수정
     @ApiOperation("질문 수정 -> 권한 있을 때")
     @PutMapping("/{sol_q_no}")
-    public Map update(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse,
-                      @RequestBody SolQuestionUpdateRequestDto solQuestionUpdateRequestDto, @PathVariable Long sol_q_no) {
+    public Map update(HttpServletRequest httpServletRequest, @PathVariable Long sol_q_no,
+                      @RequestBody SolQuestionUpdateRequestDto solQuestionUpdateRequestDto) {
         String jwt = httpServletRequest.getHeader("Authorization");
         //유효성 검사
         if (!jwtService.isUsable(jwt)) throw new UnauthorizedException(); // 예외
-        StudentJwtResponseDto user=jwtService.getUser(jwt);
+        UserJwtResponseDto user=jwtService.getUser(jwt);
         Map<String,String> map=new HashMap<>();
 
-        boolean question=solQuestionService.update(sol_q_no,user.getStu_no(), solQuestionUpdateRequestDto);
+        boolean question=solQuestionService.update(sol_q_no,user.getUser_no(), solQuestionUpdateRequestDto);
         if(question){
 
             map.put("result","질문이 수정되었습니다~");
@@ -106,15 +106,14 @@ public class SolQuestionController {
     // 질문 삭제
     @ApiOperation("질문 삭제 -> Authorization필요(권한이 있을때 삭제?)")
     @DeleteMapping("/{sol_q_no}")
-    public Map delete(@PathVariable Long sol_q_no,
-                      HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse){
+    public Map delete(@PathVariable Long sol_q_no, HttpServletRequest httpServletRequest){
         String jwt = httpServletRequest.getHeader("Authorization");
         //유효성 검사
         if (!jwtService.isUsable(jwt)) throw new UnauthorizedException(); // 예외
-        StudentJwtResponseDto user=jwtService.getUser(jwt);
+        UserJwtResponseDto user=jwtService.getUser(jwt);
 
         Map<String,String> map=new HashMap<>();
-        boolean question=solQuestionService.delete(sol_q_no, user.getStu_no());
+        boolean question=solQuestionService.delete(sol_q_no, user.getUser_no());
         if(question){
             map.put("result","자소서가 삭제되었습니다~");
         }else{

@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Getter
 public class MentorAuthRequestDto {
+
     private String mentor_id_email;
     private int mentor_auth;
 
