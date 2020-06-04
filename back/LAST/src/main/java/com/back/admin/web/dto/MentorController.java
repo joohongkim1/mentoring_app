@@ -1,6 +1,7 @@
 package com.back.admin.web.dto;
 
 import com.back.admin.domain.mentor.Mentor;
+import com.back.admin.domain.user.User;
 import com.back.admin.service.MentorService;
 import com.back.admin.service.jwt.JwtService;
 import com.back.admin.service.jwt.UnauthorizedException;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @CrossOrigin("*")
@@ -25,8 +27,14 @@ public class MentorController {
     private final MentorService mentorService;
     private final JwtService jwtService;
 
+    @ApiOperation("모든 멘토의 정보를 출력합니다.")
+    @GetMapping("/all")
+    public List<Mentor> selectAll() {
+        return mentorService.selectAll();
+    }
 
-    @ApiOperation("특정 학생의 질문을 보여주기")
+
+    @ApiOperation("특정 멘토 보여주기")
     @GetMapping("/{mentor_no}")  // stu_no로 할지 stu_id로 할지 결정이 필요할것같아여~
     public Mentor selectAll(@PathVariable Long mentor_no) {
         return mentorService.findByMentor_no(mentor_no);
@@ -75,7 +83,7 @@ public class MentorController {
     }
 
 
-    @ApiOperation("질문 삭제 -> Authorization필요(권한이 있을때 삭제?)")
+    @ApiOperation("멘토 삭제 -> Authorization필요(권한이 있을때 삭제?)")
     @DeleteMapping("/{mentor_no}")
     public Map delete(@PathVariable Long mentor_no, HttpServletRequest httpServletRequest){
         String jwt = httpServletRequest.getHeader("Authorization");

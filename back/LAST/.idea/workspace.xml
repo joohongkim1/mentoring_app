@@ -69,22 +69,22 @@
     <expand>
       <path>
         <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
-        <item name="lastproject" type="feb32156:DbDataSourceImpl" />
+        <item name="project" type="feb32156:DbDataSourceImpl" />
       </path>
       <path>
         <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
-        <item name="lastproject" type="feb32156:DbDataSourceImpl" />
+        <item name="project" type="feb32156:DbDataSourceImpl" />
         <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
       </path>
       <path>
         <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
-        <item name="lastproject" type="feb32156:DbDataSourceImpl" />
+        <item name="project" type="feb32156:DbDataSourceImpl" />
         <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
         <item name="sys: schema" type="76f4a085:MysqlImplModel$Schema" />
       </path>
       <path>
         <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
-        <item name="lastproject" type="feb32156:DbDataSourceImpl" />
+        <item name="project" type="feb32156:DbDataSourceImpl" />
         <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
         <item name="sys: schema" type="76f4a085:MysqlImplModel$Schema" />
         <item name="tables" type="d4e8921:DatabaseStructure$FamilyGroup" />
@@ -138,6 +138,7 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="DatabaseDriversLRU" value="mysql" />
     <property name="RequestMappingsPanelOrder0" value="0" />
     <property name="RequestMappingsPanelOrder1" value="1" />
     <property name="RequestMappingsPanelWidth0" value="75" />
@@ -166,12 +167,12 @@
             <expand>
               <path>
                 <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
-                <item name="root:lastproject" type="7427dc5b:ServiceModel$ServiceGroupNode" />
+                <item name="root:project" type="7427dc5b:ServiceModel$ServiceGroupNode" />
               </path>
               <path>
                 <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
-                <item name="root:lastproject" type="7427dc5b:ServiceModel$ServiceGroupNode" />
-                <item name="com.intellij.database.console.session.MessageBusSession@2ecb1e88" type="9fbbdea:ServiceModel$ServiceNode" />
+                <item name="root:project" type="7427dc5b:ServiceModel$ServiceGroupNode" />
+                <item name="com.intellij.database.console.session.MessageBusSession@8e567e7" type="9fbbdea:ServiceModel$ServiceNode" />
               </path>
             </expand>
             <select />
@@ -204,6 +205,7 @@
       <workItem from="1591243378050" duration="3198000" />
       <workItem from="1591251401294" duration="8543000" />
       <workItem from="1591260366800" duration="1372000" />
+      <workItem from="1591265182092" duration="2656000" />
     </task>
     <servers />
   </component>
@@ -224,6 +226,10 @@
     </option>
   </component>
   <component name="WindowStateProjectService">
+    <state x="360" y="70" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1591268782381">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="360" y="70" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1536.824@0.0.1536.824" timestamp="1591268782381" />
     <state x="573" y="128" key="#com.intellij.ide.util.MemberChooser" timestamp="1591007233312">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -244,54 +250,54 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="548" y="167" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1591066713385" />
-    <state width="1491" height="242" key="GridCell.Tab.0.bottom" timestamp="1591261837162">
+    <state width="1023" height="210" key="GridCell.Tab.0.bottom" timestamp="1591268857890">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1491" height="242" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1591261837162" />
-    <state width="1491" height="242" key="GridCell.Tab.0.center" timestamp="1591261837161">
+    <state width="1023" height="210" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1591268857890" />
+    <state width="1023" height="210" key="GridCell.Tab.0.center" timestamp="1591268857889">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1491" height="242" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1591261837161" />
-    <state width="1491" height="242" key="GridCell.Tab.0.left" timestamp="1591261837161">
+    <state width="1023" height="210" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1591268857889" />
+    <state width="1023" height="210" key="GridCell.Tab.0.left" timestamp="1591268857872">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1491" height="242" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1591261837161" />
-    <state width="1491" height="242" key="GridCell.Tab.0.right" timestamp="1591261837162">
+    <state width="1023" height="210" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1591268857872" />
+    <state width="1023" height="210" key="GridCell.Tab.0.right" timestamp="1591268857890">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1491" height="242" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1591261837162" />
-    <state width="1491" height="242" key="GridCell.Tab.1.bottom" timestamp="1591261837166">
+    <state width="1023" height="210" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1591268857890" />
+    <state width="1491" height="242" key="GridCell.Tab.1.bottom" timestamp="1591268857825">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1491" height="242" key="GridCell.Tab.1.bottom/0.0.1536.824@0.0.1536.824" timestamp="1591261837166" />
-    <state width="1491" height="242" key="GridCell.Tab.1.center" timestamp="1591261837164">
+    <state width="1491" height="242" key="GridCell.Tab.1.bottom/0.0.1536.824@0.0.1536.824" timestamp="1591268857825" />
+    <state width="1491" height="242" key="GridCell.Tab.1.center" timestamp="1591268857824">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1491" height="242" key="GridCell.Tab.1.center/0.0.1536.824@0.0.1536.824" timestamp="1591261837164" />
-    <state width="1491" height="242" key="GridCell.Tab.1.left" timestamp="1591261837163">
+    <state width="1491" height="242" key="GridCell.Tab.1.center/0.0.1536.824@0.0.1536.824" timestamp="1591268857824" />
+    <state width="1491" height="242" key="GridCell.Tab.1.left" timestamp="1591268857824">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1491" height="242" key="GridCell.Tab.1.left/0.0.1536.824@0.0.1536.824" timestamp="1591261837163" />
-    <state width="1491" height="242" key="GridCell.Tab.1.right" timestamp="1591261837165">
+    <state width="1491" height="242" key="GridCell.Tab.1.left/0.0.1536.824@0.0.1536.824" timestamp="1591268857824" />
+    <state width="1491" height="242" key="GridCell.Tab.1.right" timestamp="1591268857824">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1491" height="242" key="GridCell.Tab.1.right/0.0.1536.824@0.0.1536.824" timestamp="1591261837165" />
-    <state width="194" height="483" key="HiddenNamespacesPopup" timestamp="1591260143883">
+    <state width="1491" height="242" key="GridCell.Tab.1.right/0.0.1536.824@0.0.1536.824" timestamp="1591268857824" />
+    <state width="194" height="483" key="HiddenNamespacesPopup" timestamp="1591268711589">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="194" height="483" key="HiddenNamespacesPopup/0.0.1536.824@0.0.1536.824" timestamp="1591260143883" />
+    <state width="194" height="483" key="HiddenNamespacesPopup/0.0.1536.824@0.0.1536.824" timestamp="1591268711589" />
     <state x="85" y="79" key="SettingsEditor" timestamp="1591261811320">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="85" y="79" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1591261811320" />
-    <state x="476" y="222" width="332" height="374" key="com.intellij.database.actions.DdlActions$DeleteProvider2$1" timestamp="1591066746856">
+    <state x="476" y="222" width="332" height="374" key="com.intellij.database.actions.DdlActions$DeleteProvider2$1" timestamp="1591268670510">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="476" y="222" width="332" height="374" key="com.intellij.database.actions.DdlActions$DeleteProvider2$1/0.0.1536.824@0.0.1536.824" timestamp="1591066746856" />
-    <state x="458" y="236" key="com.intellij.ide.util.TipDialog" timestamp="1591261054173">
+    <state x="476" y="222" width="332" height="374" key="com.intellij.database.actions.DdlActions$DeleteProvider2$1/0.0.1536.824@0.0.1536.824" timestamp="1591268670510" />
+    <state x="458" y="236" key="com.intellij.ide.util.TipDialog" timestamp="1591265268506">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="458" y="236" key="com.intellij.ide.util.TipDialog/0.0.1536.824@0.0.1536.824" timestamp="1591261054173" />
+    <state x="458" y="236" key="com.intellij.ide.util.TipDialog/0.0.1536.824@0.0.1536.824" timestamp="1591265268506" />
     <state x="658" y="0" width="744" height="466" key="dock-window-1" timestamp="1590720469753">
       <screen x="0" y="0" width="1536" height="824" />
     </state>

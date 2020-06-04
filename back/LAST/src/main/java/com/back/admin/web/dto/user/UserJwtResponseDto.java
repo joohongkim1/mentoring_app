@@ -16,7 +16,6 @@ public class UserJwtResponseDto {
     private String user_id_email;
     private String user_password;
     private Long user_total_mileage;
-    private Role role;
 
     public UserJwtResponseDto(User entity) {
         this.user_no = entity.getUser_no();
@@ -27,6 +26,5 @@ public class UserJwtResponseDto {
         this.user_id_email = entity.getUser_id_email();
         this.user_password = entity.getUser_password();
         this.user_total_mileage = entity.getUser_total_mileage();
-        this.role = entity.getRole();
     }
 }

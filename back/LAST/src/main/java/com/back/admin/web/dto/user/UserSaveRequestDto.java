@@ -17,7 +17,6 @@ public class UserSaveRequestDto {
     private String user_id_email;
     private String user_password;
     private Long user_total_mileage;
-    private Role role;
 
     public UserSaveRequestDto(User entity) {
         this.user_auth = entity.getUser_auth();
@@ -27,7 +26,6 @@ public class UserSaveRequestDto {
         this.user_id_email = entity.getUser_id_email();
         this.user_password = entity.getUser_password();
         this.user_total_mileage = entity.getUser_total_mileage();
-        this.role = entity.getRole();
     }
 
     public User toEntity() {
@@ -39,7 +37,6 @@ public class UserSaveRequestDto {
                 .user_id_email(user_id_email)
                 .user_password(user_password)
                 .user_total_mileage(user_total_mileage)
-                .role(role)
                 .build();
     }
 }

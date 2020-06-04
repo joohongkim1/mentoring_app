@@ -42,10 +42,6 @@ public class User {
     @Column
     private Long user_total_mileage;
 
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    private Role role;
-
     // fk -> 1:N = student:experience
     @OneToMany(cascade=CascadeType.ALL, mappedBy = "studentexperience")
     @JsonManagedReference
@@ -64,7 +60,7 @@ public class User {
 
     @Builder
     public User(int user_auth, String user_name, String user_school, String user_major,
-                   String user_id_email, String user_password, Long user_total_mileage, Role role) {
+                   String user_id_email, String user_password, Long user_total_mileage) {
         this.user_auth = user_auth;
         this.user_name = user_name;
         this.user_school = user_school;
@@ -72,7 +68,6 @@ public class User {
         this.user_id_email = user_id_email;
         this.user_password = user_password;
         this.user_total_mileage = user_total_mileage;
-        this.role = role;
     }
 
     // 회원가입 이후, 수정할 수 있는 정보들
