@@ -1,7 +1,7 @@
 package com.back.admin.web.dto.sol_question;
 
 import com.back.admin.domain.sol_question.SolQuestion;
-import com.back.admin.domain.student.Student;
+import com.back.admin.domain.user.User;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -25,14 +25,14 @@ public class SolQuestionSaveRequestDto {
         this.sol_q_tag=entity.getSol_q_tag();
     }
 
-    public SolQuestion toEntity(Student student) {
+    public SolQuestion toEntity(User user) {
         return SolQuestion.builder()
                 .sol_q_title(sol_q_title)
                 .sol_q_want_job(sol_q_want_job)
                 .sol_q_company(sol_q_company)
                 .sol_q_content(sol_q_content)
                 .sol_q_tag(sol_q_tag)
-                .studentsolq(student)
+                .studentsolq(user)
                 .build();
     }
 

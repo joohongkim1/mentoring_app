@@ -13,8 +13,8 @@ public interface SolQuestionRepository extends JpaRepository<SolQuestion,Long> {
     List<SolQuestion> findAll();
 
     // 특정 학생의 질문 보여주기 findBoardByStu_id
-    @Query("select q from SolQuestion q where q.studentsolq.stu_no=:stu_no")
-    SolQuestion findByStu_no(@Param("stu_no") Long stu_no);
+    @Query("select q from SolQuestion q where q.studentsolq.user_no=:user_no")
+    SolQuestion findByUser_no(@Param("user_no") Long user_no);
 
     // 특정 질문 찾기 findBySolQ_no
     @Query("select q from SolQuestion q where q.sol_q_no=:sol_q_no")
