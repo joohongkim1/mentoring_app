@@ -2,8 +2,8 @@ package com.back.admin.service;
 
 import com.back.admin.domain.sol_question.SolQuestion;
 import com.back.admin.domain.sol_question.SolQuestionRepository;
-import com.back.admin.domain.student.Student;
-import com.back.admin.domain.student.StudentRepository;
+import com.back.admin.domain.user.User;
+import com.back.admin.domain.user.UserRepository;
 import com.back.admin.web.dto.sol_question.SolQuestionSaveRequestDto;
 import com.back.admin.web.dto.sol_question.SolQuestionUpdateRequestDto;
 import lombok.RequiredArgsConstructor;
@@ -16,7 +16,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class SolQuestionService {
     private final SolQuestionRepository solQuestionRepository;
-    private final StudentRepository studentRepository;
+    private final UserRepository userRepository;
 
     // 모든 질문 보여주기 selectAll
     public List<SolQuestion> selectAll() {
@@ -26,8 +26,8 @@ public class SolQuestionService {
 
     // 특정 학생의 질문 보여주기 findBoardByStu_id
     @Transactional
-    public SolQuestion findByStu_no(Long stu_no) {
-        return solQuestionRepository.findByStu_no(stu_no);
+    public SolQuestion findByStu_no(Long user_no) {
+        return solQuestionRepository.findByUser_no(user_no);
     }
 
     // 특정 회사의 질문 보여주기
@@ -45,8 +45,8 @@ public class SolQuestionService {
 
     // 질문 저장 save
     @Transactional
-    public boolean save(Long stu_no, SolQuestionSaveRequestDto solQuestionSaveRequestDto) {
-        Student student = studentRepository.findBystu_no(stu_no);
+    public boolean save(Long user_no, SolQuestionSaveRequestDto solQuestionSaveRequestDto) {
+        User student = userRepository.findByUser_no(user_no);
         solQuestionRepository.save(solQuestionSaveRequestDto.toEntity(student));
         return true;
     }
@@ -54,10 +54,10 @@ public class SolQuestionService {
 
     // 질문 수정 update
     @Transactional
-    public boolean update(Long sol_q_no, Long stu_no, SolQuestionUpdateRequestDto solQuestionUpdateRequestDto) {
+    public boolean update(Long sol_q_no, Long user_no, SolQuestionUpdateRequestDto solQuestionUpdateRequestDto) {
         SolQuestion solQuestion = solQuestionRepository.findBySol_q_no(sol_q_no);
-        Long sol_q_stu_id = solQuestion.getStudentsolq().getStu_no();
-        if (sol_q_stu_id.equals(stu_no)) { //수정 권한이 있어
+        Long sol_q_stu_id = solQuestion.getStudentsolq().getUser_no();
+        if (sol_q_stu_id.equals(user_no)) { //수정 권한이 있어
             solQuestion.update(solQuestionUpdateRequestDto.getSol_q_title(), solQuestionUpdateRequestDto.getSol_q_company(),
                     solQuestionUpdateRequestDto.getSol_q_want_job(), solQuestionUpdateRequestDto.getSol_q_content(),
                     solQuestionUpdateRequestDto.getSol_q_tag());
@@ -69,10 +69,10 @@ public class SolQuestionService {
 
     // 질문 삭제 delete
     @Transactional
-    public boolean delete(Long sol_q_no, Long stu_no){
+    public boolean delete(Long sol_q_no, Long user_no){
         SolQuestion solQuestion = solQuestionRepository.findBySol_q_no(sol_q_no);
-        Long sol_q_stu = solQuestion.getStudentsolq().getStu_no();
-        if (sol_q_stu.equals(stu_no)) {
+        Long sol_q_stu = solQuestion.getStudentsolq().getUser_no();
+        if (sol_q_stu.equals(user_no)) {
             solQuestionRepository.delete(solQuestion);
             return true;
         } else {
