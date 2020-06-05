@@ -28,6 +28,14 @@ apply plugin: 'eclipse'
 apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
 //apply plugin: 'application'
+apply plugin: 'war'
+
+
+bootWar {
+    archiveBaseName = 'A104-api'
+    archiveFileName = 'A104.war'
+    archiveVersion = '0.0.1-SNAPSHOT'
+}
 
 
 group 'org.example'
