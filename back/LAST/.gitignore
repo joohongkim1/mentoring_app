@@ -6,6 +6,11 @@
 .settings
 .idea
 .project
+.vscode
+.idea/misc.xml
+.idea/modules.xml
+.idea/s02p31a104.iml
+.idea/vcs.xml
 # Log file
 *.log
 
