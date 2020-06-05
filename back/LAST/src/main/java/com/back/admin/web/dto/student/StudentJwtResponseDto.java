@@ -12,8 +12,7 @@ public class StudentJwtResponseDto {
     private String stu_name;
     private String stu_school;
     private String stu_major;
-    private String stu_id;
-    private String stu_email;
+    private String stu_id_email;
     private Long stu_total_mileage;
 
     public StudentJwtResponseDto(Student entity) {
@@ -22,8 +21,7 @@ public class StudentJwtResponseDto {
         this.stu_name = entity.getStu_name();
         this.stu_school = entity.getStu_school();
         this.stu_major = entity.getStu_major();
-        this.stu_id = entity.getStu_id();
-        this.stu_email = entity.getStu_email();
+        this.stu_id_email = entity.getStu_id_email();
         this.stu_total_mileage = entity.getStu_total_mileage();
     }
 }

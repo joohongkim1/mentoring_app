@@ -6,8 +6,8 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 public class StudentDeleteRequestDto {
-    String stu_id;
-    StudentDeleteRequestDto(String stu_id) {
-        this.stu_id=getStu_id();
+    String stu_id_email;
+    StudentDeleteRequestDto(String stu_id_email) {
+        this.stu_id_email=stu_id_email;
     }
 }
