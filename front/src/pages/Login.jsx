@@ -37,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
   },
   border: {
     borderColor: '#00b08b',
-    //border :"1px 1px 1px 1px",
+    // border :"1px 1px 1px 1px",
     backgroundColor: '#00b08b',
   },
 
@@ -84,6 +84,7 @@ const Login = () => {
     email: '',
     password: '',
   });
+  // eslint-disable-next-line no-unused-vars
   const [cookies, setCookie, removeCookie] = useCookies(['token']);
   const inputProps = {
     classes: {
