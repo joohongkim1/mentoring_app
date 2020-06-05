@@ -1,4 +1,4 @@
-package com.back.admin.web.dto;
+package com.back.admin.web;
 
 import com.google.gson.Gson;
 import io.swagger.annotations.ApiOperation;

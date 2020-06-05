@@ -1,4 +1,4 @@
-package com.back.admin.web.dto;
+package com.back.admin.web;
 
 import com.back.admin.domain.experience.Experience;
 import com.back.admin.service.ExperienceService;
