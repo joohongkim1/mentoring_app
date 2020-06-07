@@ -25,6 +25,12 @@ public class ExperienceService {
     }
 
 
+    // 특정 경험 보여주기
+    public Experience findByExperience(Long experience_no) {
+        return experienceRepository.findByExperience_no(experience_no);
+    }
+
+
     // 학생 개인의 경험 확인하기
     @Transactional
     public List<ExperienceResponseDto> findExperienceByStu_no(Long stu_no) {

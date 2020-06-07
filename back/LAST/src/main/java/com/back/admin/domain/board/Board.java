@@ -23,7 +23,10 @@ public class Board {
     private String board_content;
 
     @Column(columnDefinition = "TEXT")
-    private String board_when;
+    private String board_company;
+
+    @Column
+    private String board_keyword;
 
     // fix
     // experience:board = 1:N
@@ -33,16 +36,20 @@ public class Board {
 
 
     @Builder
-    public Board(String board_question, String board_content, String board_when, Experience experienceboard) {
+    public Board(String board_question, String board_content, String board_company,
+                 String board_keyword, Experience experienceboard) {
         this.board_question = board_question;
         this.board_content = board_content;
         this.experienceboard = experienceboard;
-        this.board_when = board_when;
+        this.board_company = board_company;
+        this.board_keyword = board_keyword;
     }
 
-    public void update(String board_question, String board_content, String board_when) {
+    public void update(String board_question, String board_content,
+                       String board_company, String board_keyword) {
         this.board_question = board_question;
         this.board_content = board_content;
-        this.board_when = board_when;
+        this.board_company = board_company;
+        this.board_keyword = board_keyword;
     }
 }
