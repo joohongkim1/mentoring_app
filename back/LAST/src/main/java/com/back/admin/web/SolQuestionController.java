@@ -64,7 +64,8 @@ public class SolQuestionController {
         UserJwtResponseDto student=jwtService.getUser(jwt);
         Map<String,String> map=new HashMap<>();
 
-        if (solQuestionService.save(stu_no, solQuestionSaveRequestDto)) {
+        if (student.getUser_no().equals(stu_no)) {
+            solQuestionService.save(stu_no, solQuestionSaveRequestDto);
             map.put("result", "질문이 저장되었습니다~");
             System.out.println("질문이 저장되었습니다~");
         } else {

@@ -4,7 +4,6 @@ import com.back.admin.domain.board.Board;
 import com.back.admin.domain.board.BoardRepository;
 import com.back.admin.domain.experience.Experience;
 import com.back.admin.domain.experience.ExperienceRepository;
-import com.back.admin.web.dto.board.BoardResponseDto;
 import com.back.admin.web.dto.board.BoardSaveRequestDto;
 import com.back.admin.web.dto.board.BoardUpdateRequestDto;
 import lombok.RequiredArgsConstructor;
@@ -49,12 +48,13 @@ public class BoardService {
         Long board_stu_id = board.getExperienceboard().getStudentexperience().getUser_no();
         if (board_stu_id.equals(stu_no)) { //수정 권한이 있어
             board.update(boardUpdateRequestDto.getBoard_question(), boardUpdateRequestDto.getBoard_content(),
-                    boardUpdateRequestDto.getBoard_when());
+                    boardUpdateRequestDto.getBoard_company(),boardUpdateRequestDto.getBoard_keyword());
             return true;
         } else { //수정 권한이 없어
             return false;
         }
     }
+
 
     // 자소서 삭제 delete
     @Transactional
@@ -67,6 +67,20 @@ public class BoardService {
         } else {
             return false;
         }
-
     }
+
+
+    // 특정 회사+년도로 자소서 찾기(ex. 2020상반기 삼성) findByCompany
+    @Transactional
+    public Board findByCompany(String board_company) {
+        return boardRepository.findByBoard_company(board_company);
+    }
+
+
+    // 특정 키워드로 자소서 찾기(ex. 2020상반기 삼성) findByKeyword
+    @Transactional
+    public Board findByKeyword(String board_keyword) {
+        return boardRepository.findByBoard_keyword(board_keyword);
+    }
+
 }

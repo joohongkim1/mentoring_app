@@ -1,6 +1,5 @@
 package com.back.admin.web.dto.user;
 
-import com.back.admin.domain.user.Role;
 import com.back.admin.domain.user.User;
 import lombok.Builder;
 import lombok.Getter;

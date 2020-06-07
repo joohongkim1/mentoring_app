@@ -51,7 +51,8 @@ public class MentorController {
         UserJwtResponseDto student=jwtService.getUser(jwt);
         Map<String,String> map=new HashMap<>();
 
-        if (mentorService.save(user_no, mentorSaveRequestDto)) {
+        if (student.getUser_no().equals(user_no)) {
+            mentorService.save(user_no, mentorSaveRequestDto);
             map.put("result", "멘토 신청이 되었습니다~");
             System.out.println("신청이 되었습니다~");
         } else {
