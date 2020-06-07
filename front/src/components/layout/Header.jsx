@@ -6,6 +6,7 @@ import { fade, makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
+import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Badge from '@material-ui/core/Badge';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -17,6 +18,8 @@ import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import { useHistory } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
+
+import Logo from '../../assets/images/logo.png';
 
 const HideOnScroll = (props) => {
   const { children, window } = props;
@@ -100,6 +103,9 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.up('md')]: {
       display: 'none',
     },
+  },
+  logo: {
+    height: '2.5rem',
   },
 }));
 
@@ -198,11 +204,24 @@ const Header = (props) => {
       <HideOnScroll {...props}>
         <AppBar color="default">
           <Toolbar>
-            <Typography className={classes.title} variant="h6" noWrap>
-              자소서. 취업. 멘토링
-            </Typography>
+            <Button
+              onClick={() => {
+                history.push('/');
+              }}
+            >
+              <img className={classes.logo} src={Logo} alt="logo" />
+            </Button>
             <div className={classes.grow} />
             <div className={classes.sectionDesktop}>
+              <Button color="inherit" size="large">
+                자소서
+              </Button>
+              <Button color="inherit" size="large">
+                취업정보
+              </Button>
+              <Button color="inherit" size="large">
+                멘토링
+              </Button>
               <IconButton
                 aria-label="show 17 new notifications"
                 color="inherit"
