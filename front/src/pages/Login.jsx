@@ -55,6 +55,7 @@ const useStyles = makeStyles((theme) => ({
   },
   boxWrapper: {
     width: '40vw',
+    maxWidth: '400px',
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
@@ -193,30 +194,28 @@ const Login = () => {
           >
             로그인 하기
           </Button>
-          <p>- 또는 -</p>
-          <GoogleLogin
-            clientId={process.env.REACT_APP_GOOGLE_LOGIN_CLIENT_ID}
-            buttonText="------------------------------구글 계정으로 로그인"
-            onSuccess={responseGoogleSuccess}
-            onFailure={responseGoogleFail}
-            cookiePolicy="single_host_origin"
-          />
         </form>
         {/* </Paper> */}
-        <Typography
-          className={classes.textRegisterText}
-          color="textSecondary"
-          variant="body2"
-        >
-          <Box>
+        <Box display="flex" justifyContent="flex-end">
+          <Typography
+            className={classes.textRegisterText}
+            color="textSecondary"
+            variant="body2"
+          >
             <Link className={classes.textRegister} to="/signup">
               회원가입
             </Link>
+          </Typography>
+          <Typography
+            className={classes.textRegisterText}
+            color="textSecondary"
+            variant="body2"
+          >
             <Link className={classes.textRegister} to="/register">
               비밀번호 찾기
             </Link>
-          </Box>
-        </Typography>
+          </Typography>
+        </Box>
       </Container>
     </div>
   );
