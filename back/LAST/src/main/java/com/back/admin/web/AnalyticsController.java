@@ -16,7 +16,7 @@ import java.util.Map;
 
 @CrossOrigin("*")
 @RestController
-@RequestMapping("/last/analytics")
+@RequestMapping("/api/a1")
 @RequiredArgsConstructor
 public class AnalyticsController {
     static public class Morpheme {
