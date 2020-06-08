@@ -10,10 +10,14 @@ import lombok.NoArgsConstructor;
 public class BoardUpdateRequestDto {
     private String board_question;
     private String board_content;
+    private String board_company;
+    private String board_keyword;
 
     @Builder
     public BoardUpdateRequestDto(Board entity) {
         this.board_question=entity.getBoard_question();
         this.board_content=entity.getBoard_content();
+        this.board_company=entity.getBoard_company();
+        this.board_keyword=entity.getBoard_keyword();
     }
 }
