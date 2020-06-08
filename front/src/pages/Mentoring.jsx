@@ -3,13 +3,16 @@ import React, { useEffect, useState, useRef } from 'react';
 import io from 'socket.io-client';
 import Peer from 'simple-peer';
 import styled from 'styled-components';
-import notConnect from '../assets/images/notConnect.png';
+import { Box, Grid } from '@material-ui/core';
+import { makeStyles } from '@material-ui/styles';
+import Connecting from '../assets/images/connecting.png';
 
 const Container = styled.div`
   height: 100vh;
   width: 100%;
   display: flex;
   flex-direction: column;
+  background-color: #595959;
 `;
 
 const Row = styled.div`
@@ -19,17 +22,31 @@ const Row = styled.div`
 
 const Video = styled.video`
   border: 1px solid blue;
-  width: 50%;
-  height: 50%;
+  width: 100%;
+  /* max-width: 550px; */
+  /* height: 80%; */
 `;
 
-const Unconnect = styled.img`
+const Connenct = styled.img`
   border: 1px solid blue;
-  width: 50%;
-  height: 50%;
+  width: 100%;
+  background-color: #ffffff;
+  /* height: 100%; */
 `;
-
-function RTC() {
+const useStyles = makeStyles((theme) => ({
+  page: {
+    marginTop: theme.spacing(15),
+    marginBottom: theme.spacing(8),
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    backgroundColor: '#222222',
+  },
+  // videoGrid: {
+  //   backgroundColor: '#FFFFFF',
+  // }
+}));
+const Mentoring = () => {
   const [yourID, setYourID] = useState('');
   const [users, setUsers] = useState({});
   const [stream, setStream] = useState();
@@ -41,6 +58,8 @@ function RTC() {
   const userVideo = useRef();
   const partnerVideo = useRef();
   const socket = useRef();
+
+  const classes = useStyles();
 
   useEffect(() => {
     socket.current = io.connect(process.env.REACT_APP_RTC_SERVER_URL);
@@ -126,12 +145,12 @@ function RTC() {
     peer.signal(callerSignal);
   }
 
-  let UserVideo = <Unconnect />;
+  let UserVideo = <Connenct src={Connecting} alt="connecting" />;
   if (stream) {
     UserVideo = <Video playsInline muted ref={userVideo} autoPlay />;
   }
 
-  let PartnerVideo = <Unconnect src={notConnect} alt="connecting" />;
+  let PartnerVideo = <Connenct src={Connecting} alt="connecting" />;
   if (callAccepted) {
     PartnerVideo = <Video playsInline ref={partnerVideo} autoPlay />;
   }
@@ -141,27 +160,54 @@ function RTC() {
     incomingCall = (
       <div>
         <h1>{caller} is calling you</h1>
-        <button type="button" onClick={acceptCall}>Accept</button>
+        <button type="button" onClick={acceptCall}>
+          Accept
+        </button>
       </div>
     );
   }
   return (
     <Container>
-      <Row>
+      {/* <Box display="flex" justifyContent="space-around">
         {UserVideo}
         {PartnerVideo}
-      </Row>
+      </Box>
+      <Box display="flex" justifyContent="space-around">
+        <Box width="50%">
+          <img src={Connecting} alt="connecting" style={{ width: '100%' }} />
+        </Box>
+      </Box> */}
+      <Box maxWidth="1400px">
+        <Grid
+          container
+          direction="row"
+          justify="space-evenly"
+          // alignItems="center"
+          spacing={3}
+        >
+          <Grid item sm={5} xs={false}>
+            {UserVideo}
+          </Grid>
+          <Grid item sm={5} xs={11}>
+            {PartnerVideo}
+          </Grid>
+        </Grid>
+      </Box>
       <Row>
         {Object.keys(users).map((key) => {
           if (key === yourID) {
             return null;
           }
-          return <button type="button" onClick={() => callPeer(key)}>Call {key}</button>;
+          return (
+            <button type="button" onClick={() => callPeer(key)}>
+              Call {key}
+            </button>
+          );
         })}
       </Row>
       <Row>{incomingCall}</Row>
     </Container>
   );
-}
+};
 
-export default RTC;
+export default Mentoring;
