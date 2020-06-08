@@ -20,17 +20,25 @@ import java.util.Map;
 
 @CrossOrigin("*")
 @RestController
-@RequestMapping("/api/v1")
+@RequestMapping("/api/u1")
 @RequiredArgsConstructor
 public class UserController {
+
     private final UserService userService;
     private final JwtService jwtService;
+//    private final KakaoPayService kakaoPayService;
+//    private static int TotalPayMoney;
+//    private static String orderuserID;
 
     private CookieManage cm = new CookieManage();
 
+//    static void init(){
+//        TotalPayMoney=0;
+//        orderuserID=null;
+//    }
 
     @ApiOperation("모든 유저의 정보를 출력합니다.")
-    @GetMapping("/all")
+    @GetMapping()
     public List<User> selectAll() {
         return userService.selectAll();
     }
@@ -48,7 +56,7 @@ public class UserController {
     @ApiOperation("회원가입시 아이디 중복 확인")
     @PostMapping("/checkid/{stu_id_email}")
     public boolean checkBystu_id_email(@PathVariable String user_id_email) {
-        return userService.checkBystu_id_email(user_id_email);
+        return userService.checkByuser_id_email(user_id_email);
     }
 
 
@@ -71,18 +79,12 @@ public class UserController {
 
             map.put("token", request.getCookies()[0].getValue());
             map.put("result", "성공");
-            System.out.println("기존");
-            System.out.println("token");
-            System.out.println(request.getCookies()[0].getValue());
             return map;
         }
         String token = jwtService.create(userJwtResponseDto);
         cm.CookieMake(request, response, token);
         map.put("token", token);
         map.put("result", "성공");
-        System.out.println("새롭게");
-        System.out.println("token");
-        System.out.println(token);
         return map;
     }
 
@@ -98,15 +100,15 @@ public class UserController {
             return map;
         }
 
-        UserJwtResponseDto student = jwtService.getUser(jwt);
+        UserJwtResponseDto user = jwtService.getUser(jwt);
         // 비밀번호 encrypt(암호화 과정 필요)
-        userService.update(student.getUser_id_email(), userUpdateRequestDto);
+        userService.update(user.getUser_id_email(), userUpdateRequestDto);
 
         // 기존 토큰 죽이기
         cm.CookieDelete(request, response);
         //토큰 재발행
         System.out.println("토큰을 재발행합니다.");
-        String token = jwtService.create(new UserJwtResponseDto(userService.findBystu_id(student.getUser_id_email())));
+        String token = jwtService.create(new UserJwtResponseDto(userService.findByuser_id_email(user.getUser_id_email())));
         cm.CookieMake(request, response, token);
         map.put("token", token);
         return map;
@@ -127,10 +129,10 @@ public class UserController {
         String jwt = request.getHeader("Authorization");
         //유효성 검사
         if (!jwtService.isUsable(jwt)) throw new UnauthorizedException(); // 예외
-        UserJwtResponseDto student = jwtService.getUser(jwt);
+        UserJwtResponseDto user = jwtService.getUser(jwt);
 
-        if (student.getUser_id_email().equals(userDeleteRequestDto.getUser_id_email())) {
-            userService.delete(student.getUser_id_email());
+        if (user.getUser_id_email().equals(userDeleteRequestDto.getUser_id_email())) {
+            userService.delete(user.getUser_id_email());
             Cookie cookie = request.getCookies()[0];
             cookie.setValue(null);
             cookie.setPath("/"); // <- 여기 잘 모르겠음
@@ -167,20 +169,58 @@ public class UserController {
 
     @ApiOperation("학생 상태 변경 -> 일반:0, 우수:1")
     @PutMapping("/change/auth")
-    public User change_stu_auth(@RequestBody UserAuthRequestDto userAuthRequestDto) {
-        String stu_id_email = userAuthRequestDto.getUser_id_email();
-        int stu_auth = userAuthRequestDto.getUser_auth();
-        userService.change_stu_auth(stu_id_email, stu_auth);
-        System.out.println(userService.findBystu_id_email(stu_id_email));
-        return userService.findBystu_id_email(stu_id_email);
+    public User change_user_auth(@RequestBody UserAuthRequestDto userAuthRequestDto) {
+        String user_id_email = userAuthRequestDto.getUser_id_email();
+        int user_auth = userAuthRequestDto.getUser_auth();
+        userService.change_user_auth(user_id_email, user_auth);
+        System.out.println(userService.findByuser_id_email(user_id_email));
+        return userService.findByuser_id_email(user_id_email);
     }
 
 
     @ApiOperation("학생 상태에 따른 리스트 보여주기")
-    @PostMapping("/manage/{stu_auth}")
-    public List<UserResponseDto> show_by_stu_auth(@PathVariable int stu_auth) {
-        return userService.show_by_stu_auth(stu_auth);
+    @PostMapping("/manage/{user_auth}")
+    public List<UserResponseDto> show_by_user_auth(@PathVariable int user_auth) {
+        return userService.show_by_user_auth(user_auth);
     }
 
+
+//    @ApiOperation("유저가 카페에서 메뉴를 주문하는 기능입니다.")
+//    @PostMapping("/latte/order")
+//    public KakaoPayReadyVO save(@RequestBody OrderedRequestDto orderedRequestDto, HttpServletRequest httpServletRequest){
+//        //요청할 때 들어오는 값 :메뉴번호(1개 필수),사이즈번호(1개 필수),옵션번호들(0개~여러개),총 가격- 이 모든게 리스트형태로 들어옴
+//        String jwt = httpServletRequest.getHeader("Authorization");
+//        //유효성 검사
+//        if (!jwtService.isUsable(jwt)) throw new UnauthorizedException(); // 예외
+//
+//        UserJwtResponsetDto user=jwtService.getUser(jwt);
+//
+//        //현재 orderDetailRequestDtos에는 메뉴, 옵션 등의 정보가 담겨 있다.
+//        //현재 초기 코드는 메뉴만 있다고 가정.
+//
+//        // 사용자확인
+//        User orderuser=userService.findByuid(user.getUid());
+//
+//        System.out.println("현재 주문하는 유저는 : "+orderuser.getUname()+"님 입니다.");
+//        Long cur_ooid=orderedService.save(orderuser,orderedRequestDto); //주문하기
+//
+//        //--------------------------위에서는 기존 orderDetail에 관련된 정보만 썼음---------------------
+//        //아직 각 메뉴별 사이즈,옵션 정보 사용하지 않은 상태이다. 활용 가능
+//        init();
+//        TotalPayMoney=orderedRequestDto.getOprice();
+//        orderuserID=orderuser.getUid();
+//        ooid=cur_ooid;
+//
+//        return kakaoPayService.kakaoPayReady(orderuser,cur_ooid,orderedRequestDto); //카카오 페이
+//    }
+//
+//
+//    @GetMapping("/kakaoPaySuccess")
+//    public KakaoPayApprovalRequestDto kakaoPaySuccess(@RequestParam("pg_token") String pg_token) {
+//        log.info("kakaoPaySuccess get............................................");
+//        log.info("kakaoPaySuccess pg_token : " + pg_token);
+//        //프론트에서 이 상태를 봐야함.
+//        return kakaoPayService.kakaoPayInfo(pg_token,ooid,orderuserID,TotalPayMoney);
+//    }
 
 }

@@ -18,7 +18,7 @@ import java.util.Map;
 
 @CrossOrigin("*")
 @RestController
-@RequestMapping("/api/v4")
+@RequestMapping("/api/q1")
 @RequiredArgsConstructor
 public class SolQuestionController {
 
@@ -27,16 +27,16 @@ public class SolQuestionController {
 
 
     @ApiOperation("모든 학생의 질문을 보여준다")
-    @GetMapping("/all")
+    @GetMapping()
     public List<SolQuestion> selectAll() {
         return solQuestionService.selectAll();
     }
 
 
     @ApiOperation("특정 학생의 질문을 보여주기")
-    @GetMapping("/{stu_no}")  // stu_no로 할지 stu_id로 할지 결정이 필요할것같아여~
-    public SolQuestion selectAll(@PathVariable Long stu_no) {
-        return solQuestionService.findByStu_no(stu_no);
+    @GetMapping("/{user_no}")  // stu_no로 할지 stu_id로 할지 결정이 필요할것같아여~
+    public SolQuestion selectAll(@PathVariable Long user_no) {
+        return solQuestionService.findByUser_no(user_no);
     }
 
 
@@ -55,17 +55,17 @@ public class SolQuestionController {
 
 
     @ApiOperation("질문 저장 -> 권한 있을 때")
-    @PostMapping("/{stu_no}")
+    @PostMapping("/{user_no}")
     public Map save(HttpServletRequest httpServletRequest,
-                    @PathVariable Long stu_no, @RequestBody SolQuestionSaveRequestDto solQuestionSaveRequestDto) {
+                    @PathVariable Long user_no, @RequestBody SolQuestionSaveRequestDto solQuestionSaveRequestDto) {
         String jwt = httpServletRequest.getHeader("Authorization");
 
         if (!jwtService.isUsable(jwt)) throw new UnauthorizedException(); // 예외
-        UserJwtResponseDto student=jwtService.getUser(jwt);
+        UserJwtResponseDto user=jwtService.getUser(jwt);
         Map<String,String> map=new HashMap<>();
 
-        if (student.getUser_no().equals(stu_no)) {
-            solQuestionService.save(stu_no, solQuestionSaveRequestDto);
+        if (user.getUser_no().equals(user_no)) {
+            solQuestionService.save(user_no, solQuestionSaveRequestDto);
             map.put("result", "질문이 저장되었습니다~");
             System.out.println("질문이 저장되었습니다~");
         } else {

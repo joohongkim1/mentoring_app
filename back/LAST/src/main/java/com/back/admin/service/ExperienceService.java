@@ -16,59 +16,59 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class ExperienceService {
+
     private final ExperienceRepository experienceRepository;
     private final UserRepository userRepository;
 
-    // 관리자가 모든 학생의 경험을 확인하기
+
+    @Transactional
     public List<Experience> selectAll() {
         return experienceRepository.findAll();
     }
 
 
-    // 특정 경험 보여주기
+    @Transactional
     public Experience findByExperience(Long experience_no) {
         return experienceRepository.findByExperience_no(experience_no);
     }
 
 
-    // 학생 개인의 경험 확인하기
     @Transactional
-    public List<ExperienceResponseDto> findExperienceByStu_no(Long stu_no) {
-        return experienceRepository.findByStu_no(stu_no);
+    public List<ExperienceResponseDto> findExperienceByStu_no(Long user_no) {
+        return experienceRepository.findByStu_no(user_no);
     }
 
-    // 경험 저장
+
     @Transactional
     public void save(ExperienceSaveRequestDto experienceSaveRequestDto, Long user_no) {
         User student = userRepository.findByUser_no(user_no);
         experienceRepository.save(experienceSaveRequestDto.toEntity(student));
     }
 
-    // 경험 수정
+
     @Transactional
     public boolean update(Long experience_no, String user_id_email, ExperienceUpdateRequestDto experienceUpdateRequestDto) {
         Experience experience = experienceRepository.findByExperience_no(experience_no);
-        String exp_stu_id = experience.getStudentexperience().getUser_id_email();
-        if (exp_stu_id.equals(user_id_email)) { //수정 권한이 있어
+        String exp_user_id = experience.getStudentexperience().getUser_id_email();
+        if (exp_user_id.equals(user_id_email)) {
             experience.update(experienceUpdateRequestDto.getExperience_start(), experienceUpdateRequestDto.getExperience_end(),
                     experienceUpdateRequestDto.getExperience_title(), experienceUpdateRequestDto.getExperience_content(),
                     experienceUpdateRequestDto.getExperience_tag());
             return true;
-        } else { //수정 권한이 없어
+        } else {
             return false;
         }
     }
 
 
-    // 경험 삭제
     @Transactional
     public boolean delete(Long experience_no, String user_id_email){
-        Experience experience = experienceRepository.findByExperience_no(experience_no); //엔티티 하나의 레코드를 가져옴
-        String exp_stu_id = experience.getStudentexperience().getUser_id_email();//현재 리뷰작성자 아이디.
-        if (exp_stu_id.equals(user_id_email)) { //삭제 권한이 있어
+        Experience experience = experienceRepository.findByExperience_no(experience_no);
+        String exp_user_id = experience.getStudentexperience().getUser_id_email();
+        if (exp_user_id.equals(user_id_email)) {
             experienceRepository.delete(experience);
             return true;
-        } else { //삭제 권한이 없어
+        } else {
             return false;
         }
     }
