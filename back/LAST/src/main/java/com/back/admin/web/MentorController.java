@@ -48,10 +48,10 @@ public class MentorController {
         String jwt = httpServletRequest.getHeader("Authorization");
 
         if (!jwtService.isUsable(jwt)) throw new UnauthorizedException(); // 예외
-        UserJwtResponseDto student=jwtService.getUser(jwt);
+        UserJwtResponseDto user=jwtService.getUser(jwt);
         Map<String,String> map=new HashMap<>();
 
-        if (student.getUser_no().equals(user_no)) {
+        if (user.getUser_no().equals(user_no)) {
             mentorService.save(user_no, mentorSaveRequestDto);
             map.put("result", "멘토 신청이 되었습니다~");
             System.out.println("신청이 되었습니다~");
@@ -75,7 +75,6 @@ public class MentorController {
 
         boolean question=mentorService.update(mentor_no,user.getUser_no(), mentorUpdateRequestDto);
         if(question){
-
             map.put("result","멘토 정보가 수정되었습니다~");
         }else{
             map.put("result","수정중 오류가 발생했습니다.");

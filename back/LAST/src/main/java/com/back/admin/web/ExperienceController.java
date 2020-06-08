@@ -29,7 +29,7 @@ public class ExperienceController {
 
     // 모든 경험 보여주기
     @ApiOperation("모든 학생의 경험을 보여준다")
-    @GetMapping("/all")
+    @GetMapping()
     public List<Experience> selectAll() {
         return experienceService.selectAll();
     }
@@ -37,24 +37,24 @@ public class ExperienceController {
 
     // 특정 학생의 경험 보여주기
     @ApiOperation("특정 학생의 경험을 보여주기")
-    @GetMapping("/{stu_no}")  // stu_no로 할지 stu_id로 할지 결정이 필요할것같아여~
-    public List<ExperienceResponseDto> selectAll(@PathVariable Long stu_no) {
-        return experienceService.findExperienceByStu_no(stu_no);
+    @GetMapping("/{user_no}")  // stu_no로 할지 stu_id로 할지 결정이 필요할것같아여~
+    public List<ExperienceResponseDto> selectAll(@PathVariable Long user_no) {
+        return experienceService.findExperienceByStu_no(user_no);
     }
 
 
     // 경험 저장
     @ApiOperation("경험 저장 -> 권한 있을 때")
-    @PostMapping("/{stu_no}")
-    public Map save(@PathVariable Long stu_no, HttpServletRequest httpServletRequest,
+    @PostMapping("/{user_no}")
+    public Map save(@PathVariable Long user_no, HttpServletRequest httpServletRequest,
                     @RequestBody ExperienceSaveRequestDto experienceSaveRequestDto) {
         String jwt = httpServletRequest.getHeader("Authorization");
         //유효성 검사
         if (!jwtService.isUsable(jwt)) throw new UnauthorizedException(); // 예외
         UserJwtResponseDto user = jwtService.getUser(jwt);
 
-        if (user.getUser_no().equals(stu_no)) {
-            experienceService.save(experienceSaveRequestDto, stu_no);
+        if (user.getUser_no().equals(user_no)) {
+            experienceService.save(experienceSaveRequestDto, user_no);
         }
         Map<String, String> map = new HashMap<>();
         map.put("result", "경험이 저장되었습니다~");

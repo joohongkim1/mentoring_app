@@ -36,11 +36,6 @@ public class WebConfig implements WebMvcConfigurer{
 
 
     private static final String[] EXCLUDE_PATHS = {
-//            "swagger-ui.html#",
-//            "/swagger-resources",
-//            "/swagger/**",
-//            "/member/**",
-//            "/error/**"
             "/**"
     };
 

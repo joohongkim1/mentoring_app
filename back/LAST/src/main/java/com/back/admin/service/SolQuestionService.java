@@ -26,7 +26,7 @@ public class SolQuestionService {
 
     // 특정 학생의 질문 보여주기 findBoardByStu_id
     @Transactional
-    public SolQuestion findByStu_no(Long user_no) {
+    public SolQuestion findByUser_no(Long user_no) {
         return solQuestionRepository.findByUser_no(user_no);
     }
 
