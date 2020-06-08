@@ -4,7 +4,6 @@ import com.back.admin.domain.board.Board;
 import com.back.admin.domain.board.BoardRepository;
 import com.back.admin.domain.experience.Experience;
 import com.back.admin.domain.experience.ExperienceRepository;
-import com.back.admin.web.dto.board.BoardResponseDto;
 import com.back.admin.web.dto.board.BoardSaveRequestDto;
 import com.back.admin.web.dto.board.BoardUpdateRequestDto;
 import lombok.RequiredArgsConstructor;
@@ -20,20 +19,18 @@ public class BoardService {
     private final BoardRepository boardRepository;
     private final ExperienceRepository experienceRepository;
 
-    // 모든 자소서 보여주기 selectAll
+
     public List<Board> selectAll() {
         return boardRepository.findAll();
     }
 
 
-    // 특정 학생의 자소서 보여주기 findBoardByStu_id
     @Transactional
-    public Board findBoardByStu_no(Long stu_no) {
-        return boardRepository.findByStu_no(stu_no);
+    public Board findBoardByUser_no(Long user_no) {
+        return boardRepository.findByStu_no(user_no);
     }
 
 
-    // 자소서 저장 save
     @Transactional
     public boolean save(Long experience_no, BoardSaveRequestDto boardSaveRequestDto) {
         Experience experience=experienceRepository.findByExperience_no(experience_no);
@@ -42,31 +39,42 @@ public class BoardService {
     }
 
 
-    // 자소서 수정 update
     @Transactional
-    public boolean update(Long board_no, Long stu_no, BoardUpdateRequestDto boardUpdateRequestDto) {
+    public boolean update(Long board_no, Long user_no, BoardUpdateRequestDto boardUpdateRequestDto) {
         Board board = boardRepository.findByBoard_no(board_no);
-        Long board_stu_id = board.getExperienceboard().getStuexperience().getStu_no();
-        if (board_stu_id.equals(stu_no)) { //수정 권한이 있어
+        Long board_user_id = board.getExperienceboard().getStudentexperience().getUser_no();
+        if (board_user_id.equals(user_no)) {
             board.update(boardUpdateRequestDto.getBoard_question(), boardUpdateRequestDto.getBoard_content(),
-                    boardUpdateRequestDto.getBoard_when());
+                    boardUpdateRequestDto.getBoard_company(),boardUpdateRequestDto.getBoard_keyword());
             return true;
-        } else { //수정 권한이 없어
+        } else {
             return false;
         }
     }
 
-    // 자소서 삭제 delete
+
     @Transactional
-    public boolean delete(Long board_no, Long stu_no){
+    public boolean delete(Long board_no, Long user_no){
         Board board = boardRepository.findByBoard_no(board_no);
-        Long board_stu = board.getExperienceboard().getStuexperience().getStu_no();
-        if (board_stu.equals(stu_no)) {
+        Long board_user = board.getExperienceboard().getStudentexperience().getUser_no();
+        if (board_user.equals(user_no)) {
             boardRepository.delete(board);
             return true;
         } else {
             return false;
         }
-
     }
+
+
+    @Transactional
+    public Board findByCompany(String board_company) {
+        return boardRepository.findByBoard_company(board_company);
+    }
+
+
+    @Transactional
+    public Board findByKeyword(String board_keyword) {
+        return boardRepository.findByBoard_keyword(board_keyword);
+    }
+
 }

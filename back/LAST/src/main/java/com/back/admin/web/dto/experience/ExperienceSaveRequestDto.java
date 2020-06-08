@@ -1,7 +1,7 @@
 package com.back.admin.web.dto.experience;
 
 import com.back.admin.domain.experience.Experience;
-import com.back.admin.domain.student.Student;
+import com.back.admin.domain.user.User;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -27,14 +27,14 @@ public class ExperienceSaveRequestDto {
         this.experience_tag = experience_tag;
     }
 
-    public Experience toEntity(Student stuexperience) {
+    public Experience toEntity(User stuexperience) {
         return Experience.builder()
                 .experience_start(experience_start)
                 .experience_end(experience_end)
                 .experience_title(experience_title)
                 .experience_content(experience_content)
                 .experience_tag(experience_tag)
-                .stuexperience(stuexperience)
+                .studentexperience(stuexperience)
                 .build();
     }
 }

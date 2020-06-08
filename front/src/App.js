@@ -7,6 +7,7 @@ import JasoseoListPage from './pages/Jasoseo/JasoseoListPage';
 import JasoseoWritePage from './pages/Jasoseo/JasosoeWritePage';
 import ExperiencePage from './pages/ExperiencePage';
 import ExperienceWritePage from './pages/Experience/ExperienceWritePage';
+import RTC from './pages/RTC';
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
         <Route exact path="/experience" component={ExperiencePage} />
         <Route exact path="/experiencewrite" component={ExperienceWritePage} />
 
+        <Route exact path="/rtc" component={RTC} />
       </BrowserRouter>
     </div>
   );
