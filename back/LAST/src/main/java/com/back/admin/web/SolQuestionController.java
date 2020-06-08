@@ -18,7 +18,7 @@ import java.util.Map;
 
 @CrossOrigin("*")
 @RestController
-@RequestMapping("/api/v4")
+@RequestMapping("/api/q1")
 @RequiredArgsConstructor
 public class SolQuestionController {
 

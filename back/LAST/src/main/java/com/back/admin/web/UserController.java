@@ -6,6 +6,7 @@ import com.back.admin.service.UserService;
 import com.back.admin.service.jwt.CookieManage;
 import com.back.admin.service.jwt.JwtService;
 import com.back.admin.service.jwt.UnauthorizedException;
+import com.back.admin.web.dto.kakaopay.KakaoPayApprovalRequestDto;
 import com.back.admin.web.dto.user.*;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -26,6 +27,7 @@ import java.util.Map;
 @RequestMapping("/api/u1")
 @RequiredArgsConstructor
 public class UserController {
+
     private final UserService userService;
     private final JwtService jwtService;
     private final KakaoPayService kakaoPayService;
@@ -217,14 +219,14 @@ public class UserController {
 //
 //        return kakaoPayService.kakaoPayReady(orderuser,cur_ooid,orderedRequestDto); //카카오 페이
 //    }
-//
-//
-//    @GetMapping("/kakaoPaySuccess")
-//    public KakaoPayApprovalRequestDto kakaoPaySuccess(@RequestParam("pg_token") String pg_token) {
-//        log.info("kakaoPaySuccess get............................................");
-//        log.info("kakaoPaySuccess pg_token : " + pg_token);
-//        //프론트에서 이 상태를 봐야함.
-//        return kakaoPayService.kakaoPayInfo(pg_token,ooid,orderuserID,TotalPayMoney);
-//    }
+
+
+    @GetMapping("/kakaoPaySuccess")
+    public KakaoPayApprovalRequestDto kakaoPaySuccess(@RequestParam("pg_token") String pg_token) {
+        log.info("kakaoPaySuccess get............................................");
+        log.info("kakaoPaySuccess pg_token : " + pg_token);
+        //프론트에서 이 상태를 봐야함.
+        return kakaoPayService.kakaoPayInfo(pg_token,ooid,orderuserID,TotalPayMoney);
+    }
 
 }

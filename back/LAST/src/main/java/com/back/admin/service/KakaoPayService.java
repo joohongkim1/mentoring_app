@@ -3,6 +3,9 @@ package com.back.admin.service;
 import java.net.URI;
 import java.net.URISyntaxException;
 
+import com.back.admin.domain.user.User;
+import com.back.admin.web.dto.kakaopay.KakaoPayApprovalRequestDto;
+import com.back.admin.web.dto.kakaopay.KakaoPayReadyVO;
 import com.latte.admin.domain.order.Ordered;
 import com.latte.admin.domain.user.User;
 import com.latte.admin.web.dto.kakaoPay.KakaoPayApprovalRequestDto;
@@ -32,7 +35,7 @@ public class KakaoPayService {
 
 
     @Transactional
-    public KakaoPayReadyVO kakaoPayReady(User user,Long ooid,OrderedRequestDto orderedRequestDto) {
+    public KakaoPayReadyVO kakaoPayReady(User user, Long ooid, OrderedRequestDto orderedRequestDto) {
         System.out.println("카카오 페이 결제를 위한 준비 단계입니다.");
         RestTemplate restTemplate = new RestTemplate();
         // 서버로 요청할 Header

@@ -20,14 +20,13 @@ import java.util.Map;
 
 @CrossOrigin("*")
 @RestController
-@RequestMapping("/api/v2")
+@RequestMapping("/api/e1")
 @RequiredArgsConstructor
 public class ExperienceController {
     private final ExperienceService experienceService;
     private final JwtService jwtService;
 
 
-    // 모든 경험 보여주기
     @ApiOperation("모든 학생의 경험을 보여준다")
     @GetMapping()
     public List<Experience> selectAll() {
@@ -35,15 +34,13 @@ public class ExperienceController {
     }
 
 
-    // 특정 학생의 경험 보여주기
     @ApiOperation("특정 학생의 경험을 보여주기")
-    @GetMapping("/{user_no}")  // stu_no로 할지 stu_id로 할지 결정이 필요할것같아여~
+    @GetMapping("/{user_no}")
     public List<ExperienceResponseDto> selectAll(@PathVariable Long user_no) {
         return experienceService.findExperienceByStu_no(user_no);
     }
 
 
-    // 경험 저장
     @ApiOperation("경험 저장 -> 권한 있을 때")
     @PostMapping("/{user_no}")
     public Map save(@PathVariable Long user_no, HttpServletRequest httpServletRequest,
@@ -64,8 +61,6 @@ public class ExperienceController {
     }
 
 
-    // 경험 수정하기
-    // service단에서 boolean으로 맞춰둠. equals부분 확인필요!!!
     @ApiOperation("경험 수정 -> 권한 있을 때")
     @PutMapping("/{exprience_no}")
     public Map update(@PathVariable Long exprience_no, HttpServletRequest httpServletRequest,
@@ -87,7 +82,6 @@ public class ExperienceController {
     }
 
 
-    // 경험 삭제하기
     @ApiOperation("경험 삭제 -> Authorization필요")
     @DeleteMapping("/{experience_no}")
     public Map delete(@PathVariable Long experience_no, HttpServletRequest httpServletRequest){
@@ -99,13 +93,12 @@ public class ExperienceController {
         Map<String,String> map=new HashMap<>();
         boolean experience=experienceService.delete(experience_no,user.getUser_id_email());
         if(experience){
-
-
             map.put("result","경험이 삭제되었습니다~");
         }else{
             map.put("result","삭제중 오류가 발생했습니다.");
         }
         return map;
     }
+
 }
 

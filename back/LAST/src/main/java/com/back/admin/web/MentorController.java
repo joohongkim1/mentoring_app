@@ -35,7 +35,7 @@ public class MentorController {
 
 
     @ApiOperation("특정 멘토 보여주기")
-    @GetMapping("/{mentor_no}")  // stu_no로 할지 stu_id로 할지 결정이 필요할것같아여~
+    @GetMapping("/{mentor_no}")
     public Mentor selectAll(@PathVariable Long mentor_no) {
         return mentorService.findByMentor_no(mentor_no);
     }
@@ -47,7 +47,7 @@ public class MentorController {
                     @PathVariable Long user_no, @RequestBody MentorSaveRequestDto mentorSaveRequestDto) {
         String jwt = httpServletRequest.getHeader("Authorization");
 
-        if (!jwtService.isUsable(jwt)) throw new UnauthorizedException(); // 예외
+        if (!jwtService.isUsable(jwt)) throw new UnauthorizedException();
         UserJwtResponseDto user=jwtService.getUser(jwt);
         Map<String,String> map=new HashMap<>();
 
@@ -69,7 +69,7 @@ public class MentorController {
                       @RequestBody MentorUpdateRequestDto mentorUpdateRequestDto) {
         String jwt = httpServletRequest.getHeader("Authorization");
 
-        if (!jwtService.isUsable(jwt)) throw new UnauthorizedException(); // 예외
+        if (!jwtService.isUsable(jwt)) throw new UnauthorizedException();
         UserJwtResponseDto user=jwtService.getUser(jwt);
         Map<String,String> map=new HashMap<>();
 
@@ -88,7 +88,7 @@ public class MentorController {
     public Map delete(@PathVariable Long mentor_no, HttpServletRequest httpServletRequest){
         String jwt = httpServletRequest.getHeader("Authorization");
 
-        if (!jwtService.isUsable(jwt)) throw new UnauthorizedException(); // 예외
+        if (!jwtService.isUsable(jwt)) throw new UnauthorizedException();
         UserJwtResponseDto user=jwtService.getUser(jwt);
 
         Map<String,String> map=new HashMap<>();
