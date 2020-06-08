@@ -1,17 +1,13 @@
 package com.back.admin.web;
 
 import com.back.admin.domain.user.User;
-import com.back.admin.service.KakaoPayService;
 import com.back.admin.service.UserService;
 import com.back.admin.service.jwt.CookieManage;
 import com.back.admin.service.jwt.JwtService;
 import com.back.admin.service.jwt.UnauthorizedException;
-import com.back.admin.web.dto.kakaopay.KakaoPayApprovalRequestDto;
 import com.back.admin.web.dto.user.*;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.Cookie;
@@ -30,18 +26,16 @@ public class UserController {
 
     private final UserService userService;
     private final JwtService jwtService;
-    private final KakaoPayService kakaoPayService;
-    private static int TotalPayMoney;
-    private static String orderuserID;
-    private static Long ooid;
+//    private final KakaoPayService kakaoPayService;
+//    private static int TotalPayMoney;
+//    private static String orderuserID;
 
     private CookieManage cm = new CookieManage();
 
-    static void init(){
-        TotalPayMoney=0;
-        orderuserID=null;
-        ooid=0L;
-    }
+//    static void init(){
+//        TotalPayMoney=0;
+//        orderuserID=null;
+//    }
 
     @ApiOperation("모든 유저의 정보를 출력합니다.")
     @GetMapping()
@@ -185,7 +179,7 @@ public class UserController {
 
 
     @ApiOperation("학생 상태에 따른 리스트 보여주기")
-    @PostMapping("/manage/{stu_auth}")
+    @PostMapping("/manage/{user_auth}")
     public List<UserResponseDto> show_by_user_auth(@PathVariable int user_auth) {
         return userService.show_by_user_auth(user_auth);
     }
@@ -219,14 +213,14 @@ public class UserController {
 //
 //        return kakaoPayService.kakaoPayReady(orderuser,cur_ooid,orderedRequestDto); //카카오 페이
 //    }
-
-
-    @GetMapping("/kakaoPaySuccess")
-    public KakaoPayApprovalRequestDto kakaoPaySuccess(@RequestParam("pg_token") String pg_token) {
-        log.info("kakaoPaySuccess get............................................");
-        log.info("kakaoPaySuccess pg_token : " + pg_token);
-        //프론트에서 이 상태를 봐야함.
-        return kakaoPayService.kakaoPayInfo(pg_token,ooid,orderuserID,TotalPayMoney);
-    }
+//
+//
+//    @GetMapping("/kakaoPaySuccess")
+//    public KakaoPayApprovalRequestDto kakaoPaySuccess(@RequestParam("pg_token") String pg_token) {
+//        log.info("kakaoPaySuccess get............................................");
+//        log.info("kakaoPaySuccess pg_token : " + pg_token);
+//        //프론트에서 이 상태를 봐야함.
+//        return kakaoPayService.kakaoPayInfo(pg_token,ooid,orderuserID,TotalPayMoney);
+//    }
 
 }
