@@ -21,7 +21,7 @@ import java.util.Map;
 
 @CrossOrigin("*")
 @RestController
-@RequestMapping("/api/v3")
+@RequestMapping("/api/b1")
 @RequiredArgsConstructor
 public class BoardController {
 
@@ -30,7 +30,6 @@ public class BoardController {
     private final JwtService jwtService;
 
 
-    // 모든 자소서 보여주기
     @ApiOperation("모든 학생의 자소서를 보여준다")
     @GetMapping("/all")
     public List<Board> selectAll() {
@@ -38,15 +37,13 @@ public class BoardController {
     }
 
 
-    // 특정 학생의 자소서 보여주기
     @ApiOperation("특정 학생의 자소서를 보여주기")
-    @GetMapping("/{stu_no}")  // stu_no로 할지 stu_id로 할지 결정이 필요할것같아여~
-    public Board selectAll(@PathVariable Long stu_no) {
-        return boardService.findBoardByStu_no(stu_no);
+    @GetMapping("/{user_no}")  // stu_no로 할지 stu_id로 할지 결정이 필요할것같아여~
+    public Board selectAll(@PathVariable Long user_no) {
+        return boardService.findBoardByUser_no(user_no);
     }
 
 
-    // 자소서 저장
     @ApiOperation("자소서 저장 -> 권한 있을 때")
     @PostMapping("/{experience_no}")
     public Map save(HttpServletRequest httpServletRequest,
@@ -54,11 +51,11 @@ public class BoardController {
         String jwt = httpServletRequest.getHeader("Authorization");
         //유효성 검사
         if (!jwtService.isUsable(jwt)) throw new UnauthorizedException(); // 예외
-        UserJwtResponseDto student=jwtService.getUser(jwt);
+        UserJwtResponseDto user=jwtService.getUser(jwt);
         Map<String,String> map=new HashMap<>();
         Experience experience = experienceService.findByExperience(experience_no);
 
-        if (student.getUser_no().equals(experience.getStudentexperience().getUser_no())) {
+        if (user.getUser_no().equals(experience.getStudentexperience().getUser_no())) {
             boardService.save(experience_no, boardSaveRequestDto);
             map.put("result", "자소서가 저장되었습니다~");
             System.out.println("자소서가 저장되었습니다~");
@@ -70,7 +67,6 @@ public class BoardController {
     }
 
 
-    // 자소서 수정
     @ApiOperation("자소서 수정 -> 권한 있을 때")
     @PutMapping("/{board_no}")
     public Map update(HttpServletRequest httpServletRequest,
@@ -92,7 +88,6 @@ public class BoardController {
     }
 
 
-    // 자소서 삭제
     @ApiOperation("경험 삭제 -> Authorization필요(권한이 있을때 삭제?)")
     @DeleteMapping("/{board_no}")
     public Map delete(@PathVariable Long board_no, HttpServletRequest httpServletRequest){
@@ -112,17 +107,15 @@ public class BoardController {
     }
 
 
-    // 특정 회사+년도로 자소서 찾기(ex. 2020상반기 삼성) findByCompany
     @ApiOperation("특정 회사+년도로 자소서를 보여주기")
-    @GetMapping("/{board_company}")  // stu_no로 할지 stu_id로 할지 결정이 필요할것같아여~
+    @GetMapping("/{board_company}")
     public Board findByCompany(@PathVariable String board_company) {
         return boardService.findByCompany(board_company);
     }
 
 
-    // 특정 키워드로 자소서 찾기(ex. 2020상반기 삼성) findByKeyword
     @ApiOperation("특정 키워드로 자소서를 보여주기")
-    @GetMapping("/{board_keyword}")  // stu_no로 할지 stu_id로 할지 결정이 필요할것같아여~
+    @GetMapping("/{board_keyword}")
     public Board findByKeyword(@PathVariable String board_keyword) {
         return boardService.findByKeyword(board_keyword);
     }
