@@ -122,7 +122,7 @@ export default function SignupForm({ user }) {
 
   const [{ data: result = {}, loading }, doSignup] = useAxios(
     {
-      url: 'http://localhost:8080/api/v1/signup',
+      url: 'http://k02a1041.p.ssafy.io:8081/A104/api/v1/signup',
       method: 'POST',
       data: {
         "stu_auth": 0,
@@ -139,7 +139,7 @@ export default function SignupForm({ user }) {
 
   const [{ data: mentoResult = {}, mentoLoading }, doMentoSignup] = useAxios(
     {
-      url: 'http://localhost:8080/api/m1/signup',
+      url: 'http://k02a1041.p.ssafy.io:8081/A104/api/m1/signup',
       method: 'POST',
       data: {
         "mentor_auth": 0,
@@ -160,7 +160,7 @@ export default function SignupForm({ user }) {
 
   const [{ data: emailResult = {} }, doCheckEmail] = useAxios(
     {
-      url: 'http://localhost:8080/api/v1/checkid/' + email,
+      url: 'http://k02a1041.p.ssafy.io:8081/A104/api/v1/checkid/' + email,
       method: 'POST',
     },
     { manual: true },
@@ -172,7 +172,7 @@ export default function SignupForm({ user }) {
 
   const [{ data: emailMentoResult = {} }, doMentoCheckEmail] = useAxios(
     {
-      url: 'http://localhost:8080/api/m1/checkid/' + email,
+      url: 'http://k02a1041.p.ssafy.io:8081/A104/api/m1/checkid/' + email,
       method: 'POST',
     },
     { manual: true },
