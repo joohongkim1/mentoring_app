@@ -1,26 +1,19 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'NotoSansKR', 'Segoe UI',
-    'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans',
-    'Helvetica Neue', sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+@font-face {
+  font-family: 'Recipe Korea';
+  src: url(./assets/fonts/Recipekorea.ttf) format('truetype');
 }
 
 @font-face {
-  font-family: 'NotoSansKR';
-  src: url('./assets/fonts/Noto_Sans_KR/NotoSansKR-Bold.otf') format('woff');
-  font-style: normal;
+  font-family: 'JS Dongkang';
+  src: url(./assets/fonts/JSDonkang.ttf) format('truetype');
 }
 
 @font-face {
-  font-family: 'NotoSansKR';
-  src: url('./assets/fonts/Open_Sans/OpenSans-SemiBold.ttf') format('woff');
-  unicode-range: U+0020-007E;
-  font-style: normal;
+  font-family: 'Gmarket';
+  src: url(./assets/fonts/GmarketSans.ttf) format('truetype');
+}
+
+@font-face {
+  font-family: 'Gukdae';
+  src: url(./assets/fonts/Gukdae.otf) format('truetype');
 }

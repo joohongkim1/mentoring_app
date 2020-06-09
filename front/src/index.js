@@ -3,9 +3,11 @@ import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 import { createMuiTheme, MuiThemeProvider } from '@material-ui/core';
 import ReactDOM from 'react-dom';
+import { BrowserRouter } from 'react-router-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
+import Header from './components/layout/Header';
 
 import rootReducer from './modules';
 
@@ -37,7 +39,10 @@ const store = createStore(
 ReactDOM.render(
   <Provider store={store}>
     <MuiThemeProvider theme={theme}>
-      <App />
+      <BrowserRouter>
+        <Header />
+        <App />
+      </BrowserRouter>
     </MuiThemeProvider>
   </Provider>,
 
