@@ -40,7 +40,7 @@ public class ChatRoomController {
         return chatRoomRepository.createChatRoom(name);
     }
 
-    @GetMapping("/room/enter/{roomId}")
+    @GetMapping("/room/enter/{roomId}")  // 채팅
     public String roomDetail(Model model, @PathVariable String roomId) {
         model.addAttribute("roomId", roomId);
         return "/chat/roomdetail";
