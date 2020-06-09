@@ -2,6 +2,8 @@ import React, { useState, useEffect, Component } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import useAxios from 'axios-hooks';
 
+import Header from '../layout/Header';
+
 import Container from '@material-ui/core/Container';
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
@@ -9,12 +11,25 @@ import FormLabel from '@material-ui/core/FormLabel';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormControl from '@material-ui/core/FormControl';
 import { Paper, TextField, Button, Typography, Box } from '@material-ui/core';
+import Chip from '@material-ui/core/Chip';
 import { makeStyles } from '@material-ui/core/styles';
 
 import Loading from '../Loading';
 
 const useStyles = makeStyles((theme) => ({
-
+  analytics: {
+    height: '90px',
+    display: 'flex',
+    flexDirection: 'column',
+    
+  },
+  analyticsResult: {
+    display: 'flex',
+    flexDirection: 'row',
+  },
+  resultChip: {
+    margin: '5px'
+  }
 }));
 
 // {
@@ -31,7 +46,9 @@ const JasoseoWrite = () => {
   const [question, setQuestion] = useState('');
   const [title, setTitle] = useState('');
   const [experience, setExperience] = useState(1);
+  const [keywords, setKeywords] = useState([])
   const token = window.localStorage.token;
+
   const inputProps = {
     classes: {
       root: classes.inputRoot,
@@ -46,6 +63,24 @@ const JasoseoWrite = () => {
     },
   };
 
+  const [{ data: resultAnalystics = {} }, doAnalytics] = useAxios(
+    {
+      url: 'http://k02a1041.p.ssafy.io:8081/A104/last/analytics/profile',
+      method: 'POST',
+      data: {
+        value: content
+      },
+    },
+    { manual: true },
+  );
+
+  function doContentAnalytics(event) {
+    event.preventDefault();
+    doAnalytics().then(result => {
+      console.log(result['data'])
+      setKeywords(result['data']['핵심역량']);
+    })
+  }
 
   const [{ data: result = {}, loading }, doSaveJasoseo] = useAxios(
     {
@@ -79,6 +114,7 @@ const JasoseoWrite = () => {
   }
   return (
     <div>
+      <Header/>
       <Container maxWidth="sm">
         <TextField
           error={result.status === 'failure'}
@@ -118,13 +154,27 @@ const JasoseoWrite = () => {
           fullWidth
           margin="normal"
         />
+        <div className={classes.analytics}>
+
+          <Button
+            variant="contained"
+            disableElevation
+            fullWidth
+            size="large"
+            onClick={doContentAnalytics}>
+            핵심 키워드 분석하기
+        </Button>
+          <div className={classes.analyticsResult}>
+            {keywords.map((keyword) => <Chip className={classes.resultChip} label={keyword} variant="contained" />)}
+          </div>
+        </div>
         <Button
-        variant="contained"
-        color="secondary"
-        disableElevation
-        fullWidth
-        size="large"
-        onClick={onClickSaveJasoseo}>
+          variant="contained"
+          color="secondary"
+          disableElevation
+          fullWidth
+          size="large"
+          onClick={onClickSaveJasoseo}>
           저장하기
         </Button>
       </Container>

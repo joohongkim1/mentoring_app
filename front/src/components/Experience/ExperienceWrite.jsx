@@ -2,6 +2,8 @@ import React, { useState, useEffect, Component } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import useAxios from 'axios-hooks';
 
+import Header from '../layout/Header';
+
 import Container from '@material-ui/core/Container';
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
@@ -134,6 +136,7 @@ const ExperienceWrite = () => {
   }
   return (
     <div>
+      <Header/>
       <Container maxWidth="sm">
         <TextField
           error={result.status === 'failure'}

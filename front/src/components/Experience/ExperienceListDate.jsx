@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import useAxios from 'axios-hooks';
 
 // material-ui
 import { makeStyles, useTheme } from '@material-ui/core/styles';
@@ -59,15 +60,19 @@ const ExperienceListDate = () => {
   const classes = useStyles();
   const [year, setYear] = React.useState(0);
   const [halfYear, setHalfYear] = React.useState(0);
-
-  useEffect(() => {
-
-  });
+  const token = window.localStorage.token;
+  // useEffect(() => {
+  //   const years = []
+  //   for(let te in tempExperience) {
+  //     str = te["experience_start"].substring(0, 3);
+      
+  //   }
+  // });
 
   const [{ data: result = {}, loading }, doSaveExperience] = useAxios(
     {
       url: 'http://k02a1041.p.ssafy.io:8081/A104/api/v2/1',
-      method: 'GeT',
+      method: 'GET',
       headers: {
         'Content-Type': 'application/json',
         'Authorization': token
