@@ -16,6 +16,8 @@ import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
 import styled from 'styled-components';
 
+import { useHistory } from 'react-router-dom';
+
 const useStyles = makeStyles((theme) => ({
   '@global': {
     ul: {
@@ -51,6 +53,9 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'baseline',
     marginBottom: theme.spacing(2),
   },
+  writeJasoseoButton: {
+    margin: '100px'
+  }
 }));
 
 const tiers = [
@@ -88,7 +93,10 @@ const tiers = [
 
 export default function ResumePage() {
   const classes = useStyles();
-
+  const history = useHistory();
+  function goToWriteJasoseo(){
+    history.push('/jasoseowrite');
+  }
   return (
     <React.Fragment>
       <CssBaseline />
@@ -160,6 +168,13 @@ export default function ResumePage() {
             </Grid>
           ))}
         </Grid>
+        <div className={classes.writeJasoseoButton}>
+          <Button
+            fullWidth
+            variant="contained"
+            onClick={goToWriteJasoseo}
+            >자소서 작성하기</Button>
+        </div>
       </Container>
     </React.Fragment>
   );
