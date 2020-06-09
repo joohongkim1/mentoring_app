@@ -3,8 +3,14 @@ import React, { useEffect, useState, useRef } from 'react';
 import io from 'socket.io-client';
 import Peer from 'simple-peer';
 import styled from 'styled-components';
-import { Box, Grid } from '@material-ui/core';
+import { Box, Grid, Button, IconButton } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
+import VideocamIcon from '@material-ui/icons/Videocam';
+import VideocamOffIcon from '@material-ui/icons/VideocamOff';
+import MicIcon from '@material-ui/icons/Mic';
+import MicOffIcon from '@material-ui/icons/MicOff';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import ChatIcon from '@material-ui/icons/Chat';
 import Connecting from '../assets/images/connecting.png';
 
 const Container = styled.div`
@@ -12,6 +18,8 @@ const Container = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
+  align-items: center;
+  justify-content: center;
   background-color: #595959;
 `;
 
@@ -23,15 +31,14 @@ const Row = styled.div`
 const Video = styled.video`
   border: 1px solid blue;
   width: 100%;
+  height: auto;
   /* max-width: 550px; */
-  /* height: 80%; */
 `;
 
 const Connenct = styled.img`
   border: 1px solid blue;
   width: 100%;
   background-color: #ffffff;
-  /* height: 100%; */
 `;
 const useStyles = makeStyles((theme) => ({
   page: {
@@ -55,12 +62,25 @@ const Mentoring = () => {
   const [callerSignal, setCallerSignal] = useState();
   const [callAccepted, setCallAccepted] = useState(false);
 
+  const [videoSend, setVideoSend] = useState(true);
+  const [audioSend, setAudioSend] = useState(true);
+
   const userVideo = useRef();
   const partnerVideo = useRef();
   const socket = useRef();
 
   const classes = useStyles();
-
+  const onVideoButtonClick = () => {
+    setVideoSend(!videoSend);
+    navigator.mediaDevices
+      .getUserMedia({ video: true, audio: true })
+      .then((stream) => {
+        setStream(stream);
+        if (userVideo.current) {
+          userVideo.current.srcObject = stream;
+        }
+      });
+  };
   useEffect(() => {
     socket.current = io.connect(process.env.REACT_APP_RTC_SERVER_URL);
     navigator.mediaDevices
@@ -85,7 +105,7 @@ const Mentoring = () => {
       setCallerSignal(data.signal);
     });
   }, []);
-
+  useEffect(() => {}, [videoSend]);
   function callPeer(id) {
     const peer = new Peer({
       initiator: true,
@@ -149,7 +169,7 @@ const Mentoring = () => {
   if (stream) {
     UserVideo = <Video playsInline muted ref={userVideo} autoPlay />;
   }
-
+  let VideoButton = <VideocamIcon fontSize="large" />;
   let PartnerVideo = <Connenct src={Connecting} alt="connecting" />;
   if (callAccepted) {
     PartnerVideo = <Video playsInline ref={partnerVideo} autoPlay />;
@@ -159,7 +179,7 @@ const Mentoring = () => {
   if (receivingCall) {
     incomingCall = (
       <div>
-        <h1>{caller} is calling you</h1>
+        {/* <h1>{caller} is calling you</h1> */}
         <button type="button" onClick={acceptCall}>
           Accept
         </button>
@@ -193,14 +213,49 @@ const Mentoring = () => {
           </Grid>
         </Grid>
       </Box>
+      <Box
+        display="flex"
+        justifyContent="space-around"
+        marginTop="30px"
+        width="50%"
+        maxWidth="500px"
+      >
+        <Button
+          onClick={() => setVideoSend(!videoSend)}
+          variant="contained"
+          color="default"
+        >
+          {VideoButton}
+        </Button>
+        <Button
+          onClick={() => setVideoSend(!videoSend)}
+          variant="contained"
+          color="default"
+        >
+          <MicIcon fontSize="large" />
+        </Button>
+        <Button
+          onClick={() => setVideoSend(!videoSend)}
+          variant="contained"
+          color="default"
+        >
+          <ChatIcon fontSize="large" />
+        </Button>
+        <Button
+          onClick={() => setVideoSend(!videoSend)}
+          variant="contained"
+          color="secondary"
+        >
+          <ExitToAppIcon fontSize="large" />
+        </Button>
+      </Box>
       <Row>
         {Object.keys(users).map((key) => {
           if (key === yourID) {
             return null;
           }
           return (
-            <button type="button" onClick={() => callPeer(key)}>
-              Call {key}
+            <button type="button" onClick={() => callPeer(key)} style={{width: '1px'}}>
             </button>
           );
         })}
