@@ -111,6 +111,7 @@ const JasoseoWrite = () => {
   function onClickSaveJasoseo(event) {
     event.preventDefault();
     doSaveJasoseo();
+    history.push('/jasoseodetail/1');
   }
   return (
     <div>
