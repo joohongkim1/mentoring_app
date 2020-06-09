@@ -18,6 +18,7 @@ import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import { useHistory } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
+import { Link } from 'react-router-dom';
 
 import Logo from '../../assets/images/logo.png';
 
@@ -204,20 +205,21 @@ const Header = (props) => {
       <HideOnScroll {...props}>
         <AppBar color="default">
           <Toolbar>
-            <Button
-              onClick={() => {
-                history.push('/');
-              }}
-            >
+            <Link to="/">
               <img className={classes.logo} src={Logo} alt="logo" />
-            </Button>
+            </Link>
             <div className={classes.grow} />
             <div className={classes.sectionDesktop}>
               <Button color="inherit" size="large">
-                자소서
+                <Link
+                  to="/resume"
+                  style={{ textDecoration: 'none', color: 'black' }}
+                >
+                  자소서
+                </Link>
               </Button>
               <Button color="inherit" size="large">
-                취업정보
+                경험정리
               </Button>
               <Button color="inherit" size="large">
                 멘토링

@@ -35,7 +35,7 @@ public class MentorController {
 
 
     @ApiOperation("특정 멘토 보여주기")
-    @GetMapping("/{mentor_no}")  // stu_no로 할지 stu_id로 할지 결정이 필요할것같아여~
+    @GetMapping("/{mentor_no}")
     public Mentor selectAll(@PathVariable Long mentor_no) {
         return mentorService.findByMentor_no(mentor_no);
     }
@@ -47,11 +47,11 @@ public class MentorController {
                     @PathVariable Long user_no, @RequestBody MentorSaveRequestDto mentorSaveRequestDto) {
         String jwt = httpServletRequest.getHeader("Authorization");
 
-        if (!jwtService.isUsable(jwt)) throw new UnauthorizedException(); // 예외
-        UserJwtResponseDto student=jwtService.getUser(jwt);
+        if (!jwtService.isUsable(jwt)) throw new UnauthorizedException();
+        UserJwtResponseDto user=jwtService.getUser(jwt);
         Map<String,String> map=new HashMap<>();
 
-        if (student.getUser_no().equals(user_no)) {
+        if (user.getUser_no().equals(user_no)) {
             mentorService.save(user_no, mentorSaveRequestDto);
             map.put("result", "멘토 신청이 되었습니다~");
             System.out.println("신청이 되었습니다~");
@@ -69,13 +69,12 @@ public class MentorController {
                       @RequestBody MentorUpdateRequestDto mentorUpdateRequestDto) {
         String jwt = httpServletRequest.getHeader("Authorization");
 
-        if (!jwtService.isUsable(jwt)) throw new UnauthorizedException(); // 예외
+        if (!jwtService.isUsable(jwt)) throw new UnauthorizedException();
         UserJwtResponseDto user=jwtService.getUser(jwt);
         Map<String,String> map=new HashMap<>();
 
         boolean question=mentorService.update(mentor_no,user.getUser_no(), mentorUpdateRequestDto);
         if(question){
-
             map.put("result","멘토 정보가 수정되었습니다~");
         }else{
             map.put("result","수정중 오류가 발생했습니다.");
@@ -89,7 +88,7 @@ public class MentorController {
     public Map delete(@PathVariable Long mentor_no, HttpServletRequest httpServletRequest){
         String jwt = httpServletRequest.getHeader("Authorization");
 
-        if (!jwtService.isUsable(jwt)) throw new UnauthorizedException(); // 예외
+        if (!jwtService.isUsable(jwt)) throw new UnauthorizedException();
         UserJwtResponseDto user=jwtService.getUser(jwt);
 
         Map<String,String> map=new HashMap<>();

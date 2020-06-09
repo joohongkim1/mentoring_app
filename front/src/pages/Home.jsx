@@ -13,6 +13,7 @@ const useStyles = makeStyles((theme) => ({
   },
   banner: {
     width: '60%',
+    height: '400px',
   },
   bannerBackground: {
     backgroundColor: '#d9d9d9',
@@ -24,7 +25,6 @@ const Home = () => {
 
   return (
     <>
-      <Header />
       <div className={classes.page}>
         <Box
           display="flex"
@@ -35,12 +35,21 @@ const Home = () => {
           <img src={mainBanner} alt="main banner" className={classes.banner} />
         </Box>
       </div>
-
-      {/* Test용 */}
-      <Box height={5000}>
-        <p>d</p>
-      </Box>
+      <div>
+        <iframe
+          id="pageFrame"
+          name="pageFrame"
+          src="http://www.jobkorea.co.kr/Starter/calendar/sub/month"
+          frameborder="0"
+          width="80%"
+          height="1500px"
+          scrolling="auto"
+          style={{ marginLeft: '10%', marginTop: '5%' }}
+        ></iframe>
+      </div>
     </>
   );
 };
+
+
 export default Home;
