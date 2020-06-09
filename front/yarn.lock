@@ -1043,6 +1043,9 @@
   dependencies:
     regenerator-runtime "^0.13.4"
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 "@babel/runtime@^7.6.0":
   version "7.10.2"
   resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.10.2.tgz#d103f21f2602497d38348a32e008637d506db839"
@@ -1050,6 +1053,7 @@
   dependencies:
     regenerator-runtime "^0.13.4"
 
+>>>>>>> fa640b714079315d3ae2460ff090e5738952ceaf
 "@babel/template@^7.10.1":
   version "7.10.1"
   resolved "https://registry.yarnpkg.com/@babel/template/-/template-7.10.1.tgz#e167154a94cb5f14b28dc58f5356d2162f539811"
@@ -1058,6 +1062,17 @@
     "@babel/code-frame" "^7.10.1"
     "@babel/parser" "^7.10.1"
     "@babel/types" "^7.10.1"
+<<<<<<< HEAD
+=======
+"@babel/runtime@^7.6.0":
+  version "7.10.2"
+  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.10.2.tgz#d103f21f2602497d38348a32e008637d506db839"
+  integrity sha512-6sF3uQw2ivImfVIl62RZ7MXhO2tap69WeWK57vAaimT6AZbE4FbqjdEJIN1UqoD6wI6B+1n9UiagafH1sxjOtg==
+  dependencies:
+    regenerator-runtime "^0.13.4"
+>>>>>>> b9115ddab1ed408bd52ea79fd54f410556a6574c
+=======
+>>>>>>> fa640b714079315d3ae2460ff090e5738952ceaf
 
 "@babel/template@^7.4.0", "@babel/template@^7.8.3", "@babel/template@^7.8.6":
   version "7.8.6"
@@ -1743,7 +1758,15 @@
     "@types/minimatch" "*"
     "@types/node" "*"
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+"@types/hoist-non-react-statics@^3.0.1":
+=======
+"@types/hoist-non-react-statics@^3.3.1":
+>>>>>>> b9115ddab1ed408bd52ea79fd54f410556a6574c
+=======
 "@types/hoist-non-react-statics@^3.0.1", "@types/hoist-non-react-statics@^3.3.1":
+>>>>>>> fa640b714079315d3ae2460ff090e5738952ceaf
   version "3.3.1"
   resolved "https://registry.yarnpkg.com/@types/hoist-non-react-statics/-/hoist-non-react-statics-3.3.1.tgz#1124aafe5118cb591977aeb1ceaaed1070eb039f"
   integrity sha512-iMIqiko6ooLrTh1joXodJK5X9xeEALT1kM5G3ZLhD3hszxBdIEd5C75U834D9mLcINgD4OyZf5uQXjkuYydWvA==
