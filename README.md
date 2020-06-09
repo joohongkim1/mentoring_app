@@ -37,8 +37,8 @@ https://ovenapp.io/view/1mcbsPtgJYhj2PLbjGQT6zQY19CNXMDP/KzEmI
 
 - 채팅화면
 
-![채팅](./readme-asset/chat.png)
+![채팅](./readme-asset/chat.PNG)
 
 - 경험 정리
 
-![키워드](./readme-asset/exp.png)
+![키워드](./readme-asset/exp.PNG)
