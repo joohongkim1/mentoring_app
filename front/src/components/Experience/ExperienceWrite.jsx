@@ -195,7 +195,7 @@ const ExperienceWrite = () => {
           handleAddition={handleAddition}
           handleDrag={handleDrag}
           delimiters={delimiters} /> */}
-        <div>내용은 STAR 기법으로 정리하시길 권해 드립니다.</div>
+        <div>내용은 STAR기법 정리를 권해 드립니다.</div>
         <TextField
           error={result.status === 'failure'}
           InputLabelProps={inputLabelProps}
