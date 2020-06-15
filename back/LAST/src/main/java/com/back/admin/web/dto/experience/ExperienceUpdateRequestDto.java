@@ -1,7 +1,5 @@
 package com.back.admin.web.dto.experience;
 
-import com.back.admin.domain.experience.Experience;
-import com.back.admin.domain.student.Student;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,12 +13,15 @@ public class ExperienceUpdateRequestDto {
     private Date experience_end;
     private String experience_title;
     private String experience_content;
+    private String experience_tag;
 
     @Builder
-    public ExperienceUpdateRequestDto(Experience entity) {
-        this.experience_start = entity.getExperience_start();
-        this.experience_end = entity.getExperience_end();
-        this.experience_title = entity.getExperience_title();
-        this.experience_content = entity.getExperience_content();
+    public ExperienceUpdateRequestDto(Date experience_start, Date experience_end,
+                                    String experience_title, String experience_content, String experience_tag) {
+        this.experience_start = experience_start;
+        this.experience_end = experience_end;
+        this.experience_title = experience_title;
+        this.experience_content = experience_content;
+        this.experience_tag = experience_tag;
     }
 }

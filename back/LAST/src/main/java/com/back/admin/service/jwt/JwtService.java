@@ -1,6 +1,6 @@
 package com.back.admin.service.jwt;
 
-import com.back.admin.web.dto.student.StudentJwtResponseDto;
+import com.back.admin.web.dto.user.UserJwtResponseDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
@@ -19,10 +19,10 @@ public class JwtService {
     @Autowired
     private ObjectMapper objectMapper;
 
-    private static final String SALT = "LatteSecret";
+    private static final String SALT = "LastSecret";
     private static String key = "member";
 
-    public StudentJwtResponseDto getUser(String jwt){
+    public UserJwtResponseDto getUser(String jwt){
         ObjectMapper mapper=new ObjectMapper();
 
         Jws<Claims> claims=null;
@@ -37,11 +37,12 @@ public class JwtService {
         //LinkedHashMap으로 변환되는 claims.getbody() <- 데이터 담긴곳
         //이걸 자바 코딩에서 이용하기위해 객체화 해야함
         //그게 바로 아래 코드
-        StudentJwtResponseDto studentJwtResponseDto =
-                mapper.convertValue(claims.getBody().get(key), StudentJwtResponseDto.class);
+        UserJwtResponseDto userJwtResponseDto =
+                mapper.convertValue(claims.getBody().get(key), UserJwtResponseDto.class);
 
-        return studentJwtResponseDto;
+        return userJwtResponseDto;
     }
+
 
     // 토큰 발행(JWT 만들기)
     // JWT의 헤더, 클레임, 암호 등의 필요한 정보를 넣고 직렬화
