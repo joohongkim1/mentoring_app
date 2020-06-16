@@ -19,29 +19,24 @@ public class SolQuestionService {
     private final SolQuestionRepository solQuestionRepository;
     private final UserRepository userRepository;
 
-
     public List<SolQuestion> selectAll() {
         return solQuestionRepository.findAll();
     }
-
 
     @Transactional
     public SolQuestion findByUser_no(Long user_no) {
         return solQuestionRepository.findByUser_no(user_no);
     }
 
-
     @Transactional
     public SolQuestion findByCompany(String sol_q_company) {
         return solQuestionRepository.findByCompany(sol_q_company);
     }
 
-
     @Transactional
     public SolQuestion findByWant_job(String sol_q_want_job) {
         return solQuestionRepository.findByWant_job(sol_q_want_job);
     }
-
 
     @Transactional
     public boolean save(Long user_no, SolQuestionSaveRequestDto solQuestionSaveRequestDto) {
@@ -49,7 +44,6 @@ public class SolQuestionService {
         solQuestionRepository.save(solQuestionSaveRequestDto.toEntity(student));
         return true;
     }
-
 
     @Transactional
     public boolean update(Long sol_q_no, Long user_no, SolQuestionUpdateRequestDto solQuestionUpdateRequestDto) {
@@ -64,7 +58,6 @@ public class SolQuestionService {
             return false;
         }
     }
-
 
     @Transactional
     public boolean delete(Long sol_q_no, Long user_no){

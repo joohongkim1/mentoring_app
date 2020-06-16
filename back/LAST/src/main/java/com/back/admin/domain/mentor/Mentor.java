@@ -31,7 +31,6 @@ public class Mentor{
     @JsonBackReference
     private User mentor;
 
-
     @Builder
     public Mentor(String mentor_identification_url, String mentor_company, String mentor_job, User mentor) {
         this.mentor_identification_url = mentor_identification_url;

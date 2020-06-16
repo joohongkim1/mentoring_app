@@ -46,7 +46,6 @@ public class Experience {
     @JsonManagedReference
     private List<Board> boards=new ArrayList<>();
 
-
     @Builder
     public Experience(Date experience_start, Date experience_end, String experience_title,
                       String experience_content, String experience_tag, User studentexperience) {

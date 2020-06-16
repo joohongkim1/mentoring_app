@@ -37,7 +37,7 @@ public class SwaggerConfig {
         return new Docket(DocumentationType.SWAGGER_2)
                 .globalOperationParameters(headerParams)
                 .select().apis(RequestHandlerSelectors.basePackage("com.back.admin.web"))
-//                .paths(PathSelectors.any()).build();
+                // .paths(PathSelectors.any()).build();
                 .paths(PathSelectors.any()).build().apiInfo(metadata());
     }
 }

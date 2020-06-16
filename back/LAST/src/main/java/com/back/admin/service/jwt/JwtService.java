@@ -34,9 +34,7 @@ public class JwtService {
             throw new UnauthorizedException();
         }
 
-        //LinkedHashMap으로 변환되는 claims.getbody() <- 데이터 담긴곳
-        //이걸 자바 코딩에서 이용하기위해 객체화 해야함
-        //그게 바로 아래 코드
+        //LinkedHashMap으로 변환되는 claims.getbody()을 객체화
         UserJwtResponseDto userJwtResponseDto =
                 mapper.convertValue(claims.getBody().get(key), UserJwtResponseDto.class);
 
@@ -45,8 +43,6 @@ public class JwtService {
 
 
     // 토큰 발행(JWT 만들기)
-    // JWT의 헤더, 클레임, 암호 등의 필요한 정보를 넣고 직렬화
-    // session처럼 활용하기 위해서는 claim에 데이터를 넣으면 된다.
     public <T> String create(T data) { // user
         String jwt =Jwts.builder()
                 .setHeaderParam("type", "JWT")
@@ -93,7 +89,6 @@ public class JwtService {
         } catch (Exception e) {
             throw new UnauthorizedException();
         }
-//        System.out.println("이건가요? "+claims.getBody().get(KEY));
         return claims.getBody();
     }
 

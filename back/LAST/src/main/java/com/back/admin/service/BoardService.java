@@ -19,17 +19,14 @@ public class BoardService {
     private final BoardRepository boardRepository;
     private final ExperienceRepository experienceRepository;
 
-
     public List<Board> selectAll() {
         return boardRepository.findAll();
     }
-
 
     @Transactional
     public Board findBoardByUser_no(Long user_no) {
         return boardRepository.findByStu_no(user_no);
     }
-
 
     @Transactional
     public boolean save(Long experience_no, BoardSaveRequestDto boardSaveRequestDto) {
@@ -37,7 +34,6 @@ public class BoardService {
         boardRepository.save(boardSaveRequestDto.toEntity(experience));
         return true;
     }
-
 
     @Transactional
     public boolean update(Long board_no, Long user_no, BoardUpdateRequestDto boardUpdateRequestDto) {
@@ -52,7 +48,6 @@ public class BoardService {
         }
     }
 
-
     @Transactional
     public boolean delete(Long board_no, Long user_no){
         Board board = boardRepository.findByBoard_no(board_no);
@@ -65,16 +60,13 @@ public class BoardService {
         }
     }
 
-
     @Transactional
     public Board findByCompany(String board_company) {
         return boardRepository.findByBoard_company(board_company);
     }
 
-
     @Transactional
     public Board findByKeyword(String board_keyword) {
         return boardRepository.findByBoard_keyword(board_keyword);
     }
-
 }

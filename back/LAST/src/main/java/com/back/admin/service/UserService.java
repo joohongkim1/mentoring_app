@@ -24,11 +24,9 @@ public class UserService {
     @Autowired
     JavaMailSender javaMailSender;
 
-
     public List<User> selectAll() {
         return userRepository.findAll();
     }
-
 
     @Transactional
     public boolean signUp(UserSaveRequestDto userSaveRequestDto) {
@@ -40,14 +38,12 @@ public class UserService {
         return true;
     }
 
-
     @Transactional
     public boolean checkByuser_id_email(String user_id_email) {
         List<User> user = userRepository.checkByUser_id_email(user_id_email);
         if (user.size() > 0) return true;
         else return false;
     }
-
 
     @Transactional
     public String findId(String user_name, String user_email) {
@@ -59,7 +55,6 @@ public class UserService {
         }
     }
 
-
     @Transactional
     public String findPass(String user_id_email) {
         if (!checkByuser_id_email(user_id_email))
@@ -68,8 +63,6 @@ public class UserService {
         User user = userRepository.findByUser_id_email(user_id_email);
 
         if (user.getUser_id_email().equals(user_id_email)) {
-
-
             String new_pass = generatePass(10);
             MailService mailService = new MailService();
             mailService.setJavaMailSender(javaMailSender);
@@ -80,7 +73,6 @@ public class UserService {
         }
         return user.getUser_id_email();
     }
-
 
     public String generatePass(int length) {
         StringBuilder sb = new StringBuilder();
@@ -99,12 +91,10 @@ public class UserService {
         return sb.toString();
     }
 
-
     @Transactional
     public User findByuser_id_email(String user_id_email) {
         return userRepository.findByUser_id_email(user_id_email);
     }
-
 
     @Transactional
     public void update(String user_id_email, UserUpdateRequestDto userUpdateRequestDto) {
@@ -117,7 +107,6 @@ public class UserService {
         user.update( userUpdateRequestDto.getUser_school(),
                 userUpdateRequestDto.getUser_major(), encrypt(userUpdateRequestDto.getUser_password()));
     }
-
 
     public static String encrypt(String rawpass) {
         try {
@@ -145,7 +134,6 @@ public class UserService {
 
     static String Static_access_Token = null;
 
-
     @Transactional
     public void delete(String user_id_email) {
         User user = userRepository.findByUser_id_email(user_id_email);
@@ -155,7 +143,6 @@ public class UserService {
         assert user != null;
         userRepository.delete(user);
     }
-
 
     @Transactional
     public UserJwtResponseDto signIn(String user_id_email, String user_password) {
@@ -175,12 +162,10 @@ public class UserService {
 
     }
 
-
     @Transactional
     public void change_user_auth(String user_id_email,int user_auth){
         userRepository.change_User_auth(user_id_email,user_auth);
     }
-
 
     @Transactional
     public List<UserResponseDto> show_by_user_auth(int user_auth) {

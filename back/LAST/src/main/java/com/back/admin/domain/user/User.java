@@ -16,9 +16,8 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 public class User {
-    @Id  // pk
-    @GeneratedValue(strategy = GenerationType.IDENTITY)  // auto-increment
-    // stu_no:1,2,3,4,올라가는 값인데, int보다 long이 큰 의미라서 int stu_no보다 Long stu_no을 보편적으로 사용합니다
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long user_no;
 
     @Column
@@ -57,7 +56,6 @@ public class User {
     @JsonManagedReference
     private List<Mentor> mentor=new ArrayList<>();
 
-
     @Builder
     public User(int user_auth, String user_name, String user_school, String user_major,
                    String user_id_email, String user_password, Long user_total_mileage) {
@@ -70,9 +68,6 @@ public class User {
         this.user_total_mileage = user_total_mileage;
     }
 
-    // 회원가입 이후, 수정할 수 있는 정보들
-    // auth, mileage는 관리자만 수정 가능!!
-    // 관리자 페이지 따로 만들어야할듯 -> student, mentor 마일리지 관리, 권한 관리
     public void update(String user_school, String user_major, String user_password) {
         this.user_school = user_school;
         this.user_major = user_major;

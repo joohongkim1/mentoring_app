@@ -19,17 +19,14 @@ public class MentorService {
     private final MentorRepository mentorRepository;
     private final UserRepository userRepository;
 
-
     public List<Mentor> selectAll() {
         return mentorRepository.findAll();
     }
-
 
     @Transactional
     public Mentor findByMentor_no(Long mentor_no) {
         return mentorRepository.findBymentor_no(mentor_no);
     }
-
 
     @Transactional
     public boolean save(Long user_no, MentorSaveRequestDto mentorSaveRequestDto) {
@@ -37,7 +34,6 @@ public class MentorService {
         mentorRepository.save(mentorSaveRequestDto.toEntity(user));
         return true;
     }
-
 
     @Transactional
     public boolean update(Long mentor_no, Long user_no, MentorUpdateRequestDto mentorUpdateRequestDto) {
@@ -51,7 +47,6 @@ public class MentorService {
             return false;
         }
     }
-
 
     @Transactional
     public boolean delete(Long mentor_no, Long user_no){

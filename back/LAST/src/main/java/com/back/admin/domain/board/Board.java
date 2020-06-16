@@ -34,7 +34,6 @@ public class Board {
     @JsonBackReference
     private Experience experienceboard;
 
-
     @Builder
     public Board(String board_question, String board_content, String board_company,
                  String board_keyword, Experience experienceboard) {

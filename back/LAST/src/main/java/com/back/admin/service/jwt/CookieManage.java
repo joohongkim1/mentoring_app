@@ -24,6 +24,5 @@ public class CookieManage {
         cookie.setMaxAge(Integer.MAX_VALUE);
         response.addCookie(cookie);
         System.out.println("발행된 토큰 : " + cookie.getValue());
-//        System.out.println("지금 쿠키수 : "+request.getCookies().length);
     }
 }
